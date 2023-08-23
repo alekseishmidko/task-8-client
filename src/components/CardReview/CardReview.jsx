@@ -1,48 +1,35 @@
 import React from "react";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+
 import { Avatar, Card, Tag } from "antd";
-const CardReview = () => {
-  const { Meta } = Card;
+const CardReview = ({ title, group, tags, rating }) => {
   return (
-    <div>
-      {/* <Card
-        style={{ width: 300 }}
+    <>
+      <Card
+        // title={title}
         cover={
           <img
             alt="example"
-            // src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
           />
         }
-        actions={[<SettingOutlined key="setting" />]}
       >
-        <Meta
-          avatar={<Avatar />}
-          title="Card title"
-          description="This is the description"
-        />
-      </Card> */}
-      <Card title={"title"} className="review-card">
-        <p>
-          <strong>Work Title:</strong> {"1234r2rw"}
+        <p className="my-2 ">
+          Title:<span className="pl-2">{title}</span>
         </p>
-        <p>
-          <strong>Group:</strong> {"group"}
+        <p className="my-2 ">
+          Group:<span className="pl-2">{group}</span>
         </p>
-        <p>
-          <>Tags:</>{" "}
-          {new Array(6).map((tag, index) => (
-            <Tag key={index}>{tag}</Tag>
+        <p className="my-2 pr-2">
+          <span className="pr-2">Tags:</span>
+          {tags.map((item, index) => (
+            <Tag key={index}>{item}</Tag>
           ))}
         </p>
-        <p>
-          <strong>Rating:</strong> {"rating"}/10
+        <p className="my-2">
+          Rating: <span className="pl-2">{rating}</span>
         </p>
       </Card>
-    </div>
+    </>
   );
 };
 
