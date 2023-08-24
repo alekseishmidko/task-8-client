@@ -2,7 +2,8 @@ import React from "react";
 import TabContent from "../components/TabContent/TabContent";
 import Header from "../components/Header/Header";
 import TagCloud from "../components/TagCloud/TagCloud";
-
+import Comments from "../components/Comments/Comments";
+import { Layout } from "antd";
 const MainPage = () => {
   const tags = [
     "#1",
@@ -18,15 +19,18 @@ const MainPage = () => {
   return (
     <>
       <Header />
-      <div className="flex justify-center items-center">
-        <div className="w-1/6">
-          <TagCloud tags={tags} />
+      <Layout>
+        <div className="flex justify-center items-center">
+          <div className="w-1/2">
+            <TabContent />
+            <TagCloud tags={tags} />
+          </div>
+          {/* <div className="w-1/2"></div> */}
+          {/* <div className="w-1/4">
+          <Comments />
+        </div> */}
         </div>
-        <div className="w-1/2">
-          <TabContent />
-        </div>
-        <div className="w-1/4">Right</div>
-      </div>
+      </Layout>
     </>
   );
 };

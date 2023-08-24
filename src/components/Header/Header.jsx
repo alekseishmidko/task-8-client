@@ -1,19 +1,29 @@
 import React from "react";
 import { Button, Input } from "antd";
-import { FireOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { isAuthenticated, logout } from "../../store/AccountSlice/AccountSlice";
+import {
+  FireOutlined,
+  UserOutlined,
+  LogoutOutlined,
+  BulbOutlined,
+  BulbFilled,
+} from "@ant-design/icons";
+import { Link, useNavigate } from "react-router-dom";
+import { handleTheme } from "../../store/ThemeSlice/themeSlice";
+import { logout } from "../../store/AccountSlice/AccountSlice";
 import { useSelector, useDispatch } from "react-redux";
 const Header = () => {
   const { data } = useSelector((state) => state.accountSlice);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
     <header className="bg-gray-800 text-white py-4 ">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between mx-2 ">
         <div className="flex items-center justify-center md:justify-start ">
-          <FireOutlined className="ml-2 mr-2 cursor-pointer" />
-          <span className="text-lg font-semibold">My Website</span>
+          <span className="text-lg font-semibold ml-2">My Website</span>
+          <BulbFilled
+            className="ml-4 mr-2 cursor-pointer"
+            onClick={() => dispatch(handleTheme())}
+          />
         </div>
         <div className="flex items-center justify-center md:flex-1">
           <div className="flex items-center  border-gray-600 rounded-lg">
@@ -29,7 +39,10 @@ const Header = () => {
         </div>
         <div className="mt-4 md:mt-0 md:ml-4 mr-3">
           {data !== null ? (
-            <div className="flex items-center">
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={() => navigate("/account")}
+            >
               <UserOutlined className="text-white mr-2" />
 
               <span className="text-white">{data.name || ""}</span>
