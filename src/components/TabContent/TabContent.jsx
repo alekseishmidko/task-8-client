@@ -2,11 +2,15 @@ import React from "react";
 import { Carousel, Tabs } from "antd";
 import CardReview from "../CardReview/CardReview";
 import { PopularArr, LatestArr, contentStyle } from "./TabContentUtils";
+import { useSelector } from "react-redux";
 const TabContent = () => {
   const optionsArr = ["Latest", "Popular"];
 
   const onChange = (currentSlide) => {};
-
+  const { last6Reviews, pop6Reviews, isLoading } = useSelector(
+    (state) => state.reviewsSlice
+  );
+  if (isLoading === "loading") <h1>Loading...</h1>;
   return (
     // <div className="w-full max-w-3xl">
     <Tabs
@@ -20,7 +24,7 @@ const TabContent = () => {
           children:
             item === "Latest" ? (
               <Carousel autoplay afterChange={onChange}>
-                {LatestArr.map((item) => (
+                {last6Reviews.map((item) => (
                   <div key={item.key}>
                     <CardReview {...item} />
 
@@ -30,7 +34,7 @@ const TabContent = () => {
               </Carousel>
             ) : (
               <Carousel autoplay>
-                {PopularArr.map((item) => (
+                {pop6Reviews.map((item) => (
                   <div key={item.key}>
                     <CardReview {...item} />
                     <div style={contentStyle} key={item.key}></div>

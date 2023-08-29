@@ -11,14 +11,24 @@ import { Link, useNavigate } from "react-router-dom";
 import { handleTheme } from "../../store/ThemeSlice/themeSlice";
 import { logout } from "../../store/AccountSlice/AccountSlice";
 import { useSelector, useDispatch } from "react-redux";
+import BurgerMenu from "../BurgerMenu/BurgerMenu";
+import { fetchGetMyReviews } from "../../store/ReviewsSlice/ReviewsSlice";
 const Header = () => {
   const { data } = useSelector((state) => state.accountSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const onClickUserLogo = () => {
+    // dispatch(fetchGetMyReviews());
+    navigate("/account");
+  };
   return (
     <header className="bg-gray-800 text-white py-4 ">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between mx-2 ">
         <div className="flex items-center justify-center md:justify-start ">
+          <div className="mx-2 ">
+            {" "}
+            <BurgerMenu />
+          </div>
           <span className="text-lg font-semibold ml-2">My Website</span>
           <BulbFilled
             className="ml-4 mr-2 cursor-pointer"
@@ -41,15 +51,15 @@ const Header = () => {
           {data !== null ? (
             <div
               className="flex items-center cursor-pointer"
-              onClick={() => navigate("/account")}
+              onClick={() => onClickUserLogo()}
             >
               <UserOutlined className="text-white mr-2" />
 
               <span className="text-white">{data.name || ""}</span>
-              <LogoutOutlined
+              {/* <LogoutOutlined
                 onClick={() => dispatch(logout())}
                 className="text-white mx-3"
-              />
+              /> */}
             </div>
           ) : (
             <>

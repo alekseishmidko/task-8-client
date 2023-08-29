@@ -64,6 +64,7 @@ export const postPassword = createAsyncThunk(
     }
   }
 );
+
 const initialState = {
   data: null,
   isLoading: "loading",

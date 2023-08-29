@@ -21,7 +21,7 @@ const LoginPage = () => {
       dispatch(fetchLogin(formData));
       setTimeout(() => {
         navigate("/");
-      }, 350);
+      }, 650);
     } catch (error) {
       console.error("error while fetchLogin:", error);
     }
