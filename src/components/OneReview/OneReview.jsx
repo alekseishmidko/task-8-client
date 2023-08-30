@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import {
   Layout,
   Card,
@@ -9,6 +10,8 @@ import {
   Form,
   Select,
   Slider,
+  Rate,
+  AutoComplete,
 } from "antd";
 import { RollbackOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
@@ -29,7 +32,10 @@ const OneReview = () => {
   const { title, group, content, rating } = useSelector(
     (state) => state.reviewsSlice.oneReview
   );
-
+  const { averageRatingFive, allUnicTags } = useSelector(
+    (state) => state.reviewsSlice
+  );
+  console.log(content, "allUnicTags");
   //
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = React.useState(false);
@@ -46,6 +52,7 @@ const OneReview = () => {
       setIsEditing(false);
     });
   };
+
   return (
     <Layout className="flex justify-center items-center min-h-screen">
       <div
@@ -87,10 +94,18 @@ const OneReview = () => {
                   ))}
                 </Select>
               </Form.Item>
-              <Form.Item label="Content" name="content">
-                <Input.TextArea />
-              </Form.Item>
-              <Form.Item label="Author rating" name="rating">
+
+              {isEditing ? (
+                <Form.Item label="Content" name="content">
+                  <Input.TextArea />
+                </Form.Item>
+              ) : (
+                <div className="p-4 rounded-md shadow-md">
+                  <ReactMarkdown className="prose">{content}</ReactMarkdown>
+                </div>
+              )}
+
+              <Form.Item label="Author rating" name="rating" className="mt-4">
                 <Slider
                   defaultValue={rating}
                   min={0}
@@ -100,7 +115,7 @@ const OneReview = () => {
                 />
               </Form.Item>
             </Form>
-
+            <Rate disabled defaultValue={averageRatingFive} />
             <div className="mt-4">
               {isEditing ? (
                 <Button onClick={handleSaveClick}>Save</Button>

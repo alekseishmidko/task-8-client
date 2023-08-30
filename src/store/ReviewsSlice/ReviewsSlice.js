@@ -64,11 +64,13 @@ export const fetchDeleteReview = createAsyncThunk(
 
 const initialState = {
   data: null,
+  allUnicTags: [],
   allReviews: [],
   last6Reviews: [],
   pop6Reviews: [],
   myReviews: [],
   oneReview: [],
+  averageRatingFive: 0,
   isLoading: "loading",
   errors: null,
   message: "",
@@ -83,6 +85,7 @@ const ReviewsSlice = createSlice({
       state.isLoading = "loading";
       state.errors = null;
       state.data = {};
+      state.allUnicTags = [];
       state.allReviews = [];
       state.last6Reviews = [];
       state.pop6Reviews = [];
@@ -93,6 +96,7 @@ const ReviewsSlice = createSlice({
       state.isLoading = "loaded";
       state.errors = null;
       state.data = action.payload;
+      state.allUnicTags = action.payload.allUnicTags;
       state.allReviews = action.payload.allReviews;
       state.last6Reviews = action.payload.last6Reviews;
       state.pop6Reviews = action.payload.pop6Reviews;
@@ -102,6 +106,7 @@ const ReviewsSlice = createSlice({
       state.errors = action.payload;
       state.message = action.payload;
       state.data = {};
+      state.allUnicTags = [];
       state.allReviews = [];
       state.last6Reviews = [];
       state.pop6Reviews = [];
@@ -130,17 +135,20 @@ const ReviewsSlice = createSlice({
       state.isLoading = "loading";
       state.errors = null;
       state.oneReview = [];
+      state.averageRatingFive = 0;
     });
 
     builder.addCase(fetchGetOneReview.fulfilled, (state, action) => {
       state.isLoading = "loaded";
       state.errors = null;
       state.oneReview = action.payload.review;
+      state.averageRatingFive = action.payload.averageRatingFive;
     });
     builder.addCase(fetchGetOneReview.rejected, (state, action) => {
       state.isLoading = "error";
       state.errors = action.payload;
       state.message = action.payload;
+      state.averageRatingFive = action.payload.averageRatingFive;
       state.oneReview = [];
     });
     // PUT UPDATE REVIEW

@@ -6,13 +6,21 @@ import { Space, Table, Tag, Typography, Modal } from "antd";
 import {
   fetchDeleteReview,
   fetchGetMyReviews,
+  fetchGetOneReview,
 } from "../../store/ReviewsSlice/ReviewsSlice";
 const { Text } = Typography;
 const MyReviewsTable = () => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { myReviews } = useSelector((state) => state.reviewsSlice);
+
+  const onClickRev = (recordId) => {
+    console.log(recordId);
+    // dispatch(fetchGetOneReview(recordId));
+    navigate(recordId);
+  };
   // modal
   const showModal = () => {
     setOpen(true);
@@ -100,9 +108,9 @@ const MyReviewsTable = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Link to={record._id}>
+          <a onClick={() => onClickRev(record._id)}>
             <span className="text-blue-500 ">Open and Update </span>
-          </Link>
+          </a>
           <a>
             <span className="text-red-400" onClick={showModal}>
               Delete
@@ -117,9 +125,6 @@ const MyReviewsTable = () => {
               <p>Are you sure?</p>
             </Modal>
           </a>
-          {/* <a>
-            <span className="text-red-400">Delete </span>
-          </a> */}
         </Space>
       ),
     },

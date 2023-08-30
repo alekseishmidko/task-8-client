@@ -7,22 +7,11 @@ import { Layout } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetAllReviews } from "../store/ReviewsSlice/ReviewsSlice";
 const MainPage = () => {
-  const { isLoading } = useSelector((state) => state.reviewsSlice);
+  const { isLoading, allUnicTags } = useSelector((state) => state.reviewsSlice);
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(fetchGetAllReviews());
   }, [dispatch]);
-  const tags = [
-    "#1",
-    "#2",
-    "#three",
-    "#four",
-    "#five",
-    "#six",
-    "#seven",
-    "#12",
-    "#13",
-  ];
 
   if (isLoading === "loading") <h1>Loading...</h1>;
   return (
@@ -32,7 +21,7 @@ const MainPage = () => {
         <div className="flex justify-center items-center">
           <div className="w-1/2">
             <TabContent />
-            <TagCloud tags={tags} />
+            <TagCloud tags={allUnicTags} />
           </div>
           {/* <div className="w-1/2"></div> */}
           {/* <div className="w-1/4">
