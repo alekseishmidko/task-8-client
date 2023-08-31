@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import ReactMarkdown from "react-markdown";
 import { Space, Table, Tag, Typography, Modal } from "antd";
 import {
   fetchDeleteReview,
@@ -14,10 +14,11 @@ const MyReviewsTable = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { myReviews } = useSelector((state) => state.reviewsSlice);
+  const { myReviews, allUnicTags } = useSelector((state) => state.reviewsSlice);
 
+  // console.log(allUnicTags);
   const onClickRev = (recordId) => {
-    console.log(recordId);
+    // console.log(recordId);
     // dispatch(fetchGetOneReview(recordId));
     navigate(recordId);
   };
@@ -45,7 +46,15 @@ const MyReviewsTable = () => {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      render: (text) => <a>{text}</a>,
+      render: (text) => (
+        <ReactMarkdown
+          style={{ maxWidth: 100 }}
+          ellipsis={true}
+          className="prose"
+        >
+          {text}
+        </ReactMarkdown>
+      ),
       sorter: (a, b) => a.title.length - b.title.length,
       sortDirections: ["descend"],
     },
@@ -78,9 +87,13 @@ const MyReviewsTable = () => {
       dataIndex: "content",
       key: "content",
       render: (text) => (
-        <Text ellipsis={true} style={{ maxWidth: 300 }}>
+        <ReactMarkdown
+          className="prose"
+          ellipsis={true}
+          style={{ maxWidth: 200 }}
+        >
           {text}
-        </Text>
+        </ReactMarkdown>
       ),
     },
     {
@@ -90,9 +103,12 @@ const MyReviewsTable = () => {
       render: (_, { tags }) => (
         <>
           {tags.map((tag) => {
-            let color = tag.length > 5 ? "geekblue" : "green";
-            if (tag.length === 8) {
+            let color = tag.length > 4 ? "geekblue" : "green";
+            if (tag.length >= 7) {
               color = "volcano";
+            }
+            if (tag.length >= 10) {
+              color = "orange";
             }
             return (
               <Tag color={color} key={tag}>

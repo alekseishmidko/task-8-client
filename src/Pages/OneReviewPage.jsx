@@ -18,10 +18,10 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   fetchGetOneReview,
   fetchUpdateReview,
-} from "../../store/ReviewsSlice/ReviewsSlice";
+} from "../store/ReviewsSlice/ReviewsSlice";
 const { Option } = Select;
-const { Title, Text } = Typography;
-const OneReview = () => {
+// const { Title, Text } = Typography;
+const OneReviewPage = () => {
   const { themeMode } = useSelector((state) => state.themeSlice);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -35,7 +35,7 @@ const OneReview = () => {
   const { averageRatingFive, allUnicTags } = useSelector(
     (state) => state.reviewsSlice
   );
-  console.log(content, "allUnicTags");
+  console.log(title, group, content, rating, "allUnicTags");
   //
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = React.useState(false);
@@ -50,6 +50,7 @@ const OneReview = () => {
       dispatch(fetchUpdateReview({ id, values }));
       console.log(values);
       setIsEditing(false);
+      dispatch(fetchGetOneReview({ id }));
     });
   };
 
@@ -82,30 +83,47 @@ const OneReview = () => {
               layout="vertical"
               disabled={!isEditing}
             >
-              <Form.Item label="Title" name="title">
-                <Input />
-              </Form.Item>
-              <Form.Item label="Group" name="group">
-                <Select defaultValue={group}>
-                  {arr.map((item, index) => (
-                    <Option key={index} value={item}>
-                      {item}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
+              {isEditing ? (
+                <Form.Item label="Title" name="title">
+                  <Input />
+                </Form.Item>
+              ) : (
+                <div className="p-4 rounded-md border my-4">
+                  <ReactMarkdown className="prose">{title}</ReactMarkdown>
+                </div>
+              )}
+              {isEditing ? (
+                <Form.Item label="Group" name="group">
+                  <Select defaultValue={group}>
+                    {arr.map((item, index) => (
+                      <Option key={index} value={item}>
+                        {item}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              ) : (
+                <div className="p-4 rounded-md border my-4">
+                  <ReactMarkdown className="prose">{group}</ReactMarkdown>
+                </div>
+              )}
 
               {isEditing ? (
                 <Form.Item label="Content" name="content">
-                  <Input.TextArea />
+                  <Input.TextArea defaultValue={content} />
                 </Form.Item>
               ) : (
-                <div className="p-4 rounded-md shadow-md">
+                <div className="p-4 rounded-md border">
                   <ReactMarkdown className="prose">{content}</ReactMarkdown>
                 </div>
               )}
 
-              <Form.Item label="Author rating" name="rating" className="mt-4">
+              <Form.Item
+                label="Author rating"
+                name="rating"
+                className="mt-4 px-1"
+                defaultValue={rating}
+              >
                 <Slider
                   defaultValue={rating}
                   min={0}
@@ -130,4 +148,4 @@ const OneReview = () => {
   );
 };
 
-export default OneReview;
+export default OneReviewPage;

@@ -17,6 +17,7 @@ export const fetchLogin = createAsyncThunk(
     }
   }
 );
+
 export const fetchRegistration = createAsyncThunk(
   "account/fetchRegistration",
   async ({ email, password, name }, thunkAPI) => {
@@ -36,29 +37,15 @@ export const fetchRegistration = createAsyncThunk(
     }
   }
 );
-export const postCurrent = createAsyncThunk(
-  "api/users/current",
-  async ({ formData }, thunkAPI) => {
+export const fetchGetAllUsers = createAsyncThunk(
+  "account/fetchGetAllUsers",
+  async (thunkAPI) => {
     try {
-      // Выполнение запроса на сервер с использованием переданного токена
-      const response = await axios.post("api/users/current", formData);
+      const response = await axios.get("api/users/all");
+
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.message);
-      // throw error;
-    }
-  }
-);
-export const postPassword = createAsyncThunk(
-  "account/postPassword",
-  async ({ formData }, thunkAPI) => {
-    try {
-      // Выполнение запроса на сервер с использованием переданного токена
-      const response = await axios.post("account/password", formData);
-      console.log(response.data, "postcurrent ");
-      return response.data;
-    } catch (error) {
-      console.log(error.response.data.message);
+      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
       // throw error;
     }
@@ -70,6 +57,7 @@ const initialState = {
   isLoading: "loading",
   errors: null,
   message: "",
+  allUsers: [],
 };
 const accountSlice = createSlice({
   name: "accountSlice",
@@ -81,41 +69,6 @@ const accountSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // postCurrent POST
-    builder.addCase(postCurrent.pending, (state) => {
-      state.isLoading = "loading";
-      state.errors = null;
-      state.data = {};
-    });
-
-    builder.addCase(postCurrent.fulfilled, (state, action) => {
-      state.data = action.payload;
-      state.isLoading = "loaded";
-      state.errors = null;
-    });
-    builder.addCase(postCurrent.rejected, (state, action) => {
-      state.data = {};
-      state.isLoading = "error";
-      state.errors = action.payload;
-      state.message = action.payload;
-    });
-    builder.addCase(postPassword.pending, (state) => {
-      state.isLoading = "loading";
-      state.errors = null;
-      // state.data = null;
-    });
-
-    builder.addCase(postPassword.fulfilled, (state, action) => {
-      state.data = action.payload;
-      state.isLoading = "loaded";
-      state.errors = null;
-    });
-    builder.addCase(postPassword.rejected, (state, action) => {
-      state.data = {};
-      state.isLoading = "error";
-      state.errors = action.error.message;
-      state.message = action.payload.message;
-    });
     // Login POST
     builder.addCase(fetchLogin.pending, (state) => {
       state.isLoading = "loading";
@@ -148,6 +101,23 @@ const accountSlice = createSlice({
       state.isLoading = "error";
       state.errors = action.error.message;
       state.data = null;
+      state.message = action.payload.message;
+    });
+    // GET ALL USERS
+    builder.addCase(fetchGetAllUsers.pending, (state) => {
+      state.isLoading = "loading";
+      state.errors = null;
+      state.allUsers = [];
+    });
+    builder.addCase(fetchGetAllUsers.fulfilled, (state, action) => {
+      state.isLoading = "loaded";
+      state.errors = null;
+      state.allUsers = action.payload.allUsers;
+    });
+    builder.addCase(fetchGetAllUsers.rejected, (state, action) => {
+      state.isLoading = "error";
+      state.errors = action.error.message;
+      state.allUsers = null;
       state.message = action.payload.message;
     });
   },

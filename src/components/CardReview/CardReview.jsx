@@ -8,14 +8,14 @@ const CardReview = ({ title, group, tags, rating, content }) => {
     <>
       <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 lg:p-10">
         <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-2">
-          {title}
+          <ReactMarkdown className="prose">{title}</ReactMarkdown>
         </h2>
         <p className="text-gray-600 mb-2">{group}</p>
         <img
           alt="example"
           src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
         />
-        <p className="text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed mb-4">
+        <p className="text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed my-4">
           <ReactMarkdown className="prose">{truncatedContent}</ReactMarkdown>
         </p>
 
