@@ -51,7 +51,18 @@ export const fetchGetAllUsers = createAsyncThunk(
     }
   }
 );
-
+export const fetchDeleteUser = createAsyncThunk(
+  "api/users/delete",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.delete(`api/users/${id}`);
+      return response.data;
+    } catch (error) {
+      // Обработка ошибок, если необходимо
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 const initialState = {
   data: null,
   isLoading: "loading",
@@ -118,6 +129,20 @@ const accountSlice = createSlice({
       state.isLoading = "error";
       state.errors = action.error.message;
       state.allUsers = null;
+      state.message = action.payload.message;
+    });
+    // DELETE USER
+    builder.addCase(fetchDeleteUser.pending, (state) => {
+      state.isLoading = "loading";
+      state.errors = null;
+    });
+    builder.addCase(fetchDeleteUser.fulfilled, (state, action) => {
+      state.isLoading = "loaded";
+      state.errors = null;
+    });
+    builder.addCase(fetchDeleteUser.rejected, (state, action) => {
+      state.isLoading = "error";
+      state.errors = action.error.message;
       state.message = action.payload.message;
     });
   },

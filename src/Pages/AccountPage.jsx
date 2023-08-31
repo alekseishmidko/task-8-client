@@ -5,7 +5,7 @@ import { logout } from "../store/AccountSlice/AccountSlice";
 import {
   RollbackOutlined,
   LogoutOutlined,
-  UnorderedListOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import MyReviewsTable from "../components/MyReviewsTable/MyReviewsTable";
@@ -17,7 +17,7 @@ const AccountPage = () => {
   //
 
   return (
-    <Layout className=" min-h-screen">
+    <Layout className="min-h-screen">
       <Link to={"/"}>
         <div
           style={{
@@ -41,19 +41,19 @@ const AccountPage = () => {
       >
         {data.role === "admin" || data.role === "superadmin" ? (
           <Link to={"/admin"}>
-            <UnorderedListOutlined
+            <TeamOutlined
               style={{
-                transform: "scale(1.2)",
+                transform: "scale(1.5)",
                 color: themeMode === false ? "#fff" : "black",
               }}
-              className="text-white mx-3 "
+              className="text-white mx-3"
             />
           </Link>
         ) : null}
         <Link to={"/"}>
           <LogoutOutlined
             style={{
-              transform: "scale(1.2)",
+              transform: "scale(1.4)",
               color: themeMode === false ? "#fff" : "black",
             }}
             onClick={() => dispatch(logout())}

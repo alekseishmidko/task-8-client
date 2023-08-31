@@ -4,6 +4,7 @@ import { Drawer } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 const BurgerMenu = () => {
+  const { themeMode } = useSelector((state) => state.themeSlice);
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
   const showDrawer = () => {
@@ -32,7 +33,14 @@ const BurgerMenu = () => {
               key={index}
               //   onClick={() => navigate(`/${item}`)}
             >
-              <span className="text-lg ">{item}</span>
+              <span
+                style={{
+                  color: themeMode === false ? "#fff" : "",
+                }}
+                className="text-lg "
+              >
+                {item}
+              </span>
             </li>
           ))}
         </ul>

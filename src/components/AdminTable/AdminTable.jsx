@@ -1,15 +1,40 @@
 import React from "react";
 import { Table, Space, Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchGetAllUsers } from "../../store/AccountSlice/AccountSlice";
+import {
+  fetchDeleteUser,
+  fetchGetAllUsers,
+} from "../../store/AccountSlice/AccountSlice";
 import { Link } from "react-router-dom";
+
 const AdminTable = () => {
   const dispatch = useDispatch();
   const { allUsers, data } = useSelector((state) => state.accountSlice);
-  console.log(allUsers, data);
+  console.log(allUsers, "data", data.email);
   React.useEffect(() => {
     dispatch(fetchGetAllUsers());
-  }, []);
+  }, [dispatch]);
+
+  //   modal
+  const [open, setOpen] = React.useState(false);
+  const [confirmLoading, setConfirmLoading] = React.useState(false);
+  const showModal = () => {
+    setOpen(true);
+  };
+  const handleOk = (recordId) => {
+    console.log(recordId, "rec Id");
+    setConfirmLoading(true);
+    dispatch(fetchDeleteUser(recordId));
+    setTimeout(() => {
+      setOpen(false);
+      setConfirmLoading(false);
+      dispatch(fetchGetAllUsers());
+    }, 1000);
+  };
+  const handleCancel = () => {
+    setOpen(false);
+  };
+  //
   const columns = [
     {
       title: "name",
@@ -55,45 +80,43 @@ const AdminTable = () => {
     {
       title: "Action",
       key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <Link to={record._id}>
-            <span className=" ">Open and Update </span>
-          </Link>
-          <Link to={record._id}>
-            <span className=" ">
-              {record.role === "user"
-                ? "change role to admin"
-                : "change role to user"}
-            </span>
-          </Link>
-          <a>
-            <span
-              className="text-red-400"
-              //   onClick={showModal}
-            >
-              Delete
-            </span>
-            <Modal
-              title={record._id}
-              // open={open}
-              // onOk={() => handleOk(record._id)}
-              // confirmLoading={confirmLoading}
-              // onCancel={handleCancel}
-            >
-              <p>Are you sure?</p>
-            </Modal>
-          </a>
-        </Space>
-      ),
+      render: (_, record) =>
+        record.role !== "superadmin" &&
+        record.email !== data.email && (
+          <Space size="middle">
+            <Link to={record._id}>
+              <span className=" text-blue-500">Open reviews </span>
+            </Link>
+            <Link to={record._id}>
+              <span className=" text-green-600 ">
+                {record.role === "user" ? "Assign admin" : "Assign user"}
+              </span>
+            </Link>
+            <a>
+              <span className="text-red-600" onClick={showModal}>
+                Delete
+              </span>
+              <Modal
+                title={record._id}
+                open={open}
+                onOk={() => handleOk(record._id)}
+                confirmLoading={confirmLoading}
+                onCancel={handleCancel}
+              >
+                <p>Are you sure?</p>
+              </Modal>
+            </a>
+          </Space>
+        ),
     },
   ];
 
   const rowClassName = (record) => {
-    return record.role === "superadmin" ? "text-green-400 font-semibold" : "";
+    return record.role === "superadmin" ? " font-semibold" : "";
   };
+
   return (
-    <div>
+    <div className="w-3/4">
       <Table
         columns={columns}
         dataSource={allUsers}
