@@ -14,7 +14,12 @@ const BurgerMenu = () => {
   const onClose = () => {
     setVisible(false);
   };
-  const burgerArr = ["Home", "Info"];
+  const burgerArr = [
+    { title: "Home", path: "/" },
+    { title: "Products", path: "/products" },
+    { title: "Reviews", path: "/" },
+    { title: "Info", path: "/" },
+  ];
   return (
     <div>
       <MenuOutlined onClick={showDrawer} className="text-2xl cursor-pointer" />
@@ -28,18 +33,15 @@ const BurgerMenu = () => {
       >
         <ul className="list-none">
           {burgerArr.map((item, index) => (
-            <li
-              className="mb-4 cursor-pointer"
-              key={index}
-              //   onClick={() => navigate(`/${item}`)}
-            >
+            <li className="mb-4 cursor-pointer" key={index}>
               <span
                 style={{
                   color: themeMode === false ? "#fff" : "",
                 }}
                 className="text-lg "
+                onClick={() => navigate(`${item.path}`)}
               >
-                {item}
+                {item.title}
               </span>
             </li>
           ))}

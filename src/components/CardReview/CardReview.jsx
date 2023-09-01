@@ -2,13 +2,15 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import truncate from "lodash.truncate";
 import { Avatar, Card, Tag, List, Rate } from "antd";
-const CardReview = ({ title, group, tags, rating, content }) => {
+const CardReview = ({ title, group, tags, rating, content, avgRatingFive }) => {
   const truncatedContent = truncate(content, { length: 50 });
   return (
     <>
       <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 lg:p-10">
         <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-2">
-          <ReactMarkdown className="prose">{title}</ReactMarkdown>
+          <ReactMarkdown className="prose">{` ${title} ${
+            avgRatingFive === null ? 0 : avgRatingFive
+          }/5`}</ReactMarkdown>
         </h2>
         <p className="text-gray-600 mb-2">{group}</p>
         <img

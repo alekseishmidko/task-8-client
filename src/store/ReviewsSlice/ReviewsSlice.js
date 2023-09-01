@@ -14,10 +14,10 @@ export const fetchGetAllReviews = createAsyncThunk(
   }
 );
 export const fetchGetMyReviews = createAsyncThunk(
-  "api/reviews/user/myReviews",
+  "api/reviews/users/myReviews",
   async (thunkAPI) => {
     try {
-      const response = await axios.get("api/reviews/user/myReviews");
+      const response = await axios.get("api/reviews/users/myReviews");
       return response.data;
     } catch (error) {
       // Обработка ошибок, если необходимо

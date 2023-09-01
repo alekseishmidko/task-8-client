@@ -11,6 +11,8 @@ import ReviewForm from "./components/ReviewForm/ReviewForm";
 import MarkdownForm from "./components/MarkdownInput/MarkDownInput";
 import OneReviewPage from "./Pages/OneReviewPage";
 import AdminPage from "./Pages/AdminPage";
+import ReviewsByUserPage from "./Pages/ReviewsByUserPage";
+import ProductPage from "./Pages/ProductPage";
 // import CreatePostForm from "./components/FormComponent/FormComponent";
 
 function App() {
@@ -33,6 +35,9 @@ function App() {
           <Route path="/account/:id" element={<OneReviewPage />} />
           <Route path="/reviewForm" element={<ReviewForm />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/:id" element={<ReviewsByUserPage />} />
+          <Route path="/products" element={<ProductPage />} />
+
           <Route path="/test" element={<MarkdownForm />} />
         </Routes>
       </ConfigProvider>
@@ -54,15 +59,15 @@ export default App;
 // выдать количество лайков пользователя и указать рядом с именем
 // автодополнение набора тегов при редактировании обзора
 
-// Сделать страницу с произведениями , и там же создание нового обзора
-// Админка .   блокировать?  назначать других
-// Админка. возможность просматривать обзоры пользователя,
+// Сделать страницу с произведениями наполнить обзорами , и там же создание нового обзора
+// Админка. возможность просматривать обзоры пользователя, редактировать, удалять, создавать от имени юзера  блокировать?
+// (наполнить   юзера         обзорами и доделать функционла)
 // продумать постановку рейтинга, сделать на сайте
-// сделать возврат на главную стр если данные null и добавть алегт из анта? (аккаунт, админка)
+// сделать возврат на главную стр если данные null и добавть алерт из анта? (аккаунт, админка)
 //
 //
 //  ??? вопрос по лайкам как сделать так чтобы сервер не падал при постановке лайка от разных пользователей???
-
+//  ??? вопрос как не ломать приложение при перезагрузке страницы, получается некоторые данные хранить в ЛС???
 //
 
 // вопросы по рейтингам у продуктов или обзоров. как сделать так чтобы при изменении рейтинга через handleRatingReview результат

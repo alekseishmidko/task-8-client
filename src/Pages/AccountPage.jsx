@@ -12,9 +12,9 @@ import MyReviewsTable from "../components/MyReviewsTable/MyReviewsTable";
 const AccountPage = () => {
   const { themeMode } = useSelector((state) => state.themeSlice);
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.accountSlice);
-  const navigate = useNavigate();
-  //
+  const { isLoading } = useSelector((state) => state.accountSlice);
+  const data = JSON.parse(localStorage.getItem("data"));
+  console.log(data, isLoading);
 
   return (
     <Layout className="min-h-screen">

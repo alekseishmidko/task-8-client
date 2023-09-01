@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchDeleteUser,
   fetchGetAllUsers,
+  fetchHandleRoleUser,
 } from "../../store/AccountSlice/AccountSlice";
 import { Link } from "react-router-dom";
 
 const AdminTable = () => {
   const dispatch = useDispatch();
-  const { allUsers, data } = useSelector((state) => state.accountSlice);
-  console.log(allUsers, "data", data.email);
+  const { allUsers } = useSelector((state) => state.accountSlice);
+  const data = JSON.parse(localStorage.getItem("data"));
+  // console.log(allUsers, "data", data.email);
   React.useEffect(() => {
     dispatch(fetchGetAllUsers());
   }, [dispatch]);
@@ -22,7 +24,6 @@ const AdminTable = () => {
     setOpen(true);
   };
   const handleOk = (recordId) => {
-    console.log(recordId, "rec Id");
     setConfirmLoading(true);
     dispatch(fetchDeleteUser(recordId));
     setTimeout(() => {
@@ -35,6 +36,12 @@ const AdminTable = () => {
     setOpen(false);
   };
   //
+  const handleChangeRole = (recordId) => {
+    dispatch(fetchHandleRoleUser(recordId));
+    setTimeout(() => {
+      dispatch(fetchGetAllUsers());
+    }, 1000);
+  };
   const columns = [
     {
       title: "name",
@@ -87,11 +94,14 @@ const AdminTable = () => {
             <Link to={record._id}>
               <span className=" text-blue-500">Open reviews </span>
             </Link>
-            <Link to={record._id}>
-              <span className=" text-green-600 ">
+            <a>
+              <span
+                className=" text-green-600 "
+                onClick={() => handleChangeRole(record._id)}
+              >
                 {record.role === "user" ? "Assign admin" : "Assign user"}
               </span>
-            </Link>
+            </a>
             <a>
               <span className="text-red-600" onClick={showModal}>
                 Delete
@@ -117,6 +127,7 @@ const AdminTable = () => {
 
   return (
     <div className="w-3/4">
+      <h2 className="ml-4 mb-8">Admin panel</h2>
       <Table
         columns={columns}
         dataSource={allUsers}

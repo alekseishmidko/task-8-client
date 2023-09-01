@@ -4,7 +4,8 @@ import AdminTable from "../components/AdminTable/AdminTable";
 import { Link } from "react-router-dom";
 import { RollbackOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-const AdminPage = () => {
+import UserPageTable from "../components/UserPageTable/UserPageTable";
+const ReviewsByUserPage = () => {
   const { themeMode } = useSelector((state) => state.themeSlice);
   return (
     <Layout>
@@ -20,12 +21,11 @@ const AdminPage = () => {
           <RollbackOutlined style={{ transform: "scale(1.2)" }} />
         </div>
       </Link>
-
       <div className="flex justify-center items-center h-screen">
-        <AdminTable />
+        <UserPageTable />
       </div>
     </Layout>
   );
 };
 
-export default AdminPage;
+export default ReviewsByUserPage;

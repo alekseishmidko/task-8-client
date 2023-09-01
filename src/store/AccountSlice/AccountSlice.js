@@ -9,7 +9,9 @@ export const fetchLogin = createAsyncThunk(
         email,
         password,
       });
+
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("data", JSON.stringify(response.data.user));
       return response.data;
     } catch (error) {
       // Обработка ошибок, если необходимо
@@ -56,6 +58,18 @@ export const fetchDeleteUser = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await axios.delete(`api/users/${id}`);
+      return response.data;
+    } catch (error) {
+      // Обработка ошибок, если необходимо
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+export const fetchHandleRoleUser = createAsyncThunk(
+  "api/users/handle",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.put(`api/users/${id}`);
       return response.data;
     } catch (error) {
       // Обработка ошибок, если необходимо
@@ -141,6 +155,20 @@ const accountSlice = createSlice({
       state.errors = null;
     });
     builder.addCase(fetchDeleteUser.rejected, (state, action) => {
+      state.isLoading = "error";
+      state.errors = action.error.message;
+      state.message = action.payload.message;
+    });
+    // PUT HANDLE ROLE USER
+    builder.addCase(fetchHandleRoleUser.pending, (state) => {
+      state.isLoading = "loading";
+      state.errors = null;
+    });
+    builder.addCase(fetchHandleRoleUser.fulfilled, (state, action) => {
+      state.isLoading = "loaded";
+      state.errors = null;
+    });
+    builder.addCase(fetchHandleRoleUser.rejected, (state, action) => {
       state.isLoading = "error";
       state.errors = action.error.message;
       state.message = action.payload.message;
