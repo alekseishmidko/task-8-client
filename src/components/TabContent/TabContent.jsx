@@ -3,6 +3,7 @@ import { Carousel, Tabs } from "antd";
 import CardReview from "../CardReview/CardReview";
 import { PopularArr, LatestArr, contentStyle } from "./TabContentUtils";
 import { useSelector } from "react-redux";
+
 const TabContent = () => {
   const optionsArr = ["Latest", "Popular"];
 
@@ -17,6 +18,7 @@ const TabContent = () => {
       size={"large"}
       defaultActiveKey="1"
       centered
+      className="flex flex-col justify-center "
       items={optionsArr.map((item, i) => {
         return {
           label: item,
@@ -24,11 +26,14 @@ const TabContent = () => {
           children:
             item === "Latest" ? (
               <Carousel autoplay afterChange={onChange}>
-                {last6Reviews.map((item) => (
-                  <div key={item.key}>
+                {last6Reviews.map((item, index) => (
+                  <div
+                    key={item.key}
+                    className="flex flex-col justify-center items-center flex-grow"
+                  >
                     <CardReview {...item} />
 
-                    <div style={contentStyle} key={item.key}></div>
+                    <div style={contentStyle} key={index}></div>
                   </div>
                 ))}
               </Carousel>

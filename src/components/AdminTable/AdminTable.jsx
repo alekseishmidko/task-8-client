@@ -7,10 +7,12 @@ import {
   fetchHandleRoleUser,
 } from "../../store/AccountSlice/AccountSlice";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../AuthContext";
 
 const AdminTable = () => {
   const dispatch = useDispatch();
   const { allUsers } = useSelector((state) => state.accountSlice);
+  // const { data } = useAuth();
   const data = JSON.parse(localStorage.getItem("data"));
   // console.log(allUsers, "data", data.email);
   React.useEffect(() => {
@@ -107,6 +109,7 @@ const AdminTable = () => {
                 Delete
               </span>
               <Modal
+                okType="default"
                 title={record._id}
                 open={open}
                 onOk={() => handleOk(record._id)}

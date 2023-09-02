@@ -9,12 +9,25 @@ import {
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import MyReviewsTable from "../components/MyReviewsTable/MyReviewsTable";
+import { fetchCurrent } from "../store/AccountSlice/AccountSlice";
+
+// import { useAuth } from "../AuthContext";
 const AccountPage = () => {
+  React.useEffect(() => {
+    dispatch(fetchCurrent());
+  }, []);
+
   const { themeMode } = useSelector((state) => state.themeSlice);
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.accountSlice);
+  // const { isLoading, data } = useSelector((state) => state.accountSlice);
+  // const { data, logout } = useAuth();
   const data = JSON.parse(localStorage.getItem("data"));
-  console.log(data, isLoading);
+  // console.log(data, isLoading);
+  const onClickLogout = () => {
+    // dispatch(logout());
+    localStorage.removeItem("data");
+    // logout();
+  };
 
   return (
     <Layout className="min-h-screen">
@@ -39,7 +52,9 @@ const AccountPage = () => {
           color: themeMode === false ? "#fff" : "",
         }}
       >
-        {data.role === "admin" || data.role === "superadmin" ? (
+        {data.role === "admin" ||
+        data.role === "superadmin" ||
+        data.role === "" ? (
           <Link to={"/admin"}>
             <TeamOutlined
               style={{
@@ -56,7 +71,7 @@ const AccountPage = () => {
               transform: "scale(1.4)",
               color: themeMode === false ? "#fff" : "black",
             }}
-            onClick={() => dispatch(logout())}
+            onClick={onClickLogout}
             className="text-white mx-3 "
           />
         </Link>

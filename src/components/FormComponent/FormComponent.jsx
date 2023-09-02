@@ -1,6 +1,5 @@
 import React from "react";
 import { Form, Input, Select, Rate, Button } from "antd";
-import EditorComponent from "./EditorComponent"; // Подставьте путь к компоненту редактора EditorJS
 
 const { Option } = Select;
 
@@ -36,9 +35,7 @@ const CreatePostForm = () => {
         label="Content"
         name="content"
         rules={[{ required: true, message: "Please enter content" }]}
-      >
-        <EditorComponent />
-      </Form.Item>
+      ></Form.Item>
 
       <Form.Item
         label="Images"

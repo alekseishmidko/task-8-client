@@ -66,7 +66,6 @@ const MyReviewsTable = () => {
         <Rate allowHalf disabled value={text} style={{ width: 100 }} />
       ),
       sorter: (a, b) => a.averageRatingFive - b.averageRatingFive,
-      sortDirections: ["descend"],
     },
     {
       title: "Group",
@@ -147,6 +146,7 @@ const MyReviewsTable = () => {
               Delete
             </span>
             <Modal
+              okType="default"
               title={record._id}
               open={open}
               onOk={() => handleOk(record._id)}

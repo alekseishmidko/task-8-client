@@ -2,13 +2,11 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import MainPage from "./Pages/MainPage";
 import LoginPage from "./Pages/LoginPage";
-import EditorComponent from "./components/ReviewEditor/ReviewEditor";
 import RegisterPage from "./Pages/RegisterPage";
 import { useSelector } from "react-redux";
 import { ConfigProvider, theme } from "antd";
 import AccountPage from "./Pages/AccountPage";
 import ReviewForm from "./components/ReviewForm/ReviewForm";
-import MarkdownForm from "./components/MarkdownInput/MarkDownInput";
 import OneReviewPage from "./Pages/OneReviewPage";
 import AdminPage from "./Pages/AdminPage";
 import ReviewsByUserPage from "./Pages/ReviewsByUserPage";
@@ -38,7 +36,7 @@ function App() {
           <Route path="/admin/:id" element={<ReviewsByUserPage />} />
           <Route path="/products" element={<ProductPage />} />
 
-          <Route path="/test" element={<MarkdownForm />} />
+          {/* <Route path="/test" element={<MarkdownForm />} /> */}
         </Routes>
       </ConfigProvider>
     </>
@@ -56,19 +54,32 @@ export default App;
 //  Product каждый авторизованный юзер может поставить рейтинг (0-5 звезд) на  произведение / сделать контроллер на основе likes
 //  Likes каждый авторизованный пользователь может поставить лайк обзору (не более 1 лайка от юзера на обзор)  +++
 //
-// выдать количество лайков пользователя и указать рядом с именем
-// автодополнение набора тегов при редактировании обзора
+// ***выдать количество лайков пользователя и указать рядом с именем
+// ***автодополнение набора тегов при редактировании обзора
 
 // Сделать страницу с произведениями наполнить обзорами , и там же создание нового обзора
-// Админка. возможность просматривать обзоры пользователя, редактировать, удалять, создавать от имени юзера  блокировать?
-// (наполнить   юзера         обзорами и доделать функционла)
 // продумать постановку рейтинга, сделать на сайте
-// сделать возврат на главную стр если данные null и добавть алерт из анта? (аккаунт, админка)
+// сделать страницу с обзорами
+// сделать фильтрации
+// сделать клик на лого и возврат на главную
 //
+
+// Админка. возможность просматривать обзоры пользователя, редактировать, удалять, создавать от имени юзера  блокировать юзера?
+// (наполнить   юзера обзорами и доделать функционла)
+
+//
+
 //
 //  ??? вопрос по лайкам как сделать так чтобы сервер не падал при постановке лайка от разных пользователей???
 //  ??? вопрос как не ломать приложение при перезагрузке страницы, получается некоторые данные хранить в ЛС???
 //
 
+//
+
+//
+
+//
+
+//
 // вопросы по рейтингам у продуктов или обзоров. как сделать так чтобы при изменении рейтинга через handleRatingReview результат
 // пересчитывался в средний рейтинг и отображался  в базе+++

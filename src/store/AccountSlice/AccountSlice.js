@@ -19,6 +19,21 @@ export const fetchLogin = createAsyncThunk(
     }
   }
 );
+export const fetchCurrent = createAsyncThunk(
+  "api/users/current",
+  async (thunkAPI) => {
+    try {
+      const response = await axios.get("api/users/current");
+
+      // localStorage.setItem("token", response.data.token);
+      // localStorage.setItem("data", JSON.stringify(response.data.user));
+      return response.data;
+    } catch (error) {
+      // Обработка ошибок, если необходимо
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const fetchRegistration = createAsyncThunk(
   "account/fetchRegistration",
@@ -106,6 +121,23 @@ const accountSlice = createSlice({
       state.data = action.payload.user;
     });
     builder.addCase(fetchLogin.rejected, (state, action) => {
+      state.isLoading = "error";
+      state.errors = action.error.message;
+      state.data = null;
+      state.message = action.payload.message;
+    });
+    // GET CURRENT
+    builder.addCase(fetchCurrent.pending, (state) => {
+      state.isLoading = "loading";
+      state.errors = null;
+      state.data = null;
+    });
+    builder.addCase(fetchCurrent.fulfilled, (state, action) => {
+      state.isLoading = "loaded";
+      state.errors = null;
+      state.data = action.payload.user;
+    });
+    builder.addCase(fetchCurrent.rejected, (state, action) => {
       state.isLoading = "error";
       state.errors = action.error.message;
       state.data = null;
