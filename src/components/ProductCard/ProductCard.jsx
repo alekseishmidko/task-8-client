@@ -1,7 +1,37 @@
-import { Rate } from "antd";
+import { Rate, message } from "antd";
 import React from "react";
 import ReactMarkdown from "react-markdown";
-const ProductCard = ({ image, group, title, avgRatingFive }) => {
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchGetAllProducts,
+  fetchHandleProductsRating,
+} from "../../store/ProductSlice/ProductSlice";
+
+const ProductCard = ({ image, group, title, avgRatingFive, _id }) => {
+  const data = JSON.parse(localStorage.getItem("data")) || 0;
+
+  console.log(data, ">>datas");
+  //
+  const { productsRatings } = useSelector((state) => state.productsSlice);
+  const filtered = productsRatings.filter((item) => {
+    if (data._id === null) {
+      return;
+    } else return item.userId === data._id;
+  });
+  console.log(productsRatings, filtered);
+  const dispatch = useDispatch();
+  const handleRatingFive = (id, value) => {
+    console.log(id, { ratingFive: value });
+    const res = dispatch(fetchHandleProductsRating({ id, value }));
+    if (!res) {
+      return message.error(res.payload.message);
+    }
+    setTimeout(() => {
+      const parameters = "";
+      dispatch(fetchGetAllProducts({ parameters }));
+    }, 980);
+  };
+
   return (
     <div className="w-3/4 sm:w-full mt-4 ">
       <div className="max-w-sm rounded overflow-hidden border my-3 mr-2">
@@ -23,10 +53,17 @@ const ProductCard = ({ image, group, title, avgRatingFive }) => {
         <div className="px-6 py-4">
           <span className=" text-base font-semibold">
             <Rate
-              defaultValue={avgRatingFive === null ? 0 : avgRatingFive}
-              onChange={(value) => console.log(value)}
+              defaultValue={
+                filtered.find((item) => item.productId === _id)?.ratingFive || 0
+              }
+              disabled={data === null || data === 0}
+              onChange={(value) => handleRatingFive(_id, value)}
             />
-            {/* avg rating: {avgRatingFive === null ? 0 : avgRatingFive} */}
+          </span>
+        </div>
+        <div className="px-6 py-4">
+          <span className=" text-base font-semibold">
+            average rating: {avgRatingFive === null ? 0 : avgRatingFive}
           </span>
         </div>
       </div>

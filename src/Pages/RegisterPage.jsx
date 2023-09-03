@@ -1,24 +1,27 @@
 import React from "react";
 import axios from "../axios";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Input, Button, Layout } from "antd";
+import { Form, Input, Button, Layout, message } from "antd";
 import { RollbackOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { layout, validateMessages } from "../midwares/formMidwares";
 import { fetchRegistration } from "../store/AccountSlice/AccountSlice";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../AuthContext";
+// import { useAuth } from "../AuthContext";
 const RegisterPage = () => {
-  const { data, login } = useAuth();
+  // const { data, login } = useAuth();
   const { themeMode } = useSelector((state) => state.themeSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onFinish = async (formData) => {
-    console.log("Received values of form: ", formData);
+    // console.log("Received values of form: ", formData);
     try {
-      // dispatch(fetchRegistration(formData));
-      const response = await axios.post("api/users/signUp", formData);
-      login(response.data.user);
+      const res = await dispatch(fetchRegistration(formData));
+      if (res.error) {
+        return message.error(res.payload.message);
+      }
+      // const response = await axios.post("api/users/signUp", formData);
+      // login(response.data.user);
       setTimeout(() => {
         navigate("/");
       }, 850);

@@ -7,11 +7,9 @@ import { fetchGetAllProducts } from "../store/ProductSlice/ProductSlice";
 import MenuBar from "../components/MenuBar/MenuBar";
 const ProductPage = () => {
   // const data = JSON.parse(localStorage.getItem("data"));
-  const dispatch = useDispatch();
+
   const { allProducts } = useSelector((state) => state.productsSlice);
-  React.useEffect(() => {
-    dispatch(fetchGetAllProducts());
-  }, [dispatch]);
+
   return (
     <div>
       <Header />

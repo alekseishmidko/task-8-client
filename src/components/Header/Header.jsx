@@ -31,7 +31,12 @@ const Header = () => {
             {" "}
             <BurgerMenu />
           </div>
-          <span className="text-lg font-semibold ml-2">My Website</span>
+          <span
+            className="text-lg font-semibold ml-2 cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            My Website
+          </span>
           <BulbFilled
             className="ml-4 mr-2 cursor-pointer"
             onClick={() => dispatch(handleTheme())}

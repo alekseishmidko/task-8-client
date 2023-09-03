@@ -25,8 +25,8 @@ export const fetchCurrent = createAsyncThunk(
     try {
       const response = await axios.get("api/users/current");
 
-      // localStorage.setItem("token", response.data.token);
-      // localStorage.setItem("data", JSON.stringify(response.data.user));
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("data", JSON.stringify(response.data.user));
       return response.data;
     } catch (error) {
       // Обработка ошибок, если необходимо

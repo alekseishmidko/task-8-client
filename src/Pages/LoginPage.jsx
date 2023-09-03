@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Input, Button, Row, Col, Layout } from "antd";
+import { Form, Input, Button, Row, Col, Layout, message } from "antd";
 import {
   GoogleOutlined,
   FacebookOutlined,
@@ -20,9 +20,13 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onFinish = async (formData) => {
-    console.log("Received values of form: ", formData);
+    // console.log("Received values of form: ", formData);
     try {
-      dispatch(fetchLogin(formData));
+      const res = await dispatch(fetchLogin(formData));
+
+      if (res.error) {
+        return message.error(res.payload.message);
+      }
       // const response = await axios.post("api/users/signIn", formData);
       // login(response.data.user);
       // console.log(response, "<<<<<", response.data.user);

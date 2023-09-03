@@ -1,77 +1,56 @@
 import React from "react";
-import {
-  Form,
-  Input,
-  Select,
-  Button,
-  Rate,
-  Upload,
-  Layout,
-  Menu,
-  Modal,
-} from "antd";
-import { PlusOutlined, InboxOutlined } from "@ant-design/icons";
-import CreatePostForm from "../FormComponent/FormComponent";
-import ProductForm from "../ProductForm/ProductForm";
-import { message } from "antd";
-const { Option } = Select;
-
-const { TextArea } = Input;
-const { Dragger } = Upload;
+import { Button, Menu } from "antd";
+import { fetchGetAllProducts } from "../../store/ProductSlice/ProductSlice";
+import { PlusOutlined } from "@ant-design/icons";
+import { arr } from "./menuBarProps";
+import { useDispatch } from "react-redux";
 const MenuBar = () => {
-  const [menuOptions, setMenuOptions] = React.useState("");
-  const arr = [
-    { title: "All", value: "" },
-    { title: "Books", value: "books" },
-    { title: "Games", value: "games" },
-    { title: "Movies", value: "movies" },
-    { title: "Music", value: "music" },
-  ];
-  // modal
-  const [open, setOpen] = React.useState(false);
-  const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const showModal = () => {
-    setOpen(true);
-  };
-  const [form] = Form.useForm();
-  const handleOk = () => {
-    form.validateFields().then((values) => {
-      console.log(values);
-    });
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-    }, 2000);
-  };
-  const handleCancel = () => {
-    setOpen(false);
-  };
+  const dispatch = useDispatch();
+  const [menuOptions, setMenuOptions] = React.useState({
+    title: "All",
+    value: "",
+  });
 
-  const onFinish = (values) => {
-    console.log(values);
+  React.useEffect(() => {
+    const parameters = menuOptions.value;
+    dispatch(fetchGetAllProducts({ parameters }));
+  }, []);
+
+  const handleMenuOptions = (parameters, item) => {
+    setMenuOptions(item);
+    console.log(parameters, item);
+    dispatch(fetchGetAllProducts({ parameters }));
   };
-  const categories = ["books", "music", "movies", "games"];
   return (
     <div>
       <Menu mode="horizontal">
         {arr.map((item, index) => (
           <Menu.Item
             key={index}
-            onClick={() => setMenuOptions(item.value)}
-            defaultValue={menuOptions}
+            onClick={() => {
+              handleMenuOptions(item.value, item);
+            }}
+            defaultValue={arr[0].title}
           >
             {item.title}
           </Menu.Item>
         ))}
         <>
           <Button
-            onClick={showModal}
+            onClick={() => {}}
             type="text"
             icon={<PlusOutlined />}
             className="absolute  right-0 mt-2 mr-1 pb-1"
           ></Button>
-          <Modal
+        </>
+      </Menu>
+    </div>
+  );
+};
+
+export default MenuBar;
+{
+  /* <Modal
             okType="default"
             title="Create a new Product"
             open={open}
@@ -98,11 +77,5 @@ const MenuBar = () => {
                 <Input.TextArea />
               </Form.Item>
             </Form>
-          </Modal>
-        </>
-      </Menu>
-    </div>
-  );
-};
-
-export default MenuBar;
+          </Modal> */
+}
