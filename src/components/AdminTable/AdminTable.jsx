@@ -11,9 +11,9 @@ import { useAuth } from "../../AuthContext";
 
 const AdminTable = () => {
   const dispatch = useDispatch();
-  const { allUsers } = useSelector((state) => state.accountSlice);
+  const { allUsers, data } = useSelector((state) => state.accountSlice);
   // const { data } = useAuth();
-  const data = JSON.parse(localStorage.getItem("data"));
+  // const data = JSON.parse(localStorage.getItem("data"));
   // console.log(allUsers, "data", data.email);
   React.useEffect(() => {
     dispatch(fetchGetAllUsers());

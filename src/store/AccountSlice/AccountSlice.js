@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
+import { StorageKeys } from "../../consts/storageKeys";
 
 export const fetchLogin = createAsyncThunk(
   "api/users/signIn",
@@ -11,10 +12,9 @@ export const fetchLogin = createAsyncThunk(
       });
 
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("data", JSON.stringify(response.data.user));
+      // localStorage.setItem("data", JSON.stringify(response.data.user));
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -25,12 +25,11 @@ export const fetchCurrent = createAsyncThunk(
     try {
       const response = await axios.get("api/users/current");
 
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("data", JSON.stringify(response.data.user));
+      // localStorage.setItem("data", JSON.stringify(response.data.user));
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
-      return thunkAPI.rejectWithValue(error.response.data);
+      // return thunkAPI.rejectWithValue(error.response.data);
+      return error;
     }
   }
 );
@@ -45,7 +44,7 @@ export const fetchRegistration = createAsyncThunk(
         name,
       });
 
-      localStorage.setItem("token", response.data.token);
+      // localStorage.setItem("token", response.data.token);
       return response.data;
     } catch (error) {
       // Обработка ошибок, если необходимо
@@ -108,6 +107,7 @@ export const fetchGetLikes = createAsyncThunk(
 );
 const initialState = {
   data: null,
+  authLoading: "loading",
   isLoading: "loading",
   errors: null,
   message: "",
@@ -121,56 +121,57 @@ const accountSlice = createSlice({
     logout: (state) => {
       state.data = null;
       state.errors = null;
+      localStorage.removeItem(StorageKeys.TOKEN);
     },
   },
   extraReducers: (builder) => {
     // Login POST
     builder.addCase(fetchLogin.pending, (state) => {
-      state.isLoading = "loading";
+      state.authLoading = "loading";
       state.errors = null;
       state.data = null;
     });
     builder.addCase(fetchLogin.fulfilled, (state, action) => {
-      state.isLoading = "loaded";
+      state.authLoading = "loaded";
       state.errors = null;
       state.data = action.payload.user;
     });
     builder.addCase(fetchLogin.rejected, (state, action) => {
-      state.isLoading = "error";
+      state.authLoading = "error";
       state.errors = action.error.message;
       state.data = null;
       state.message = action.payload.message;
     });
     // GET CURRENT
     builder.addCase(fetchCurrent.pending, (state) => {
-      state.isLoading = "loading";
+      state.authLoading = "loading";
       state.errors = null;
       state.data = null;
     });
     builder.addCase(fetchCurrent.fulfilled, (state, action) => {
-      state.isLoading = "loaded";
+      state.authLoading = "loaded";
       state.errors = null;
       state.data = action.payload.user;
     });
     builder.addCase(fetchCurrent.rejected, (state, action) => {
-      state.isLoading = "error";
+      state.authLoading = "error";
       state.errors = action.error.message;
       state.data = null;
-      state.message = action.payload.message;
+      // state.message = action.payload.message;
     });
     // Registration POST
     builder.addCase(fetchRegistration.pending, (state) => {
-      state.isLoading = "loading";
+      state.authLoading = "loading";
       state.errors = null;
       state.data = null;
     });
     builder.addCase(fetchRegistration.fulfilled, (state, action) => {
-      state.isLoading = "loaded";
+      state.authLoading = "loaded";
       state.errors = null;
       state.data = action.payload.user;
     });
     builder.addCase(fetchRegistration.rejected, (state, action) => {
-      state.isLoading = "error";
+      state.authLoading = "error";
       state.errors = action.error.message;
       state.data = null;
       state.message = action.payload.message;

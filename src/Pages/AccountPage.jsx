@@ -12,20 +12,19 @@ import MyReviewsTable from "../components/MyReviewsTable/MyReviewsTable";
 import { fetchCurrent } from "../store/AccountSlice/AccountSlice";
 import BadgeLike from "../components/BadgeLike/BadgeLike";
 import { HeartOutlined, LikeOutlined } from "@ant-design/icons";
-// import { useAuth } from "../AuthContext";
+import { useAuth } from "../AuthContext";
 const AccountPage = () => {
   const { Content } = Layout;
   const { themeMode } = useSelector((state) => state.themeSlice);
   const dispatch = useDispatch();
-  // const { isLoading, data } = useSelector((state) => state.accountSlice);
+  const { isLoading, data } = useSelector((state) => state.accountSlice);
   const { userLikes } = useSelector((state) => state.accountSlice);
-  // const { data, logout } = useAuth();
-  const data = JSON.parse(localStorage.getItem("data"));
+  const { logOut } = useAuth();
+  // const data = JSON.parse(localStorage.getItem("data"));
   // console.log(data, isLoading);
   const onClickLogout = () => {
     // dispatch(logout());
-    localStorage.removeItem("data");
-    // logout();
+    logOut();
   };
   React.useEffect(() => {
     dispatch(fetchGetLikes());

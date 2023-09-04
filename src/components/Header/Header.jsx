@@ -15,8 +15,8 @@ import BurgerMenu from "../BurgerMenu/BurgerMenu";
 import { fetchGetMyReviews } from "../../store/ReviewsSlice/ReviewsSlice";
 // import { useAuth } from "../../AuthContext";
 const Header = () => {
-  // const { data } = useSelector((state) => state.accountSlice);
-  const data = JSON.parse(localStorage.getItem("data"));
+  const { data } = useSelector((state) => state.accountSlice);
+  // const data = JSON.parse(localStorage.getItem("data"));
   // const { data } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();

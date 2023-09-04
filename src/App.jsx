@@ -13,7 +13,7 @@ import ReviewsByUserPage from "./Pages/ReviewsByUserPage";
 import ProductPage from "./Pages/ProductPage";
 import ReviewPage from "./Pages/ReviewPage";
 // import CreatePostForm from "./components/FormComponent/FormComponent";
-
+import { AuthProvider } from "./AuthContext";
 function App() {
   const { themeMode } = useSelector((state) => state.themeSlice);
   console.log(themeMode);
@@ -30,15 +30,37 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/account" element={<AccountPage />} />
+
+          <Route
+            path="/account"
+            Component={() => (
+              <AuthProvider>
+                <AccountPage />
+              </AuthProvider>
+            )}
+          />
           <Route path="/account/:id" element={<OneReviewPage />} />
           <Route path="/reviewForm" element={<ReviewForm />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/admin/:id" element={<ReviewsByUserPage />} />
+
+          <Route
+            path="/admin"
+            Component={() => (
+              <AuthProvider>
+                <AdminPage />
+              </AuthProvider>
+            )}
+          />
+
+          <Route
+            path="/admin/:id"
+            Component={() => (
+              <AuthProvider>
+                <ReviewsByUserPage />
+              </AuthProvider>
+            )}
+          />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/reviews" element={<ReviewPage />} />
-
-          {/* <Route path="/test" element={<MarkdownForm />} /> */}
         </Routes>
       </ConfigProvider>
     </>
@@ -46,40 +68,33 @@ function App() {
 }
 
 export default App;
-// комментарии , гугл, фейсбук,  перевод сайта,  как и где хранить картинки (multer?)
+// комментарии , гугл, фейсбук,  перевод сайта,  как и где хранить картинки (multer, sdk)
 // логика поиска
-// написать сокет (comments, ratings, likes)
-
+// написать сокет (comments,)
+// автодополнение набора тегов при редактировании обзора
 //
-
-//  Review оценка от автора = (0-10), каждый авторизованный юзер может поставить рейтинг (0-5 звезд) на  обзор
-//  Product каждый авторизованный юзер может поставить рейтинг (0-5 звезд) на  произведение / сделать контроллер на основе likes
-//  Likes каждый авторизованный пользователь может поставить лайк обзору (не более 1 лайка от юзера на обзор)  +++
-//
-// ***автодополнение набора тегов при редактировании обзора
 
 // Сделать страницу с произведениями наполнить обзорами,создание нового обзора
 // сделать страницу с обзорами, cтили текста ,
 // поиск по тегам
+// spinner
 //
 //
-
 // Админка. возможность просматривать обзоры пользователя, редактировать, удалять, создавать от имени юзера  блокировать юзера?
 // (наполнить   юзера обзорами и доделать функционла)
 
 //
-
-//
 //  ??? вопрос по лайкам как сделать так чтобы сервер не падал при постановке лайка от разных пользователей???
-//  ??? вопрос как не ломать приложение при перезагрузке страницы, получается некоторые данные хранить в ЛС???
+
 //  ??? как хранить изображения в облаке???
 
 //
 
-//
-
-//
+////  Review оценка от автора = (0-10), каждый авторизованный юзер может поставить рейтинг (0-5 звезд) на  обзор
+//  Product каждый авторизованный юзер может поставить рейтинг (0-5 звезд) на  произведение / сделать контроллер на основе likes
+//  Likes каждый авторизованный пользователь может поставить лайк обзору (не более 1 лайка от юзера на обзор)  +++
 
 //
 // вопросы по рейтингам у продуктов или обзоров. как сделать так чтобы при изменении рейтинга через handleRatingReview результат
 // пересчитывался в средний рейтинг и отображался  в базе+++
+//  ??? вопрос как не ломать приложение при перезагрузке страницы, получается некоторые данные хранить в ЛС???+++
