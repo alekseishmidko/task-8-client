@@ -92,12 +92,27 @@ export const fetchHandleRoleUser = createAsyncThunk(
     }
   }
 );
+
+export const fetchGetLikes = createAsyncThunk(
+  "account/fetchGetLikes",
+  async (thunkAPI) => {
+    try {
+      const response = await axios.get("api/likes");
+      return response.data;
+    } catch (error) {
+      // Обработка ошибок, если необходимо
+      return thunkAPI.rejectWithValue(error.response.data);
+      // throw error;
+    }
+  }
+);
 const initialState = {
   data: null,
   isLoading: "loading",
   errors: null,
   message: "",
   allUsers: [],
+  userLikes: 0,
 };
 const accountSlice = createSlice({
   name: "accountSlice",
@@ -204,6 +219,23 @@ const accountSlice = createSlice({
       state.isLoading = "error";
       state.errors = action.error.message;
       state.message = action.payload.message;
+    });
+    // GET ALL USER LIKES
+    builder.addCase(fetchGetLikes.pending, (state) => {
+      state.isLoading = "loading";
+      state.errors = null;
+      state.userLikes = 0;
+    });
+    builder.addCase(fetchGetLikes.fulfilled, (state, action) => {
+      state.isLoading = "loaded";
+      state.errors = null;
+      state.userLikes = action.payload.length;
+    });
+    builder.addCase(fetchGetLikes.rejected, (state, action) => {
+      state.isLoading = "error";
+      state.errors = action.error.message;
+      state.message = action.payload.message;
+      state.userLikes = 0;
     });
   },
 });

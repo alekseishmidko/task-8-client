@@ -3,9 +3,9 @@ import axios from "../../axios";
 
 export const fetchGetAllReviews = createAsyncThunk(
   "api/reviews/all",
-  async (thunkAPI) => {
+  async ({ parameters }, thunkAPI) => {
     try {
-      const response = await axios.get("api/reviews/all");
+      const response = await axios.get(`api/reviews/all?sortBy=${parameters}`);
       return response.data;
     } catch (error) {
       // Обработка ошибок, если необходимо
@@ -26,7 +26,7 @@ export const fetchGetMyReviews = createAsyncThunk(
   }
 );
 export const fetchGetOneReview = createAsyncThunk(
-  "api/reviews/:id",
+  "api/reviews/:fetchGetOneReview",
   async ({ id }, thunkAPI) => {
     try {
       const response = await axios.get(`api/reviews/${id}`);
@@ -38,7 +38,7 @@ export const fetchGetOneReview = createAsyncThunk(
   }
 );
 export const fetchUpdateReview = createAsyncThunk(
-  "api/reviews/:id2",
+  "api/reviews/:fetchUpdateReview",
   async ({ id, values }, thunkAPI) => {
     try {
       const response = await axios.put(`api/reviews/${id}`, values);
@@ -50,7 +50,7 @@ export const fetchUpdateReview = createAsyncThunk(
   }
 );
 export const fetchDeleteReview = createAsyncThunk(
-  "api/reviews/:id3",
+  "api/reviews/:fetchDeleteReview",
   async (id, thunkAPI) => {
     try {
       const response = await axios.delete(`api/reviews/${id}`);
@@ -61,7 +61,21 @@ export const fetchDeleteReview = createAsyncThunk(
     }
   }
 );
-
+export const fetchHandleReviewsRating = createAsyncThunk(
+  "product/fetchHandleReviewsRating",
+  async ({ id, value }, thunkAPI) => {
+    try {
+      const response = await axios.post(`api/reviews/${id}`, {
+        ratingFive: value,
+      });
+      return response.data;
+    } catch (error) {
+      // Обработка ошибок, если необходимо
+      return thunkAPI.rejectWithValue(error.response.data);
+      // throw error;
+    }
+  }
+);
 const initialState = {
   data: null,
   allUnicTags: [],
@@ -74,6 +88,7 @@ const initialState = {
   isLoading: "loading",
   errors: null,
   message: "",
+  reviewsRatings: [],
 };
 
 const ReviewsSlice = createSlice({
@@ -89,6 +104,7 @@ const ReviewsSlice = createSlice({
       state.allReviews = [];
       state.last6Reviews = [];
       state.pop6Reviews = [];
+      state.reviewsRatings = [];
     });
 
     builder.addCase(fetchGetAllReviews.fulfilled, (state, action) => {
@@ -100,6 +116,7 @@ const ReviewsSlice = createSlice({
       state.allReviews = action.payload.allReviews;
       state.last6Reviews = action.payload.last6Reviews;
       state.pop6Reviews = action.payload.pop6Reviews;
+      state.reviewsRatings = action.payload.reviewsRatings;
     });
     builder.addCase(fetchGetAllReviews.rejected, (state, action) => {
       state.isLoading = "error";
@@ -110,6 +127,7 @@ const ReviewsSlice = createSlice({
       state.allReviews = [];
       state.last6Reviews = [];
       state.pop6Reviews = [];
+      state.reviewsRatings = [];
     });
     // GET MY REVIEWS
     builder.addCase(fetchGetMyReviews.pending, (state) => {

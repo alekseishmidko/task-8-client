@@ -10,7 +10,8 @@ const MainPage = () => {
   const { isLoading, allUnicTags } = useSelector((state) => state.reviewsSlice);
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(fetchGetAllReviews());
+    const parameters = "";
+    dispatch(fetchGetAllReviews({ parameters }));
   }, [dispatch]);
 
   if (isLoading === "loading") <h1>Loading...</h1>;

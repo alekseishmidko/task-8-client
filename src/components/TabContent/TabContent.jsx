@@ -3,6 +3,7 @@ import { Carousel, Tabs } from "antd";
 import CardReview from "../CardReview/CardReview";
 import { PopularArr, LatestArr, contentStyle } from "./TabContentUtils";
 import { useSelector } from "react-redux";
+import ReviewCard from "../ReviewCard/ReviewCard";
 
 const TabContent = () => {
   const optionsArr = ["Latest", "Popular"];
@@ -32,6 +33,7 @@ const TabContent = () => {
                     className="flex flex-col justify-center items-center flex-grow"
                   >
                     <CardReview {...item} />
+                    {/* <ReviewCard {...item} /> */}
 
                     <div style={contentStyle} key={index}></div>
                   </div>

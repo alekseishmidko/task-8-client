@@ -10,7 +10,6 @@ import {
 const ProductCard = ({ image, group, title, avgRatingFive, _id }) => {
   const data = JSON.parse(localStorage.getItem("data")) || 0;
 
-  console.log(data, ">>datas");
   //
   const { productsRatings } = useSelector((state) => state.productsSlice);
   const filtered = productsRatings.filter((item) => {

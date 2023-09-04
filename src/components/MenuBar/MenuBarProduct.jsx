@@ -4,7 +4,7 @@ import { fetchGetAllProducts } from "../../store/ProductSlice/ProductSlice";
 import { PlusOutlined } from "@ant-design/icons";
 import { arr } from "./menuBarProps";
 import { useDispatch } from "react-redux";
-const MenuBar = () => {
+const MenuBarProduct = () => {
   const dispatch = useDispatch();
   const [menuOptions, setMenuOptions] = React.useState({
     title: "All",
@@ -48,7 +48,7 @@ const MenuBar = () => {
   );
 };
 
-export default MenuBar;
+export default MenuBarProduct;
 {
   /* <Modal
             okType="default"

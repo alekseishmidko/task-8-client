@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, Layout } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../store/AccountSlice/AccountSlice";
+import { fetchGetLikes, logout } from "../store/AccountSlice/AccountSlice";
 import {
   RollbackOutlined,
   LogoutOutlined,
@@ -10,16 +10,15 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import MyReviewsTable from "../components/MyReviewsTable/MyReviewsTable";
 import { fetchCurrent } from "../store/AccountSlice/AccountSlice";
-
+import BadgeLike from "../components/BadgeLike/BadgeLike";
+import { HeartOutlined, LikeOutlined } from "@ant-design/icons";
 // import { useAuth } from "../AuthContext";
 const AccountPage = () => {
-  React.useEffect(() => {
-    dispatch(fetchCurrent());
-  }, []);
-
+  const { Content } = Layout;
   const { themeMode } = useSelector((state) => state.themeSlice);
   const dispatch = useDispatch();
   // const { isLoading, data } = useSelector((state) => state.accountSlice);
+  const { userLikes } = useSelector((state) => state.accountSlice);
   // const { data, logout } = useAuth();
   const data = JSON.parse(localStorage.getItem("data"));
   // console.log(data, isLoading);
@@ -28,7 +27,9 @@ const AccountPage = () => {
     localStorage.removeItem("data");
     // logout();
   };
-
+  React.useEffect(() => {
+    dispatch(fetchGetLikes());
+  }, []);
   return (
     <Layout className="min-h-screen">
       <Link to={"/"}>
@@ -79,7 +80,25 @@ const AccountPage = () => {
 
       <div className="flex p-8 mt-12">
         <div className="w-1/3 pr-8">
-          <Avatar size={64} />
+          <div style={{ position: "relative", display: "inline-block" }}>
+            <Avatar size={64} />
+
+            {userLikes > 0 && (
+              <span
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  background: "black",
+                  color: "white",
+                  borderRadius: "46%",
+                  padding: "1px 5px",
+                }}
+              >
+                <LikeOutlined /> {userLikes}
+              </span>
+            )}
+          </div>
           <h2
             style={{ color: themeMode === false ? "#fff" : "" }}
             className="text-xl font-semibold mt-4"

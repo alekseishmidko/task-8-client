@@ -11,6 +11,7 @@ import OneReviewPage from "./Pages/OneReviewPage";
 import AdminPage from "./Pages/AdminPage";
 import ReviewsByUserPage from "./Pages/ReviewsByUserPage";
 import ProductPage from "./Pages/ProductPage";
+import ReviewPage from "./Pages/ReviewPage";
 // import CreatePostForm from "./components/FormComponent/FormComponent";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/admin/:id" element={<ReviewsByUserPage />} />
           <Route path="/products" element={<ProductPage />} />
+          <Route path="/reviews" element={<ReviewPage />} />
 
           {/* <Route path="/test" element={<MarkdownForm />} /> */}
         </Routes>
@@ -54,14 +56,12 @@ export default App;
 //  Product каждый авторизованный юзер может поставить рейтинг (0-5 звезд) на  произведение / сделать контроллер на основе likes
 //  Likes каждый авторизованный пользователь может поставить лайк обзору (не более 1 лайка от юзера на обзор)  +++
 //
-// ***выдать количество лайков пользователя и указать рядом с именем
 // ***автодополнение набора тегов при редактировании обзора
 
-// Сделать страницу с произведениями наполнить обзорами , и там же создание нового обзора
-// продумать постановку рейтинга, сделать на сайте
-// сделать страницу с обзорами
-// сделать фильтрации
-
+// Сделать страницу с произведениями наполнить обзорами,создание нового обзора
+// сделать страницу с обзорами, cтили текста ,
+// поиск по тегам
+//
 //
 
 // Админка. возможность просматривать обзоры пользователя, редактировать, удалять, создавать от имени юзера  блокировать юзера?
@@ -72,7 +72,7 @@ export default App;
 //
 //  ??? вопрос по лайкам как сделать так чтобы сервер не падал при постановке лайка от разных пользователей???
 //  ??? вопрос как не ломать приложение при перезагрузке страницы, получается некоторые данные хранить в ЛС???
-//
+//  ??? как хранить изображения в облаке???
 
 //
 

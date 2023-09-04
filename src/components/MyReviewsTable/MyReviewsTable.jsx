@@ -63,7 +63,12 @@ const MyReviewsTable = () => {
       dataIndex: "averageRatingFive",
       key: "averageRatingFive",
       render: (text) => (
-        <Rate allowHalf disabled value={text} style={{ width: 100 }} />
+        <Rate
+          allowHalf
+          disabled
+          value={text}
+          style={{ width: 120, fontSize: 16 }}
+        />
       ),
       sorter: (a, b) => a.averageRatingFive - b.averageRatingFive,
     },

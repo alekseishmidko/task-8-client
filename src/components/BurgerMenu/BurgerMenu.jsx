@@ -17,7 +17,7 @@ const BurgerMenu = () => {
   const burgerArr = [
     { title: "Home", path: "/" },
     { title: "Products", path: "/products" },
-    { title: "Reviews", path: "/" },
+    { title: "Reviews", path: "/reviews" },
     { title: "Info", path: "/" },
   ];
   return (
