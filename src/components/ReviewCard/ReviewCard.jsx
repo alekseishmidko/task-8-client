@@ -17,7 +17,7 @@ const ReviewCard = ({
   _id,
   tags,
 }) => {
-  const data = JSON.parse(localStorage.getItem("data")) || 0;
+  const { data } = useSelector((state) => state.accountSlice) || 0;
   const dispatch = useDispatch();
   const { themeMode } = useSelector((state) => state.themeSlice);
   //
@@ -41,7 +41,10 @@ const ReviewCard = ({
   return (
     <div>
       <div className="w-3/4 sm:w-full mt-4 ">
-        <div className="max-w-sm rounded overflow-hidden border my-3 mr-2">
+        <div
+          className="max-w-sm rounded overflow-hidden border my-3 mr-2"
+          style={{ color: !themeMode ? "white" : "" }}
+        >
           <img
             className="w-full"
             src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"

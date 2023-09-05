@@ -7,13 +7,13 @@ import {
   fetchHandleProductsRating,
 } from "../../store/ProductSlice/ProductSlice";
 
-const ProductCard = ({ image, group, title, avgRatingFive, _id }) => {
-  const data = JSON.parse(localStorage.getItem("data")) || 0;
-
+const ProductCard = ({ image, group, title, avgRatingFive, _id, images }) => {
+  const { data } = useSelector((state) => state.accountSlice);
+  const { themeMode } = useSelector((state) => state.themeSlice);
   //
   const { productsRatings } = useSelector((state) => state.productsSlice);
   const filtered = productsRatings.filter((item) => {
-    if (data._id === null) {
+    if (data === null) {
       return;
     } else return item.userId === data._id;
   });
@@ -33,10 +33,15 @@ const ProductCard = ({ image, group, title, avgRatingFive, _id }) => {
 
   return (
     <div className="w-3/4 sm:w-full mt-4 ">
-      <div className="max-w-sm rounded overflow-hidden border my-3 mr-2">
+      <div
+        className="max-w-sm rounded overflow-hidden border my-3 mr-2"
+        style={{ color: !themeMode ? "white" : "" }}
+      >
         <img
+          style={{ height: "140px" }}
           className="w-full"
-          src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+          // src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+          src={images[0]}
           alt={title}
         />
         <div className="px-6 py-4">

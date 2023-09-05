@@ -4,6 +4,7 @@ import { fetchCurrent, fetchLogin } from "./store/AccountSlice/AccountSlice";
 import { logout } from "./store/AccountSlice/AccountSlice";
 import { StorageKeys } from "./consts/storageKeys";
 import LoginPage from "./Pages/LoginPage";
+import Spinner from "./components/Spinner/Spinner";
 export function AuthProvider({ children }) {
   const { data, authLoading } = useSelector((state) => state.accountSlice);
   const dispatch = useDispatch();
@@ -13,8 +14,7 @@ export function AuthProvider({ children }) {
     }
   }, [dispatch]);
   if (authLoading === "loading") {
-    // spinner
-    return <h1>Loading</h1>;
+    return <Spinner />;
   }
   if (!data) {
     return <LoginPage />;

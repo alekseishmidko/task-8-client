@@ -13,15 +13,18 @@ import { logout } from "../../store/AccountSlice/AccountSlice";
 import { useSelector, useDispatch } from "react-redux";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 import { fetchGetMyReviews } from "../../store/ReviewsSlice/ReviewsSlice";
-// import { useAuth } from "../../AuthContext";
+import { useAuth } from "../../AuthContext";
 const Header = () => {
   const { data } = useSelector((state) => state.accountSlice);
   // const data = JSON.parse(localStorage.getItem("data"));
-  // const { data } = useAuth();
+  const { logOut } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onClickUserLogo = () => {
     navigate("/account");
+  };
+  const onClickLogout = () => {
+    logOut();
   };
   return (
     <header className="bg-gray-800 text-white py-4 ">
@@ -56,17 +59,16 @@ const Header = () => {
         </div>
         <div className="mt-4 md:mt-0 md:ml-4 mr-3">
           {data !== null ? (
-            <div
-              className="flex items-center cursor-pointer"
-              onClick={() => onClickUserLogo()}
-            >
-              <UserOutlined className="text-white mr-2" />
+            <div className="flex items-center cursor-pointer">
+              <div onClick={() => onClickUserLogo()}>
+                <UserOutlined className="text-white mr-2" />
+                <span className="text-white">{data.name || ""}</span>
+              </div>
 
-              <span className="text-white">{data.name || ""}</span>
-              {/* <LogoutOutlined
-                onClick={() => dispatch(logout())}
-                className="text-white mx-3"
-              /> */}
+              <LogoutOutlined
+                onClick={onClickLogout}
+                className="text-white pl-5"
+              />
             </div>
           ) : (
             <>
