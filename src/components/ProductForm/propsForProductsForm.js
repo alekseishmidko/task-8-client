@@ -10,7 +10,7 @@ export const categories = [
 export const props = {
   name: "files",
   multiple: true,
-  maxCount: 4,
+  maxCount: 1,
   beforeUpload: (file) => {
     const maxSize = 2 * 1024 * 1024;
     if (file.size > maxSize) {

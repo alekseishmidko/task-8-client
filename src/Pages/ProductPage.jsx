@@ -6,8 +6,6 @@ import ProductCard from "../components/ProductCard/ProductCard";
 import { fetchGetAllProducts } from "../store/ProductSlice/ProductSlice";
 import MenuBarProduct from "../components/MenuBar/MenuBarProduct";
 const ProductPage = () => {
-  // const data = JSON.parse(localStorage.getItem("data"));
-
   const { allProducts } = useSelector((state) => state.productsSlice);
 
   return (

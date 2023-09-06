@@ -40,8 +40,10 @@ const ProductCard = ({ image, group, title, avgRatingFive, _id, images }) => {
         <img
           style={{ height: "140px" }}
           className="w-full"
-          // src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-          src={images[0]}
+          src={
+            images[0] ||
+            "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+          }
           alt={title}
         />
         <div className="px-6 py-4">

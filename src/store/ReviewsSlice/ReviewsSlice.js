@@ -62,12 +62,26 @@ export const fetchDeleteReview = createAsyncThunk(
   }
 );
 export const fetchHandleReviewsRating = createAsyncThunk(
-  "product/fetchHandleReviewsRating",
+  "review/fetchHandleReviewsRating",
   async ({ id, value }, thunkAPI) => {
     try {
       const response = await axios.post(`api/reviews/${id}`, {
         ratingFive: value,
       });
+      return response.data;
+    } catch (error) {
+      // Обработка ошибок, если необходимо
+      return thunkAPI.rejectWithValue(error.response.data);
+      // throw error;
+    }
+  }
+);
+export const fetchCreateReview = createAsyncThunk(
+  "review/fetchCreateReview",
+  async (values, thunkAPI) => {
+    try {
+      const response = await axios.post(`api/reviews/create`, values);
+      console.log(response);
       return response.data;
     } catch (error) {
       // Обработка ошибок, если необходимо
@@ -182,6 +196,24 @@ const ReviewsSlice = createSlice({
       // state.oneReview = action.payload.review;
     });
     builder.addCase(fetchUpdateReview.rejected, (state, action) => {
+      state.isLoading = "error";
+      state.errors = action.payload;
+      state.message = action.payload;
+      // state.oneReview = [];
+    });
+    // POST CREATE REVIEW
+    builder.addCase(fetchCreateReview.pending, (state) => {
+      state.isLoading = "loading";
+      state.errors = null;
+      // state.oneReview = [];
+    });
+
+    builder.addCase(fetchCreateReview.fulfilled, (state, action) => {
+      state.isLoading = "loaded";
+      state.errors = null;
+      // state.oneReview = action.payload.review;
+    });
+    builder.addCase(fetchCreateReview.rejected, (state, action) => {
       state.isLoading = "error";
       state.errors = action.payload;
       state.message = action.payload;

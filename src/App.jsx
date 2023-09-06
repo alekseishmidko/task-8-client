@@ -14,6 +14,8 @@ import ProductPage from "./Pages/ProductPage";
 import ReviewPage from "./Pages/ReviewPage";
 // import CreatePostForm from "./components/FormComponent/FormComponent";
 import { AuthProvider } from "./AuthContext";
+import CreateReviewPage from "./Pages/CreateReviewPage";
+import CreateProductPage from "./Pages/CreateProductPage";
 function App() {
   const { themeMode } = useSelector((state) => state.themeSlice);
   console.log(themeMode);
@@ -40,7 +42,6 @@ function App() {
             )}
           />
           <Route path="/account/:id" element={<OneReviewPage />} />
-          <Route path="/reviewForm" element={<ReviewForm />} />
 
           <Route
             path="/admin"
@@ -61,6 +62,25 @@ function App() {
           />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/reviews" element={<ReviewPage />} />
+
+          <Route
+            path="/reviews/create"
+            Component={() => (
+              <AuthProvider>
+                <CreateReviewPage />
+              </AuthProvider>
+            )}
+          />
+          <Route
+            path="/products/create"
+            Component={() => (
+              <AuthProvider>
+                <CreateProductPage />
+              </AuthProvider>
+            )}
+          />
+
+          {/* <Route path="/reviewForm" element={<ReviewForm />} /> */}
         </Routes>
       </ConfigProvider>
     </>
@@ -72,22 +92,23 @@ export default App;
 // логика поиска
 // написать сокет (comments,)
 // автодополнение набора тегов при редактировании обзора
-//
+// галерея для просмотра фото (скорее всего через модалку)
+// оптимизировать бек, раскидать переменные
 
-// Сделать страницу с произведениями наполнить обзорами,создание нового обзора
-// сделать страницу с обзорами ,
+// сделать страницу с одним обзором или продуктом ,
+// создал обзор или продукт , возврат на страницу откуда пришел , добавить кноку назад и стилей
 // поиск по тегам
-// написать контроллер для обзора(создание), внедрить в фронт
+//  сделвть страницу 404
 
 // Админка. возможность просматривать обзоры пользователя, редактировать, удалять, создавать от имени юзера  блокировать юзера?
 // (наполнить   юзера обзорами и доделать функционла)
 
 //
-//  ??? вопрос по лайкам как сделать так чтобы сервер не падал при постановке лайка от разных пользователей???
+//  ??? вопрос по лайкам как сделать так чтобы сервер не падал при постановке лайка от разных пользователей ???
 
 //
 
-////  Review оценка от автора = (0-10), каждый авторизованный юзер может поставить рейтинг (0-5 звезд) на  обзор
+//  Review оценка от автора = (0-10), каждый авторизованный юзер может поставить рейтинг (0-5 звезд) на  обзор
 //  Product каждый авторизованный юзер может поставить рейтинг (0-5 звезд) на  произведение / сделать контроллер на основе likes
 //  Likes каждый авторизованный пользователь может поставить лайк обзору (не более 1 лайка от юзера на обзор)  +++
 

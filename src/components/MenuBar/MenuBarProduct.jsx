@@ -3,9 +3,12 @@ import { Button, Menu } from "antd";
 import { fetchGetAllProducts } from "../../store/ProductSlice/ProductSlice";
 import { PlusOutlined } from "@ant-design/icons";
 import { arr } from "./menuBarProps";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const MenuBarProduct = () => {
+  const { data, authLoading } = useSelector((state) => state.accountSlice);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [menuOptions, setMenuOptions] = React.useState({
     title: "All",
     value: "",
@@ -36,12 +39,16 @@ const MenuBarProduct = () => {
           </Menu.Item>
         ))}
         <>
-          <Button
-            onClick={() => {}}
-            type="text"
-            icon={<PlusOutlined />}
-            className="absolute  right-0 mt-2 mr-1 pb-1"
-          ></Button>
+          {data !== null && (
+            <Button
+              onClick={() => {
+                navigate("/products/create");
+              }}
+              type="text"
+              icon={<PlusOutlined />}
+              className="absolute  right-0 mt-2 mr-1 pb-1"
+            ></Button>
+          )}
         </>
       </Menu>
     </div>

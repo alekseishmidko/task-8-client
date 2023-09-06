@@ -16,6 +16,7 @@ const ReviewCard = ({
   content,
   _id,
   tags,
+  images,
 }) => {
   const { data } = useSelector((state) => state.accountSlice) || 0;
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const ReviewCard = ({
   //
   const { reviewsRatings } = useSelector((state) => state.reviewsSlice);
   const filtered = reviewsRatings.filter((item) => {
-    if (data._id === null) {
+    if (data === null) {
       return;
     } else return item.userId === data._id;
   });
@@ -47,7 +48,11 @@ const ReviewCard = ({
         >
           <img
             className="w-full"
-            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+            style={{ height: "140px" }}
+            src={
+              images[1] ||
+              "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+            }
             alt={title}
           />
           <div className="px-6 py-4">
@@ -65,7 +70,7 @@ const ReviewCard = ({
               {content.length > 150 ? content.slice(0, 150) + "..." : content}
             </ReactMarkdown>
           </div>
-          <div className="px-6 py-4">
+          <div className="px-6 py-4" style={{ height: "40px" }}>
             {tags.map((tag, index) => (
               <span key={index}>
                 <Tag

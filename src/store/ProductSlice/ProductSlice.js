@@ -30,6 +30,20 @@ export const fetchHandleProductsRating = createAsyncThunk(
     }
   }
 );
+export const fetchCreateProduct = createAsyncThunk(
+  "review/fetchCreateProduct",
+  async (values, thunkAPI) => {
+    try {
+      const response = await axios.post(`api/products/create`, values);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      // Обработка ошибок, если необходимо
+      return thunkAPI.rejectWithValue(error.response.data);
+      // throw error;
+    }
+  }
+);
 
 const initialState = {
   isLoading: "loading",
@@ -73,6 +87,20 @@ const productSlice = createSlice({
       state.errors = null;
     });
     builder.addCase(fetchHandleProductsRating.rejected, (state, action) => {
+      state.isLoading = "error";
+      state.errors = action.error.message;
+      state.message = action.payload.message;
+    });
+    // POST CREATE PRODUCT
+    builder.addCase(fetchCreateProduct.pending, (state) => {
+      state.isLoading = "loading";
+      state.errors = null;
+    });
+    builder.addCase(fetchCreateProduct.fulfilled, (state, action) => {
+      state.isLoading = "loaded";
+      state.errors = null;
+    });
+    builder.addCase(fetchCreateProduct.rejected, (state, action) => {
       state.isLoading = "error";
       state.errors = action.error.message;
       state.message = action.payload.message;
