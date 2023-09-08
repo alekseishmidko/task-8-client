@@ -1,17 +1,26 @@
 import React from "react";
 import { Button, Menu } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { arr } from "./menuBarProps";
+// import { arr } from "./menuBarProps";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetAllReviews } from "../../store/ReviewsSlice/ReviewsSlice";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const MenuBarReview = () => {
+  const { t } = useTranslation();
   const { data } = useSelector((state) => state.accountSlice);
   const dispatch = useDispatch();
   const [menuOptions, setMenuOptions] = React.useState({
     title: "All",
     value: "",
   });
+  const arr = [
+    { title: t("all"), value: "" },
+    { title: t("books"), value: "books" },
+    { title: t("games"), value: "games" },
+    { title: t("movies"), value: "movies" },
+    { title: t("music"), value: "music" },
+  ];
   const navigate = useNavigate();
   React.useEffect(() => {
     const parameters = menuOptions.value;
@@ -20,7 +29,6 @@ const MenuBarReview = () => {
 
   const handleMenuOptions = (parameters, item) => {
     setMenuOptions(item);
-    console.log(parameters, item);
     dispatch(fetchGetAllReviews({ parameters }));
   };
   return (

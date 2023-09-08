@@ -8,13 +8,11 @@ import {
 } from "../../store/AccountSlice/AccountSlice";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
-
+import { useTranslation } from "react-i18next";
 const AdminTable = () => {
   const dispatch = useDispatch();
   const { allUsers, data } = useSelector((state) => state.accountSlice);
-  // const { data } = useAuth();
-  // const data = JSON.parse(localStorage.getItem("data"));
-  // console.log(allUsers, "data", data.email);
+  const { t } = useTranslation();
   React.useEffect(() => {
     dispatch(fetchGetAllUsers());
   }, [dispatch]);
@@ -46,14 +44,14 @@ const AdminTable = () => {
   };
   const columns = [
     {
-      title: "name",
+      title: t("name"),
       dataIndex: "name",
       key: "name",
       sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ["descend"],
     },
     {
-      title: "email",
+      title: t("email"),
       dataIndex: "email",
       key: "email",
 
@@ -61,7 +59,7 @@ const AdminTable = () => {
       sortDirections: ["descend"],
     },
     {
-      title: "role",
+      title: t("role"),
       dataIndex: "role",
       key: "role",
       filters: [
@@ -87,26 +85,26 @@ const AdminTable = () => {
     },
 
     {
-      title: "Action",
+      title: t("action"),
       key: "action",
       render: (_, record) =>
         record.role !== "superadmin" &&
         record.email !== data.email && (
           <Space size="middle">
             <Link to={record._id}>
-              <span className=" text-blue-500">Open reviews </span>
+              <span className=" text-blue-500">{t("openReviews")} </span>
             </Link>
             <a>
               <span
                 className=" text-green-600 "
                 onClick={() => handleChangeRole(record._id)}
               >
-                {record.role === "user" ? "Assign admin" : "Assign user"}
+                {record.role === "user" ? t("assignAdmin") : t("assignUser")}
               </span>
             </a>
             <a>
               <span className="text-red-600" onClick={showModal}>
-                Delete
+                {t("delete")}
               </span>
               <Modal
                 okType="default"
@@ -130,7 +128,7 @@ const AdminTable = () => {
 
   return (
     <div className="w-3/4">
-      <h2 className="ml-4 mb-8">Admin panel</h2>
+      <h2 className="ml-4 mb-8">{t("adminPanel")}</h2>
       <Table
         columns={columns}
         dataSource={allUsers}

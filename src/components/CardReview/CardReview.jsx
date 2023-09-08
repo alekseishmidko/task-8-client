@@ -9,6 +9,7 @@ import {
 } from "../../store/ReviewsSlice/ReviewsSlice";
 import BadgeLike from "../BadgeLike/BadgeLike";
 const CardReview = ({
+  images,
   title,
   group,
   tags,
@@ -48,7 +49,10 @@ const CardReview = ({
         <p className="text-gray-600 mb-2">{group}</p>
         <img
           alt="example"
-          src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+          src={
+            images[0] ||
+            "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+          }
         />
         <p
           className="text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed my-4"

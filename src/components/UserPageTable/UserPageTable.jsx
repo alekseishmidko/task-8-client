@@ -3,8 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
 import { Space, Table, Tag, Typography, Modal } from "antd";
-
+import { useTranslation } from "react-i18next";
 const UserPageTable = () => {
+  const { t } = useTranslation();
   const columns = [
     {
       title: "Title",
@@ -121,7 +122,7 @@ const UserPageTable = () => {
   ];
   return (
     <div className="w-3/4">
-      <h2 className="ml-4 mb-8">Reviews of user :</h2>
+      <h2 className="ml-4 mb-8 text-xl">{t("reviewsOfUser")} :</h2>
       <Table columns={columns} dataSource={[]} pagination={false} />
     </div>
   );

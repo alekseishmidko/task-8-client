@@ -2,18 +2,25 @@ import React from "react";
 import { Button, Menu } from "antd";
 import { fetchGetAllProducts } from "../../store/ProductSlice/ProductSlice";
 import { PlusOutlined } from "@ant-design/icons";
-import { arr } from "./menuBarProps";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const MenuBarProduct = () => {
-  const { data, authLoading } = useSelector((state) => state.accountSlice);
+  const { t } = useTranslation();
+  const { data } = useSelector((state) => state.accountSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOptions, setMenuOptions] = React.useState({
     title: "All",
     value: "",
   });
-
+  const arr = [
+    { title: t("all"), value: "" },
+    { title: t("books"), value: "books" },
+    { title: t("games"), value: "games" },
+    { title: t("movies"), value: "movies" },
+    { title: t("music"), value: "music" },
+  ];
   React.useEffect(() => {
     const parameters = menuOptions.value;
     dispatch(fetchGetAllProducts({ parameters }));

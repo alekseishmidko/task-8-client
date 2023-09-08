@@ -6,6 +6,7 @@ import Comments from "../components/Comments/Comments";
 import { Layout } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetAllReviews } from "../store/ReviewsSlice/ReviewsSlice";
+import Spinner from "../components/Spinner/Spinner";
 const MainPage = () => {
   const { isLoading, allUnicTags } = useSelector((state) => state.reviewsSlice);
   const dispatch = useDispatch();
@@ -14,13 +15,13 @@ const MainPage = () => {
     dispatch(fetchGetAllReviews({ parameters }));
   }, [dispatch]);
 
-  if (isLoading === "loading") <h1>Loading...</h1>;
+  if (isLoading === "loading") <Spinner />;
   return (
     <>
       <Header />
       <Layout className=" min-h-screen">
         <div className="flex justify-center items-center">
-          <div className="w-1/2">
+          <div className="w-2/3">
             <TabContent />
             <TagCloud tags={allUnicTags} />
           </div>

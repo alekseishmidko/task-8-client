@@ -8,6 +8,7 @@ import {
   fetchGetMyReviews,
   fetchGetOneReview,
 } from "../../store/ReviewsSlice/ReviewsSlice";
+import { useTranslation } from "react-i18next";
 const { Text } = Typography;
 const MyReviewsTable = () => {
   const [open, setOpen] = useState(false);
@@ -15,7 +16,7 @@ const MyReviewsTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { myReviews, allUnicTags } = useSelector((state) => state.reviewsSlice);
-
+  const { t } = useTranslation();
   console.log(myReviews);
   const onClickRev = (recordId) => {
     // console.log(recordId);
@@ -43,7 +44,7 @@ const MyReviewsTable = () => {
 
   const columns = [
     {
-      title: "Title",
+      title: t("title"),
       dataIndex: "title",
       key: "title",
       render: (text) => (
@@ -59,7 +60,7 @@ const MyReviewsTable = () => {
       sortDirections: ["descend"],
     },
     {
-      title: "Av. Rating",
+      title: t("avRating"),
       dataIndex: "averageRatingFive",
       key: "averageRatingFive",
       render: (text) => (
@@ -73,7 +74,7 @@ const MyReviewsTable = () => {
       sorter: (a, b) => a.averageRatingFive - b.averageRatingFive,
     },
     {
-      title: "Group",
+      title: t("group"),
       dataIndex: "group",
       key: "group",
       filters: [
@@ -97,12 +98,12 @@ const MyReviewsTable = () => {
       onFilter: (value, record) => record.group.indexOf(value) === 0,
     },
     {
-      title: "product",
+      title: t("product"),
       dataIndex: "productTitle",
       key: "productTitle",
     },
     {
-      title: "Content",
+      title: t("content"),
       dataIndex: "content",
       key: "content",
       render: (text) => (
@@ -116,7 +117,7 @@ const MyReviewsTable = () => {
       ),
     },
     {
-      title: "Tags",
+      title: t("tags"),
       key: "tags",
       dataIndex: "tags",
       render: (_, { tags }) => (
@@ -139,7 +140,7 @@ const MyReviewsTable = () => {
       ),
     },
     {
-      title: "Action",
+      title: t("action"),
       key: "action",
       render: (_, record) => (
         <Space size="small">

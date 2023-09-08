@@ -3,7 +3,9 @@ import { MenuOutlined } from "@ant-design/icons";
 import { Drawer } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 const BurgerMenu = () => {
+  const { t } = useTranslation();
   const { themeMode } = useSelector((state) => state.themeSlice);
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
@@ -15,9 +17,9 @@ const BurgerMenu = () => {
     setVisible(false);
   };
   const burgerArr = [
-    { title: "Home", path: "/" },
-    { title: "Products", path: "/products" },
-    { title: "Reviews", path: "/reviews" },
+    { title: t("home"), path: "/" },
+    { title: t("products"), path: "/products" },
+    { title: t("reviews"), path: "/reviews" },
     { title: "Info", path: "/" },
   ];
   return (
@@ -25,7 +27,7 @@ const BurgerMenu = () => {
       <MenuOutlined onClick={showDrawer} className="text-2xl cursor-pointer" />
 
       <Drawer
-        title="Menu"
+        title={t("menu")}
         placement="right"
         closable={false}
         onClose={onClose}

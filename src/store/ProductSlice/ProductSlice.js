@@ -15,6 +15,21 @@ export const fetchGetAllProducts = createAsyncThunk(
     }
   }
 );
+export const fetchGetOneProduct = createAsyncThunk(
+  "product/fetchGetOneProduct",
+  async (parameters, thunkAPI) => {
+    try {
+      console.log(parameters);
+      const response = await axios.get(`api${parameters}`);
+
+      return response.data;
+    } catch (error) {
+      // Обработка ошибок, если необходимо
+      return thunkAPI.rejectWithValue(error.response.data);
+      // throw error;
+    }
+  }
+);
 export const fetchHandleProductsRating = createAsyncThunk(
   "product/fetchHandleProductsRating",
   async ({ id, value }, thunkAPI) => {
@@ -51,6 +66,8 @@ const initialState = {
   message: "",
   allProducts: [],
   productsRatings: [],
+  oneProduct: [],
+  averageRatingFive: 0,
 };
 const productSlice = createSlice({
   name: "productSlice",
@@ -76,6 +93,26 @@ const productSlice = createSlice({
       state.allProducts = [];
       state.productsRatings = [];
       state.message = action.payload;
+    });
+    // GET ONE PRODUCT
+    builder.addCase(fetchGetOneProduct.pending, (state) => {
+      state.isLoading = "loading";
+      state.errors = null;
+      state.oneProduct = [];
+      state.averageRatingFive = 0;
+    });
+    builder.addCase(fetchGetOneProduct.fulfilled, (state, action) => {
+      state.isLoading = "loaded";
+      state.errors = null;
+      state.oneProduct = action.payload.product;
+      state.averageRatingFive = action.payload.averageRatingFive;
+    });
+    builder.addCase(fetchGetOneProduct.rejected, (state, action) => {
+      state.isLoading = "error";
+      state.errors = action.error.message;
+      state.oneProduct = [];
+      state.averageRatingFive = 0;
+      // state.message = action.payload;
     });
     // POST HANDLE RATING FIVE
     builder.addCase(fetchHandleProductsRating.pending, (state) => {

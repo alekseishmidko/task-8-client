@@ -6,18 +6,31 @@ import { categories, props } from "./propsForReviewForm";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCreateReview } from "../../store/ReviewsSlice/ReviewsSlice";
 import instance from "../../axios";
-
+import { AlertMessage } from "../AlertMessage/AlertMessage";
 import { fetchGetAllProducts } from "../../store/ProductSlice/ProductSlice";
+import { useNavigate, Link } from "react-router-dom";
+import RollBackButton from "../RollBackButton/RollBackButton";
 const { TextArea } = Input;
 const { Dragger } = Upload;
 //
 const ReviewForm = () => {
   const [images, setUploadedImages] = React.useState([]);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const onFinish = (values) => {
-    values.images = images;
-    console.log("Form values:", values);
-    dispatch(fetchCreateReview(values));
+  const onFinish = async (values) => {
+    try {
+      values.images = images;
+      const res = await dispatch(fetchCreateReview(values));
+      AlertMessage("success", "Review is created");
+      setTimeout(() => {
+        navigate("/reviews");
+      }, 850);
+      if (res.error) {
+        return AlertMessage("error", res.payload.message);
+      }
+    } catch (error) {
+      return console.error("error while fetchCreateReview:", error);
+    }
   };
 
   React.useEffect(() => {
@@ -28,6 +41,9 @@ const ReviewForm = () => {
 
   return (
     <div className="w-full max-w-screen-sm mx-auto p-4">
+      <Link to={-1} className="absolute top-16 left-2 z-50">
+        <RollBackButton />
+      </Link>
       <Form layout="vertical" onFinish={onFinish} className="mx-4">
         <Form.Item
           label="Review title"

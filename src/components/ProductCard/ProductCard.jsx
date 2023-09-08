@@ -6,18 +6,20 @@ import {
   fetchGetAllProducts,
   fetchHandleProductsRating,
 } from "../../store/ProductSlice/ProductSlice";
-
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const ProductCard = ({ image, group, title, avgRatingFive, _id, images }) => {
+  const { t } = useTranslation();
   const { data } = useSelector((state) => state.accountSlice);
   const { themeMode } = useSelector((state) => state.themeSlice);
   //
+  const navigate = useNavigate();
   const { productsRatings } = useSelector((state) => state.productsSlice);
   const filtered = productsRatings.filter((item) => {
     if (data === null) {
       return;
     } else return item.userId === data._id;
   });
-  console.log(productsRatings, filtered);
   const dispatch = useDispatch();
   const handleRatingFive = (id, value) => {
     console.log(id, { ratingFive: value });
@@ -32,7 +34,10 @@ const ProductCard = ({ image, group, title, avgRatingFive, _id, images }) => {
   };
 
   return (
-    <div className="w-3/4 sm:w-full mt-4 ">
+    <div
+      className="w-3/4 sm:w-full mt-4 cursor-pointer"
+      onClick={() => navigate(_id)}
+    >
       <div
         className="max-w-sm rounded overflow-hidden border my-3 mr-2"
         style={{ color: !themeMode ? "white" : "" }}
@@ -69,7 +74,7 @@ const ProductCard = ({ image, group, title, avgRatingFive, _id, images }) => {
         </div>
         <div className="px-6 py-4">
           <span className=" text-base font-semibold">
-            average rating: {avgRatingFive === null ? 0 : avgRatingFive}
+            {t("averageRating")}: {avgRatingFive === null ? 0 : avgRatingFive}
           </span>
         </div>
       </div>

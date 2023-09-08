@@ -1,30 +1,26 @@
 import React from "react";
+import Header from "../components/Header/Header";
 import { Layout, Table } from "antd";
 import AdminTable from "../components/AdminTable/AdminTable";
 import { Link } from "react-router-dom";
 import { RollbackOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import UserPageTable from "../components/UserPageTable/UserPageTable";
+import RollBackButton from "../components/RollBackButton/RollBackButton";
 const ReviewsByUserPage = () => {
   const { themeMode } = useSelector((state) => state.themeSlice);
   return (
-    <Layout>
-      <Link to={-1}>
-        <div
-          style={{
-            position: "absolute",
-            top: 20,
-            left: 20,
-            color: themeMode === false ? "#fff" : "",
-          }}
-        >
-          <RollbackOutlined style={{ transform: "scale(1.2)" }} />
+    <>
+      <Header />
+      <Layout>
+        <Link to={-1} className="absolute top-16 left-2 z-50">
+          <RollBackButton />
+        </Link>
+        <div className="flex justify-center items-center h-screen">
+          <UserPageTable />
         </div>
-      </Link>
-      <div className="flex justify-center items-center h-screen">
-        <UserPageTable />
-      </div>
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

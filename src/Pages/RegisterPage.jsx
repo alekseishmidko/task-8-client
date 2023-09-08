@@ -7,21 +7,20 @@ import { Link } from "react-router-dom";
 import { layout, validateMessages } from "../midwares/formMidwares";
 import { fetchRegistration } from "../store/AccountSlice/AccountSlice";
 import { useNavigate } from "react-router-dom";
-// import { useAuth } from "../AuthContext";
+import { AlertMessage } from "../components/AlertMessage/AlertMessage";
+import RollBackButton from "../components/RollBackButton/RollBackButton";
+import { useTranslation } from "react-i18next";
 const RegisterPage = () => {
-  // const { data, login } = useAuth();
+  const { t } = useTranslation();
   const { themeMode } = useSelector((state) => state.themeSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onFinish = async (formData) => {
-    // console.log("Received values of form: ", formData);
     try {
       const res = await dispatch(fetchRegistration(formData));
       if (res.error) {
-        return message.error(res.payload.message);
+        return AlertMessage("error", res.payload.message);
       }
-      // const response = await axios.post("api/users/signUp", formData);
-      // login(response.data.user);
       setTimeout(() => {
         navigate("/");
       }, 850);
@@ -31,7 +30,6 @@ const RegisterPage = () => {
   };
   return (
     <Layout>
-      {" "}
       <div
         style={{
           display: "flex",
@@ -41,16 +39,7 @@ const RegisterPage = () => {
         }}
       >
         <Link to={-1}>
-          <div
-            style={{
-              position: "absolute",
-              top: 20,
-              left: 20,
-              color: themeMode === false ? "#fff" : "",
-            }}
-          >
-            <RollbackOutlined />
-          </div>
+          <RollBackButton />
         </Link>
 
         <Form
@@ -72,7 +61,7 @@ const RegisterPage = () => {
           >
             <Input
               className="w-full p-2 border rounded"
-              placeholder="Enter your email"
+              placeholder={t("enterYourEmail")}
             />
           </Form.Item>
           <Form.Item
@@ -82,7 +71,7 @@ const RegisterPage = () => {
           >
             <Input
               className="w-full p-2 border rounded"
-              placeholder="Enter your name"
+              placeholder={t("enterYourName")}
             />
           </Form.Item>
           <Form.Item
@@ -93,7 +82,7 @@ const RegisterPage = () => {
             <Input
               className="w-full p-2 border rounded"
               type="password"
-              placeholder="Enter your password"
+              placeholder={t("enterYourPassword")}
               allowClear
             />
           </Form.Item>
@@ -104,7 +93,7 @@ const RegisterPage = () => {
               htmlType="submit"
               className="w-full rounded bg-blue-500 hover:bg-blue-600 mt-4"
             >
-              Submit
+              {t("submit")}
             </Button>
           </Form.Item>
         </Form>

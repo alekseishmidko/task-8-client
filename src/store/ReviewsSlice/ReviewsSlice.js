@@ -100,6 +100,7 @@ const initialState = {
   oneReview: [],
   averageRatingFive: 0,
   isLoading: "loading",
+  isOneReviewLoading: "loading",
   errors: null,
   message: "",
   reviewsRatings: [],
@@ -164,24 +165,27 @@ const ReviewsSlice = createSlice({
     });
     // GET ONE REVIEW
     builder.addCase(fetchGetOneReview.pending, (state) => {
-      state.isLoading = "loading";
+      state.isOneReviewLoading = "loading";
       state.errors = null;
       state.oneReview = [];
       state.averageRatingFive = 0;
+      state.reviewsRatings = [];
     });
 
     builder.addCase(fetchGetOneReview.fulfilled, (state, action) => {
-      state.isLoading = "loaded";
+      state.isOneReviewLoading = "loaded";
       state.errors = null;
       state.oneReview = action.payload.review;
       state.averageRatingFive = action.payload.averageRatingFive;
+      state.reviewsRatings = action.payload.reviewsRatings;
     });
     builder.addCase(fetchGetOneReview.rejected, (state, action) => {
-      state.isLoading = "error";
+      state.isOneReviewLoading = "error";
       state.errors = action.payload;
       state.message = action.payload;
       state.averageRatingFive = action.payload.averageRatingFive;
       state.oneReview = [];
+      state.reviewsRatings = [];
     });
     // PUT UPDATE REVIEW
     builder.addCase(fetchUpdateReview.pending, (state) => {

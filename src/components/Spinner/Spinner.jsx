@@ -6,13 +6,13 @@ const Spinner = () => {
   const { themeMode } = useSelector((state) => state.themeSlice);
   const spinnerStyles = {
     position: "absolute",
-    top: "8%",
-    left: "50%",
+    top: "15%",
+    left: "49%",
     transform: "translate(-50%, -50%)",
   };
   const antIcon = (
     <LoadingOutlined
-      style={{ fontSize: 64 }}
+      style={{ fontSize: 68 }}
       spin
       className="flex justify-center"
     />
