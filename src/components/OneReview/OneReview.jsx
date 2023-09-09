@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Layout,
   Card,
   Button,
   Input,
@@ -9,6 +8,7 @@ import {
   Slider,
   Rate,
   message,
+  Image,
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -22,11 +22,12 @@ import Spinner from "../Spinner/Spinner";
 import { useTranslation } from "react-i18next";
 import BadgeLike from "../BadgeLike/BadgeLike";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import CommentBlock from "../CommentBlock/CommentBlock";
 const OneReview = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = React.useState(false);
   const { t } = useTranslation();
-
+  const { Option } = Select;
   const { id } = useParams();
   const dispatch = useDispatch();
   // React.useEffect(() => {
@@ -67,130 +68,143 @@ const OneReview = () => {
     });
   };
   return (
-    <div className="flex items-center justify-center w-full max-w-4xl p-4 ">
-      <Card className="w-full border shadow-lg">
-        <div className="mx-auto my-6 flex justify-center">
-          <img
-            className="object-cover bordered  h-64 sm:h-48 md:h-64 lg:h-72 xl:h-80 "
-            alt={oneReview.title}
-            src={
-              oneReview.images[0] ||
-              "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-            }
-          />
-        </div>
-        <div className="ml-4 flex-grow">
-          <Form
-            form={form}
-            // initialValues={{ oneReview }}
-            layout="vertical"
-            disabled={!isEditing}
-          >
-            {isEditing ? (
-              <Form.Item label="Title" name="title">
-                <Input defaultValue={oneReview.title} />
-              </Form.Item>
-            ) : (
-              <div className="p-4 rounded-md border my-4 sm:p-2">
-                <h2>
-                  <ReactMarkdown className="prose">
-                    {oneReview.title}
-                  </ReactMarkdown>
-                </h2>
-              </div>
-            )}
-            {isEditing ? (
-              <Form.Item label="Group" name="group">
-                <Select defaultValue={oneReview.group}>
-                  {arr.map((item, index) => (
-                    <Option key={index} value={item}>
-                      {item}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            ) : (
-              <div className="p-4 rounded-md border my-4 sm:p-2">
-                <ReactMarkdown className="prose">
-                  {oneReview.group}
-                </ReactMarkdown>
-              </div>
-            )}
-
-            {isEditing ? (
-              <Form.Item label="Content" name="content">
-                {/* <Input.TextArea defaultValue={oneReview.content} /> */}
-                <ReactMarkdown className="prose">
-                  {oneReview.content}
-                </ReactMarkdown>
-              </Form.Item>
-            ) : (
-              <div className="p-4 rounded-md border my-4 sm:p-2">
-                <ReactMarkdown className="prose">
-                  {oneReview.content}
-                </ReactMarkdown>
-              </div>
-            )}
-
-            <Form.Item
-              label=" "
-              name="rating"
-              className="mt-4 px-1"
-              defaultValue={oneReview.rating || 0}
+    <>
+      <div className="flex items-center justify-center w-full max-w-4xl p-4 ">
+        <Card className="w-full border shadow-lg">
+          <div className="mx-auto my-6 flex justify-center">
+            <Image.PreviewGroup
+              preview={{
+                onChange: (current, prev) =>
+                  console.log(`current index: ${current}, prev index: ${prev}`),
+              }}
+              items={
+                oneReview.images ||
+                "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              }
             >
-              {!isEditing ? (
-                <span>
-                  {t("authorRating")}: {oneReview.rating}
-                </span>
-              ) : (
-                <Slider
-                  defaultValue={oneReview.rating}
-                  min={0}
-                  max={10}
-                  marks={{
-                    0: "0",
-                    2: "2",
-                    4: "4",
-                    6: "6",
-                    8: "8",
-                    10: "10",
-                  }}
-                  step={1}
-                />
-              )}
-            </Form.Item>
-          </Form>
-          <div className="px-6 py-4">
-            <span className=" text-base font-semibold">
-              <Rate
-                defaultValue={
-                  filtered.find((item) => item.reviewId === _id)?.ratingFive ||
-                  0
+              <Image
+                height={400}
+                src={
+                  oneReview.images[0] ||
+                  "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
                 }
-                disabled={data === null || data === 0}
-                onChange={(value) => handleRatingFive(_id, value)}
               />
-            </span>
+            </Image.PreviewGroup>
           </div>
-          <div className="px-6 py-4 flex justify-between">
-            <span className=" text-base font-semibold">
-              {t("averageRating")}:
-              {averageRatingFive === null ? 0 : averageRatingFive}
-            </span>
-            <BadgeLike count={3} />
-          </div>
-          {data !== null && (
-            <div className="mt-4">
+          <div className="ml-4 flex-grow">
+            <Form
+              form={form}
+              // initialValues={{ oneReview }}
+              layout="vertical"
+              disabled={!isEditing}
+            >
               {isEditing ? (
-                <Button onClick={handleSaveClick}>{t("save")}</Button>
+                <Form.Item label="Title" name="title">
+                  <Input defaultValue={oneReview.title} />
+                </Form.Item>
               ) : (
-                <Button onClick={handleEditClick}>{t("edit")}</Button>
+                <div className="p-4 rounded-md border my-4 sm:p-2">
+                  <h2>
+                    <ReactMarkdown className="prose">
+                      {oneReview.title}
+                    </ReactMarkdown>
+                  </h2>
+                </div>
               )}
+              {isEditing ? (
+                <Form.Item label="Group" name="group">
+                  <Select defaultValue={oneReview.group}>
+                    {arr.map((item, index) => (
+                      <Option key={index} value={item}>
+                        {item}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              ) : (
+                <div className="p-4 rounded-md border my-4 sm:p-2">
+                  <ReactMarkdown className="prose">
+                    {oneReview.group}
+                  </ReactMarkdown>
+                </div>
+              )}
+
+              {isEditing ? (
+                <Form.Item label="Content" name="content">
+                  {/* <Input.TextArea defaultValue={oneReview.content} /> */}
+                  <ReactMarkdown className="prose">
+                    {oneReview.content}
+                  </ReactMarkdown>
+                </Form.Item>
+              ) : (
+                <div className="p-4 rounded-md border my-4 sm:p-2">
+                  <ReactMarkdown className="prose">
+                    {oneReview.content}
+                  </ReactMarkdown>
+                </div>
+              )}
+
+              <Form.Item
+                label=" "
+                name="rating"
+                className="mt-4 px-1"
+                defaultValue={oneReview.rating || 0}
+              >
+                {!isEditing ? (
+                  <span>
+                    {t("authorRating")}: {oneReview.rating}
+                  </span>
+                ) : (
+                  <Slider
+                    defaultValue={oneReview.rating}
+                    min={0}
+                    max={10}
+                    marks={{
+                      0: "0",
+                      2: "2",
+                      4: "4",
+                      6: "6",
+                      8: "8",
+                      10: "10",
+                    }}
+                    step={1}
+                  />
+                )}
+              </Form.Item>
+            </Form>
+            <div className="px-6 py-4">
+              <span className=" text-base font-semibold">
+                <Rate
+                  defaultValue={
+                    filtered.find((item) => item.reviewId === _id)
+                      ?.ratingFive || 0
+                  }
+                  disabled={data === null || data === 0}
+                  onChange={(value) => handleRatingFive(_id, value)}
+                />
+              </span>
             </div>
-          )}
-        </div>
-      </Card>
-    </div>
+            <div className="px-6 py-4 flex justify-between">
+              <span className=" text-base font-semibold">
+                {t("averageRating")}:
+                {averageRatingFive === null ? 0 : averageRatingFive}
+              </span>
+              <BadgeLike count={3} />
+            </div>
+            {data !== null && (
+              <div className="mt-4">
+                {isEditing ? (
+                  <Button onClick={handleSaveClick}>{t("save")}</Button>
+                ) : (
+                  <Button onClick={handleEditClick}>{t("edit")}</Button>
+                )}
+              </div>
+            )}
+          </div>
+        </Card>
+      </div>
+      <CommentBlock />
+    </>
   );
 };
 

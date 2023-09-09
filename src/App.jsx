@@ -64,8 +64,17 @@ function App() {
             />
             <Route path="/products" element={<ProductPage />} />
             <Route path="/reviews" element={<ReviewPage />} />
-            <Route path="/reviews/:id" element={<OneReviewPage />} />
+            {/* <Route path="/reviews/:id" element={<OneReviewPage />} /> */}
+            {/* <Route path="/reviews/:id" element={<OneReviewPage />} /> */}
 
+            <Route
+              path="/reviews/:id"
+              Component={() => (
+                <AuthProvider>
+                  <OneReviewPage />
+                </AuthProvider>
+              )}
+            />
             <Route
               path="/reviews/create"
               Component={() => (
@@ -92,15 +101,13 @@ function App() {
 }
 
 export default App;
-// комментарии , гугл, фейсбук,  перевод сайта,
+//  гугл, фейсбук,  перевод сайта,
 // логика поиска
-// написать сокет (comments,)
 // автодополнение набора тегов при редактировании обзора
 
 // оптимизировать бек, раскидать переменные
 
 // сделать верстку адаптив header
-// галерея для просмотра фото (скорее всего через IMAGE antd)
 // Админка. возможность просматривать обзоры пользователя, редактировать, удалять, создавать от имени юзера  блокировать юзера?
 // (наполнить   юзера обзорами и доделать функционла)
 

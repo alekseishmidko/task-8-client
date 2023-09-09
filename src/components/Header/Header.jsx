@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../AuthContext";
 const Header = () => {
   const { data } = useSelector((state) => state.accountSlice);
-  const themeMode = localStorage.getItem("themeMode");
+
   const { t } = useTranslation();
   // const { themeMode } = useSelector((state) => state.themeSlice);
   const { logOut } = useAuth();
@@ -26,10 +26,10 @@ const Header = () => {
     dispatch(handleTheme());
   };
   return (
-    <header className="bg-gray-800 text-white py-4 ">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between mx-2 ">
-        <div className="flex items-center justify-center md:justify-start ">
-          <div className="mx-2 ">
+    <header className="bg-gray-800 text-white py-4">
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between mx-2">
+        <div className="flex items-center justify-center md:justify-start">
+          <div className="mx-2">
             <BurgerMenu />
           </div>
           <span
@@ -43,8 +43,8 @@ const Header = () => {
             onClick={onClickTheme}
           />
         </div>
-        <div className="flex items-center justify-center md:flex-1">
-          <div className="flex items-center  border-gray-600 rounded-lg">
+        <div className="flex items-center justify-center mt-4 md:mt-0 md:flex-1 md:justify-center">
+          <div className="flex items-center border-gray-600 rounded-lg">
             <Input
               type="text"
               placeholder={t("search")}
@@ -55,14 +55,13 @@ const Header = () => {
             </Button>
           </div>
         </div>
-        <div className="mt-4 md:mt-0 md:ml-4 mr-3">
+        <div className="mt-4 md:mt-0 md:ml-4 md:mr-3">
           {data !== null ? (
             <div className="flex items-center cursor-pointer">
               <div onClick={() => onClickUserLogo()}>
                 <UserOutlined className="text-white mr-2" />
                 <span className="text-white">{data.name || ""}</span>
               </div>
-
               <LogoutOutlined
                 onClick={onClickLogout}
                 className="text-white pl-5"

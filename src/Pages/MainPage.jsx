@@ -2,7 +2,6 @@ import React from "react";
 import TabContent from "../components/TabContent/TabContent";
 import Header from "../components/Header/Header";
 import TagCloud from "../components/TagCloud/TagCloud";
-import Comments from "../components/Comments/Comments";
 import { Layout } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetAllReviews } from "../store/ReviewsSlice/ReviewsSlice";

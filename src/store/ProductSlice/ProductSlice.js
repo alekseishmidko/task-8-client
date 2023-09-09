@@ -67,6 +67,7 @@ const initialState = {
   allProducts: [],
   productsRatings: [],
   oneProduct: [],
+  oneProductLoading: "loading",
   averageRatingFive: 0,
 };
 const productSlice = createSlice({
@@ -96,19 +97,19 @@ const productSlice = createSlice({
     });
     // GET ONE PRODUCT
     builder.addCase(fetchGetOneProduct.pending, (state) => {
-      state.isLoading = "loading";
+      state.oneProductLoading = "loading";
       state.errors = null;
       state.oneProduct = [];
       state.averageRatingFive = 0;
     });
     builder.addCase(fetchGetOneProduct.fulfilled, (state, action) => {
-      state.isLoading = "loaded";
+      state.oneProductLoading = "loaded";
       state.errors = null;
       state.oneProduct = action.payload.product;
       state.averageRatingFive = action.payload.averageRatingFive;
     });
     builder.addCase(fetchGetOneProduct.rejected, (state, action) => {
-      state.isLoading = "error";
+      state.oneProductLoading = "error";
       state.errors = action.error.message;
       state.oneProduct = [];
       state.averageRatingFive = 0;
