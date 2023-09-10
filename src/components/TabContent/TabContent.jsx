@@ -30,7 +30,7 @@ const TabContent = () => {
                 <Carousel afterChange={onChange} effect="fade" dots={false}>
                   {last6Reviews.map((item, index) => (
                     <div
-                      key={item.key}
+                      key={index}
                       className="flex flex-col justify-center items-center flex-grow"
                     >
                       <ReviewCard {...item} />

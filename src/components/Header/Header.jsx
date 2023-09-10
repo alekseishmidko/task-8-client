@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../AuthContext";
+import SearchComponent from "../SearchComponent/SearchComponent";
 const Header = () => {
   const { data } = useSelector((state) => state.accountSlice);
 
@@ -44,7 +45,7 @@ const Header = () => {
           />
         </div>
         <div className="flex items-center justify-center mt-4 md:mt-0 md:flex-1 md:justify-center">
-          <div className="flex items-center border-gray-600 rounded-lg">
+          {/* <div className="flex items-center border-gray-600 rounded-lg">
             <Input
               type="text"
               placeholder={t("search")}
@@ -53,7 +54,8 @@ const Header = () => {
             <Button className="bg-blue-500 text-white px-4 ml-2 rounded-lg">
               {t("search")}
             </Button>
-          </div>
+          </div> */}
+          <SearchComponent />
         </div>
         <div className="mt-4 md:mt-0 md:ml-4 md:mr-3">
           {data !== null ? (
