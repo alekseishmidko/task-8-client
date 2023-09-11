@@ -62,21 +62,37 @@ function App() {
                 </AuthProvider>
               )}
             />
-            <Route path="/products" element={<ProductPage />} />
-            <Route path="/reviews" element={<ReviewPage />} />
-            {/* <Route path="/reviews/:id" element={<OneReviewPage />} /> */}
-            {/* <Route path="/reviews/:id" element={<OneReviewPage />} /> */}
-
             <Route
-              path="/reviews/:id"
+              path="/admin/:id/record/:id"
               Component={() => (
-                // <AuthProvider>
-                <OneReviewPage />
-                // </AuthProvider>
+                <AuthProvider>
+                  <OneReviewPage />
+                </AuthProvider>
+              )}
+            />
+            <Route path="/products" element={<ProductPage />} />
+            <Route path="/products/:id" element={<OneProductPage />} />
+            <Route path="/reviews" element={<ReviewPage />} />
+
+            <Route path="/reviews/:id" Component={() => <OneReviewPage />} />
+            <Route
+              path="/reviews/create"
+              Component={() => (
+                <AuthProvider>
+                  <CreateReviewPage />
+                </AuthProvider>
               )}
             />
             <Route
-              path="/reviews/create"
+              path="/reviews/createbyproduct/:id"
+              Component={() => (
+                <AuthProvider>
+                  <CreateReviewPage />
+                </AuthProvider>
+              )}
+            />
+            <Route
+              path="admin/:id/create"
               Component={() => (
                 <AuthProvider>
                   <CreateReviewPage />
@@ -92,7 +108,6 @@ function App() {
               )}
             />
             <Route path="*" element={<NotFoundPage />} />
-            <Route path="/products/:id" element={<OneProductPage />} />
           </Routes>
         </I18nextProvider>
       </ConfigProvider>
@@ -103,17 +118,15 @@ function App() {
 export default App;
 // оптимизировать бек, раскидать переменные
 // сделать сайт адаптивнее
-
-//  гугл, фейсбук,  перевод сайта,
-// логика поиска
+// логика лайков
+//  гугл, фейсбук,
 // автодополнение набора тегов при редактировании обзора
 
-// Логика поиска, добавить переводы
-// Админка. возможность просматривать обзоры пользователя, редактировать, удалять, создавать от имени юзера  блокировать юзера?
-// (наполнить   юзера обзорами и доделать функционла)
+// добавить переводы, стили и адаптив
+// Админка. блокировать юзера?
+// хранить тему и язык  в ЛС с помощью redux persist
 
 // поиск по тегам(опционально)
-// хранить тему в ЛС с помощью redux persist
 
 //
 //  ??? вопрос по лайкам как сделать так чтобы сервер не падал при постановке лайка от разных пользователей ???

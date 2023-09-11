@@ -90,6 +90,18 @@ export const fetchCreateReview = createAsyncThunk(
     }
   }
 );
+export const fetchGetOneUserReviews = createAsyncThunk(
+  "review/fetchGetOneUserReviews",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.get(`api/users/${id}`);
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 const initialState = {
   data: null,
   allUnicTags: [],
@@ -104,6 +116,8 @@ const initialState = {
   errors: null,
   message: "",
   reviewsRatings: [],
+  oneUserReviews: [],
+  isOneUserReviewsLoading: "loading",
 };
 
 const ReviewsSlice = createSlice({
@@ -240,6 +254,24 @@ const ReviewsSlice = createSlice({
       state.errors = action.payload;
       state.message = action.payload;
       // state.oneReview = [];
+    });
+    // GET  ONE USER REVIEWS
+    builder.addCase(fetchGetOneUserReviews.pending, (state) => {
+      state.isOneReviewLoading = "loading";
+      state.errors = null;
+      state.oneUserReviews = [];
+    });
+
+    builder.addCase(fetchGetOneUserReviews.fulfilled, (state, action) => {
+      state.isOneReviewLoading = "loaded";
+      state.errors = null;
+      state.oneUserReviews = action.payload.oneUserReviews;
+    });
+    builder.addCase(fetchGetOneUserReviews.rejected, (state, action) => {
+      state.isOneReviewLoading = "error";
+      state.errors = action.payload;
+      // state.message = action.payload;
+      state.oneUserReviews = [];
     });
   },
 });

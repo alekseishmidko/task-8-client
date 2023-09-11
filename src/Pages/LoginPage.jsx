@@ -21,7 +21,7 @@ const LoginPage = () => {
         return AlertMessage("error", res.payload.message);
       }
       setTimeout(() => {
-        navigate("/");
+        navigate(-1);
       }, 850);
     } catch (error) {
       console.error("error while fetchLogin:", error);

@@ -1,14 +1,40 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
-import { Space, Table, Tag, Typography, Modal } from "antd";
+import { Space, Table, Tag, Typography, Modal, Button } from "antd";
 import { useTranslation } from "react-i18next";
+import {
+  fetchDeleteReview,
+  fetchGetOneUserReviews,
+} from "../../store/ReviewsSlice/ReviewsSlice";
 const UserPageTable = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { oneUserReviews } = useSelector((state) => state.reviewsSlice);
+  console.log(oneUserReviews);
   const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const showModal = () => {
+    setOpen(true);
+  };
+  const handleCancel = () => {
+    setOpen(false);
+  };
+  const handleOk = (recordId) => {
+    setConfirmLoading(true);
+    console.log(recordId);
+    dispatch(fetchDeleteReview(recordId));
+    setTimeout(() => {
+      setOpen(false);
+      setConfirmLoading(false);
+      dispatch(fetchGetOneUserReviews(id));
+    }, 1000);
+  };
   const columns = [
     {
-      title: "Title",
+      title: t("title"),
       dataIndex: "title",
       key: "title",
       render: (text) => (
@@ -24,31 +50,31 @@ const UserPageTable = () => {
       sortDirections: ["descend"],
     },
     {
-      title: "Group",
+      title: t("group"),
       dataIndex: "group",
       key: "group",
       filters: [
         {
-          text: "movie",
-          value: "movie",
+          text: t("movies"),
+          value: "movies",
         },
         {
-          text: "books",
+          text: t("books"),
           value: "books",
         },
         {
-          text: "music",
+          text: t("music"),
           value: "music",
         },
         {
-          text: "games",
+          text: t("games"),
           value: "games",
         },
       ],
       onFilter: (value, record) => record.group.indexOf(value) === 0,
     },
     {
-      title: "Content",
+      title: t("content"),
       dataIndex: "content",
       key: "content",
       render: (text) => (
@@ -62,7 +88,7 @@ const UserPageTable = () => {
       ),
     },
     {
-      title: "Tags",
+      title: t("tags"),
       key: "tags",
       dataIndex: "tags",
       render: (_, { tags }) => (
@@ -85,45 +111,45 @@ const UserPageTable = () => {
       ),
     },
     {
-      title: "Action",
+      title: t("action"),
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a
-          //   onClick={() => onClickRev(record._id)}
-          >
+          <a onClick={() => navigate(`record/${record._id}`)}>
             <span className="text-blue-500 ">Open and Update </span>
           </a>
-          <a
-          //   onClick={() => onClickRev(record._id)}
-          >
-            <span className="text-blue-500 ">Create new review </span>
-          </a>
+
           <a>
-            <span
-              className="text-red-400"
-              // onClick={showModal}
-            >
+            <span className="text-red-400" onClick={showModal}>
               Delete
             </span>
-            {/* <Modal
-              title={record._id}
+            <Modal
+              okType="default"
+              title={record.title}
               open={open}
               onOk={() => handleOk(record._id)}
               confirmLoading={confirmLoading}
               onCancel={handleCancel}
             >
               <p>Are you sure?</p>
-            </Modal> */}
+            </Modal>
           </a>
         </Space>
       ),
     },
   ];
+  const id = useParams().id;
+
+  React.useEffect(() => {
+    dispatch(fetchGetOneUserReviews(id));
+  }, [dispatch]);
   return (
     <div className="w-3/4">
       <h2 className="ml-4 mb-8 text-xl">{t("reviewsOfUser")} :</h2>
-      <Table columns={columns} dataSource={[]} pagination={false} />
+      <Button className="pb-2 mb-3" onClick={() => navigate("create")}>
+        `Create a review using the selected user name (${id})`
+      </Button>
+      <Table columns={columns} dataSource={oneUserReviews} pagination={false} />
     </div>
   );
 };

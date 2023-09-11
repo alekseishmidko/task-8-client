@@ -17,7 +17,7 @@ const SearchComponent = () => {
     console.log("search", value);
 
     const reviews = await axios.get(`/api/search/reviews?q=${value}`);
-    console.log(reviews.data);
+
     setShow(true);
     setDataSource(reviews.data.reviews);
     setDataSource2(reviews.data.comments);
@@ -30,17 +30,7 @@ const SearchComponent = () => {
     }, 100),
     []
   );
-  //   const arr = dataSource2.map((item) => {
-  //     return item.reviewId;
-  //   });
-  //   const uniqueIds = new Set();
-  //   const filtered = arr.filter((item) => {
-  //     if (!uniqueIds.has(item._id)) {
-  //       uniqueIds.add(item._id);
-  //       return true;
-  //     }
-  //     return false;
-  //   });
+
   console.log(dataSource, dataSource2);
   const onChangeInput = (event) => {
     if (value === "") {
@@ -53,13 +43,14 @@ const SearchComponent = () => {
 
   return (
     <>
-      <div>
+      <div className=" border-gray-600 rounded-lg">
         <Input.Search
           ref={inputRef}
           placeholder="Search"
           value={value}
           onChange={onChangeInput}
           onSearch={handleSearch}
+          style={{ minWidth: "300px", maxWidth: "500px" }}
         />
         <div style={stylesBlock}>
           {show !== true ? null : (
@@ -68,7 +59,7 @@ const SearchComponent = () => {
                 <div style={stylesDivMain}>Reviews:</div>
               ) : null}
               {dataSource.length > 0 || value === "" ? null : (
-                <div style={{ color: "black" }}>Not results</div>
+                <div style={stylesDivMain}>Not results</div>
               )}
             </div>
           )}
@@ -98,7 +89,9 @@ const SearchComponent = () => {
                 onClick={() => navigate(`/reviews/${item._id}`)}
               >
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <span key={index}>{item.title}</span>
+                  <span key={index}>
+                    {item.title}[{item.group}]
+                  </span>
                 </div>
               </div>
             ))}
@@ -110,3 +103,14 @@ const SearchComponent = () => {
 
 export default SearchComponent;
 // почистить код, стили
+//   const arr = dataSource2.map((item) => {
+//     return item.reviewId;
+//   });
+//   const uniqueIds = new Set();
+//   const filtered = arr.filter((item) => {
+//     if (!uniqueIds.has(item._id)) {
+//       uniqueIds.add(item._id);
+//       return true;
+//     }
+//     return false;
+//   });

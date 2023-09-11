@@ -1,6 +1,6 @@
-import { Layout, Image, Form, Rate, Card } from "antd";
+import { Layout, Image, Form, Rate, Card, Button } from "antd";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import RollBackButton from "../RollBackButton/RollBackButton";
 import ReactMarkdown from "react-markdown";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,12 +11,15 @@ const OneProduct = () => {
   const { t } = useTranslation();
   const path = useLocation().pathname;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   React.useEffect(() => {
     dispatch(fetchGetOneProduct(path));
   }, [dispatch]);
   const { oneProduct, averageRatingFive, oneProductLoading } = useSelector(
     (state) => state.productsSlice
   );
+  const { data } = useSelector((state) => state.accountSlice);
+  console.log(oneProduct._id);
   if (oneProductLoading === "loading") {
     return <Spinner />;
   }
@@ -24,7 +27,7 @@ const OneProduct = () => {
     <>
       <div className="flex items-center justify-center w-full max-w-4xl p-4 ">
         <Card className="w-full border shadow-lg">
-          <div className="mx-auto my-6 flex justify-center">
+          <div className="mx-auto my-6 flex justify-center ">
             <Image.PreviewGroup
               preview={{
                 onChange: (current, prev) =>
@@ -60,6 +63,29 @@ const OneProduct = () => {
               {t("averageRating")}: {averageRatingFive}
             </span>
           </div>
+          {data === null ? (
+            <div className="p-4 rounded-md my-4 sm:p-2 flex justify-end">
+              <Button
+                disabled={data === null}
+
+                // onClick={() =>
+                //   navigate(`/reviews/createbyproduct/${oneProduct._id}`)
+                // }
+              >
+                Login for create review
+              </Button>
+            </div>
+          ) : (
+            <div className="p-4 rounded-md my-4 sm:p-2 flex justify-end">
+              <Button
+                onClick={() =>
+                  navigate(`/reviews/createbyproduct/${oneProduct._id}`)
+                }
+              >
+                Create Review
+              </Button>
+            </div>
+          )}
         </Card>
       </div>
     </>

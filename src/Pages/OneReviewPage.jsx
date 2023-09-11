@@ -31,7 +31,7 @@ const OneReviewPage = () => {
   const { id } = useParams();
   React.useEffect(() => {
     dispatch(fetchGetOneReview({ id }));
-  }, [dispatch, id]);
+  }, [dispatch]);
   if (isOneReviewLoading === "loading") {
     return <Spinner />;
   }

@@ -68,6 +68,8 @@ const initialState = {
   productsRatings: [],
   oneProduct: [],
   oneProductLoading: "loading",
+  allProductsLoading: "loading",
+
   averageRatingFive: 0,
 };
 const productSlice = createSlice({
@@ -78,18 +80,20 @@ const productSlice = createSlice({
     // GET ALL PRODUCTS
     builder.addCase(fetchGetAllProducts.pending, (state) => {
       state.isLoading = "loading";
-      state.errors = null;
+      (state.allProductsLoading = "loading"), (state.errors = null);
       state.allProducts = [];
       state.productsRatings = [];
     });
     builder.addCase(fetchGetAllProducts.fulfilled, (state, action) => {
       state.isLoading = "loaded";
+      state.allProductsLoading = "loaded";
       state.errors = null;
       state.allProducts = action.payload.productsWithAvgRatingFive;
       state.productsRatings = action.payload.productsRatings;
     });
     builder.addCase(fetchGetAllProducts.rejected, (state, action) => {
       state.isLoading = "error";
+      state.allProductsLoading = "error";
       state.errors = action.error.message;
       state.allProducts = [];
       state.productsRatings = [];

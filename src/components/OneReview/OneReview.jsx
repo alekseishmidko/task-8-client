@@ -23,6 +23,7 @@ import { useTranslation } from "react-i18next";
 import BadgeLike from "../BadgeLike/BadgeLike";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CommentBlock from "../CommentBlock/CommentBlock";
+import { AlertMessage } from "../AlertMessage/AlertMessage";
 const OneReview = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = React.useState(false);
@@ -57,16 +58,27 @@ const OneReview = () => {
   const _id = oneReview._id;
   const arr = ["books", "music", "movies", "games"];
   const handleEditClick = () => {
-    setIsEditing(true);
+    if (isDis) {
+      setIsEditing(true);
+    } else {
+      return AlertMessage(
+        "error",
+        "you don't have enough rights to make changes for this review"
+      );
+    }
   };
 
   const handleSaveClick = () => {
     form.validateFields().then((values) => {
+      console.log(values);
       dispatch(fetchUpdateReview({ id, values }));
       setIsEditing(false);
       dispatch(fetchGetOneReview({ id }));
     });
   };
+  console.log(id, oneReview, id === oneReview._id);
+  // const isDis = oneReview.userId === data._id || data.role !== "user";
+  // console.log(isDis);
   return (
     <>
       <div className="flex items-center justify-center w-full max-w-4xl p-4 ">
@@ -94,7 +106,12 @@ const OneReview = () => {
           <div className="ml-4 flex-grow">
             <Form
               form={form}
-              // initialValues={{ oneReview }}
+              initialValues={{
+                title: oneReview.title,
+                group: oneReview.group,
+                content: oneReview.content,
+                rating: oneReview.rating || 0,
+              }}
               layout="vertical"
               disabled={!isEditing}
             >
@@ -131,10 +148,7 @@ const OneReview = () => {
 
               {isEditing ? (
                 <Form.Item label="Content" name="content">
-                  {/* <Input.TextArea defaultValue={oneReview.content} /> */}
-                  <ReactMarkdown className="prose">
-                    {oneReview.content}
-                  </ReactMarkdown>
+                  <Input.TextArea defaultValue={oneReview.content} />
                 </Form.Item>
               ) : (
                 <div className="p-4 rounded-md border my-4 sm:p-2">
@@ -196,7 +210,15 @@ const OneReview = () => {
                 {isEditing ? (
                   <Button onClick={handleSaveClick}>{t("save")}</Button>
                 ) : (
-                  <Button onClick={handleEditClick}>{t("edit")}</Button>
+                  <Button
+                    disabled={
+                      (oneReview.userId === data._id ||
+                        data.role !== "user") === false
+                    }
+                    onClick={handleEditClick}
+                  >
+                    {t("edit")}
+                  </Button>
                 )}
               </div>
             )}
