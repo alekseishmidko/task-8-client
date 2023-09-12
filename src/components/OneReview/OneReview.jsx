@@ -31,9 +31,7 @@ const OneReview = () => {
   const { Option } = Select;
   const { id } = useParams();
   const dispatch = useDispatch();
-  // React.useEffect(() => {
-  //   dispatch(fetchGetOneReview({ id }));
-  // }, [dispatch, id]);
+
   const { oneReview, averageRatingFive, isOneReviewLoading, reviewsRatings } =
     useSelector((state) => state.reviewsSlice);
 
@@ -58,15 +56,16 @@ const OneReview = () => {
   const _id = oneReview._id;
   const arr = ["books", "music", "movies", "games"];
   const handleEditClick = () => {
-    if (isDis) {
-      setIsEditing(true);
-    } else {
-      return AlertMessage(
-        "error",
-        "you don't have enough rights to make changes for this review"
-      );
-    }
+    // if (isDis) {
+    setIsEditing(true);
   };
+  // else {
+  // return AlertMessage(
+  //   "error",
+  //   "you don't have enough rights to make changes for this review"
+  // );
+  // }
+  // };
 
   const handleSaveClick = () => {
     form.validateFields().then((values) => {
@@ -76,12 +75,12 @@ const OneReview = () => {
       dispatch(fetchGetOneReview({ id }));
     });
   };
-  console.log(id, oneReview, id === oneReview._id);
+  // console.log(id, oneReview, id === oneReview._id);
   // const isDis = oneReview.userId === data._id || data.role !== "user";
   // console.log(isDis);
   return (
     <>
-      <div className="flex items-center justify-center w-full max-w-4xl p-4 ">
+      <div className="flex items-center justify-center w-full max-w-4xl p-4">
         <Card className="w-full border shadow-lg">
           <div className="mx-auto my-6 flex justify-center">
             <Image.PreviewGroup
@@ -95,6 +94,7 @@ const OneReview = () => {
               }
             >
               <Image
+                className=" rounded-3xl"
                 height={400}
                 src={
                   oneReview.images[0] ||
@@ -225,7 +225,6 @@ const OneReview = () => {
           </div>
         </Card>
       </div>
-      <CommentBlock />
     </>
   );
 };

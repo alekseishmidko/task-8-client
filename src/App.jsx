@@ -1,3 +1,4 @@
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import MainPage from "./Pages/MainPage";
 import LoginPage from "./Pages/LoginPage";
@@ -18,9 +19,9 @@ import { AuthProvider } from "./AuthContext";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 function App() {
-  // const themeMode = localStorage.getItem("themeMode");
   const { themeMode } = useSelector((state) => state.themeSlice);
 
+  console.log(theme);
   return (
     <>
       <ConfigProvider
@@ -122,15 +123,15 @@ export default App;
 //  гугл, фейсбук,
 // автодополнение набора тегов при редактировании обзора
 
-// добавить переводы, стили и адаптив
+// стили и адаптив,
 // Админка. блокировать юзера?
-// хранить тему и язык  в ЛС с помощью redux persist
+//  ограничить поиск и сделать отдельную страницу для всех результатов, клик снаружи = закрыто окно
 
 // поиск по тегам(опционально)
 
 //
 //  ??? вопрос по лайкам как сделать так чтобы сервер не падал при постановке лайка от разных пользователей ???
-
+//  ??? как хранить тему ???
 //
 
 //  Review оценка от автора = (0-10), каждый авторизованный юзер может поставить рейтинг (0-5 звезд) на  обзор

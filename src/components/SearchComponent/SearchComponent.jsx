@@ -56,10 +56,10 @@ const SearchComponent = () => {
           {show !== true ? null : (
             <div>
               {dataSource.length > 0 && value !== "" ? (
-                <div style={stylesDivMain}>Reviews:</div>
+                <div style={stylesDivMain}>{t("results")}:</div>
               ) : null}
               {dataSource.length > 0 || value === "" ? null : (
-                <div style={stylesDivMain}>Not results</div>
+                <div style={stylesDivMain}>{t("notResults")}</div>
               )}
             </div>
           )}
@@ -77,7 +77,7 @@ const SearchComponent = () => {
             ))}
           <div>
             {dataSource2.length > 0 && value !== "" ? (
-              <div style={stylesDivMain}>Found in comments:</div>
+              <div style={stylesDivMain}>{t("foundInComments")}:</div>
             ) : null}
             {dataSource2.length > 0 || value === "" ? null : <div></div>}
           </div>

@@ -10,11 +10,12 @@ import {
 } from "../../store/CommentsSlice/CommentsSlice";
 import socketIO from "socket.io-client";
 import instance from "../../axios";
+import { useTranslation } from "react-i18next";
 const CommentBlock = () => {
+  const { t } = useTranslation();
   const baseURL = instance.defaults.baseURL;
   // socket logics
   const socket = socketIO.connect(baseURL);
-  //
   const { reviewComments, commentsLoading } = useSelector(
     (state) => state.commentsSlice
   );
@@ -49,7 +50,7 @@ const CommentBlock = () => {
   return (
     <div className="flex items-center justify-center w-full max-w-4xl p-4 ">
       <div className="bg-white rounded-lg shadow-lg p-4 mt-4 w-full">
-        <h2 className="text-lg font-semibold mb-2">Commentaries: </h2>
+        <h2 className="text-lg font-semibold mb-2">{t("commentaries")}: </h2>
         <div className="mb-4">
           <Form onFinish={onFinish}>
             <Form.Item
@@ -60,7 +61,7 @@ const CommentBlock = () => {
                 allowClear
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                 rows="3"
-                placeholder="Leave your comment"
+                placeholder={t("leaveYourComment")}
               />
             </Form.Item>
             <Form.Item>
@@ -69,16 +70,16 @@ const CommentBlock = () => {
                 type="primary"
                 htmlType="submit"
                 className="bg-blue-500 text-white  px-4 mt-2 rounded-md hover:bg-blue-600 focus:outline-none"
-                // onClick={onFinish}
               >
-                {"Submit"}
+                {t("submit")}
               </Button>
             </Form.Item>
           </Form>
           {reviewComments.map((item, index) => (
             <div key={index} className="bg-gray-100 rounded-md p-2 my-4">
               <p className="text-gray-800 font-bold">
-                {item.userId.name} <span className="font-semibold">write:</span>
+                {item.userId.name}
+                <span className="font-semibold">{t("write")}:</span>
               </p>
               <p className="text-gray-600">{item.comment}</p>
             </div>

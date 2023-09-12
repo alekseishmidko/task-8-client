@@ -1,28 +1,17 @@
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
-import {
-  Layout,
-  Card,
-  Button,
-  Input,
-  Form,
-  Select,
-  Slider,
-  Rate,
-  message,
-} from "antd";
+
+import { Layout } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchGetOneReview,
-  fetchUpdateReview,
-} from "../store/ReviewsSlice/ReviewsSlice";
-import { fetchHandleReviewsRating } from "../store/ReviewsSlice/ReviewsSlice";
+import { fetchGetOneReview } from "../store/ReviewsSlice/ReviewsSlice";
+
 import RollBackButton from "../components/RollBackButton/RollBackButton";
 import Spinner from "../components/Spinner/Spinner";
 import Header from "../components/Header/Header";
 
 import OneReview from "../components/OneReview/OneReview";
+import CommentBlock from "../components/CommentBlock/CommentBlock";
+import RelatedReviews from "../components/RelatedReviews/RelatedReviews";
 
 const OneReviewPage = () => {
   const { oneReview, averageRatingFive, isOneReviewLoading, reviewsRatings } =
@@ -31,7 +20,7 @@ const OneReviewPage = () => {
   const { id } = useParams();
   React.useEffect(() => {
     dispatch(fetchGetOneReview({ id }));
-  }, [dispatch]);
+  }, [dispatch, id]);
   if (isOneReviewLoading === "loading") {
     return <Spinner />;
   }
@@ -43,6 +32,13 @@ const OneReviewPage = () => {
           <RollBackButton />
         </Link>
         <OneReview />
+        <RelatedReviews
+          oneReview={oneReview}
+          productId={oneReview.productId}
+          id={id}
+        />
+
+        <CommentBlock />
       </Layout>
     </>
   );

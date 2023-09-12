@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Input, Select, Button, Rate, Upload, Layout } from "antd";
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
-import { message } from "antd";
 import { categories, props } from "./propsForReviewForm";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCreateReview } from "../../store/ReviewsSlice/ReviewsSlice";
@@ -11,11 +10,12 @@ import { fetchGetAllProducts } from "../../store/ProductSlice/ProductSlice";
 import { useNavigate, Link, useLocation, useParams } from "react-router-dom";
 import RollBackButton from "../RollBackButton/RollBackButton";
 import Spinner from "../Spinner/Spinner";
-
+import { useTranslation } from "react-i18next";
 const { TextArea } = Input;
 const { Dragger } = Upload;
 //
 const ReviewForm = () => {
+  const { t } = useTranslation();
   const [images, setUploadedImages] = React.useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,17 +25,15 @@ const ReviewForm = () => {
       pathname.slice(0, -32) === "/admin"
         ? values.productId
         : (values.productId = paramsId);
-
-      //  (values.productId = paramsId);
       pathname.slice(0, -32) === "/admin"
         ? (values.createByAdminId = paramsId)
         : (values.createByAdminId = 0);
       console.log(values);
       const res = await dispatch(fetchCreateReview(values));
       console.log(res, "res");
-      // setTimeout(() => {
-      //   navigate("/reviews");
-      // }, 850);
+      setTimeout(() => {
+        navigate("/reviews");
+      }, 850);
       if (res.error) {
         return AlertMessage("error", res.payload.message);
       }
@@ -73,7 +71,7 @@ const ReviewForm = () => {
       </Link>
       <Form layout="vertical" onFinish={onFinish} className="mx-4">
         <Form.Item
-          label="Review title"
+          label={t("reviewTitle")}
           name="title"
           rules={[{ required: true, message: "Add title of review" }]}
         >
@@ -81,7 +79,7 @@ const ReviewForm = () => {
         </Form.Item>
         {pathname.slice(0, -24) !== "/reviews/createbyproduct/" ? (
           <Form.Item
-            label="Product name"
+            label={t("productTitle")}
             name="productId"
             rules={[{ required: true, message: "Add name of product" }]}
           >
@@ -95,7 +93,7 @@ const ReviewForm = () => {
           </Form.Item>
         ) : (
           <Form.Item
-            label="Product name"
+            label={t("productTitle")}
             name="productId"
             // rules={[{ required: true, message: "Add name of product" }]}
           >
@@ -107,7 +105,7 @@ const ReviewForm = () => {
           </Form.Item>
         )}
         <Form.Item
-          label="Group"
+          label={t("group")}
           name="group"
           rules={[{ required: true, message: "Choise your group" }]}
         >
@@ -121,14 +119,14 @@ const ReviewForm = () => {
         </Form.Item>
 
         <Form.Item
-          label="Review text"
+          label={t("content")}
           name="content"
           rules={[{ required: true, message: "Add your review" }]}
         >
           <TextArea rows={4} />
         </Form.Item>
 
-        <Form.Item label="Upload your images" name="files">
+        <Form.Item label={t("uploadYourImages")} name="files">
           <Dragger {...props}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
@@ -139,12 +137,12 @@ const ReviewForm = () => {
           </Dragger>
         </Form.Item>
 
-        <Form.Item label="Rating" name="rating">
+        <Form.Item label={t("rating")} name="rating">
           <Rate count={10} />
         </Form.Item>
         <Form.Item>
           <Button type="default" htmlType="submit">
-            To publish review
+            {t("toPublishReview")}
           </Button>
         </Form.Item>
       </Form>

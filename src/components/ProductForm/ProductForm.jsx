@@ -1,19 +1,18 @@
 import React from "react";
 import { Form, Input, Select, Button, Rate, Upload, Layout } from "antd";
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
-import { message } from "antd";
 import { categories, props } from "./propsForProductsForm";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCreateProduct } from "../../store/ProductSlice/ProductSlice";
-import instance from "../../axios";
 import { useNavigate } from "react-router-dom";
 import { AlertMessage } from "../AlertMessage/AlertMessage";
 import RollBackButton from "../RollBackButton/RollBackButton";
 import { Link } from "react-router-dom";
 const { Dragger } = Upload;
-
+import { useTranslation } from "react-i18next";
 //
 const ProductForm = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [images, setUploadedImages] = React.useState([]);
   const dispatch = useDispatch();
@@ -42,7 +41,7 @@ const ProductForm = () => {
       </Link>
       <Form layout="vertical" onFinish={onFinish} className="mx-4">
         <Form.Item
-          label="Product title"
+          label={t("productTitle")}
           name="title"
           rules={[{ required: true, message: "Add title of review" }]}
         >
@@ -50,7 +49,7 @@ const ProductForm = () => {
         </Form.Item>
 
         <Form.Item
-          label="Group"
+          label={t("group")}
           name="group"
           rules={[{ required: true, message: "Choise your group" }]}
         >
@@ -63,7 +62,7 @@ const ProductForm = () => {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Upload your images" name="files">
+        <Form.Item label={t("uploadYourImages")} name="files">
           <Dragger {...props}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
@@ -75,7 +74,7 @@ const ProductForm = () => {
         </Form.Item>
         <Form.Item>
           <Button type="default" htmlType="submit">
-            To publish product
+            {t("toPublishProduct")}
           </Button>
         </Form.Item>
       </Form>

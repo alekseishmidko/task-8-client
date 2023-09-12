@@ -1,6 +1,11 @@
 import React from "react";
-import { Button, Input } from "antd";
-import { UserOutlined, LogoutOutlined, BulbFilled } from "@ant-design/icons";
+import { Button, Input, Avatar } from "antd";
+import {
+  UserOutlined,
+  LogoutOutlined,
+  BulbFilled,
+  GlobalOutlined,
+} from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { handleTheme } from "../../store/ThemeSlice/themeSlice";
 
@@ -9,23 +14,22 @@ import BurgerMenu from "../BurgerMenu/BurgerMenu";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../AuthContext";
 import SearchComponent from "../SearchComponent/SearchComponent";
+import LangComponent from "../LangComponent/LangComponent";
+import ThemeTumbler from "../ThemeTumbler/ThemeTumbler";
 const Header = () => {
   const { data } = useSelector((state) => state.accountSlice);
+  const { t, i18n } = useTranslation();
 
-  const { t } = useTranslation();
-  // const { themeMode } = useSelector((state) => state.themeSlice);
   const { logOut } = useAuth();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   const onClickUserLogo = () => {
     navigate("/account");
   };
   const onClickLogout = () => {
     logOut();
   };
-  const onClickTheme = () => {
-    dispatch(handleTheme());
-  };
+
   return (
     <header className="bg-gray-800 text-white py-4">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between mx-2">
@@ -39,22 +43,11 @@ const Header = () => {
           >
             My Website
           </span>
-          <BulbFilled
-            className="ml-4 mr-2 cursor-pointer"
-            onClick={onClickTheme}
-          />
+          <ThemeTumbler />
+
+          <LangComponent />
         </div>
         <div className="flex items-center justify-center mt-4 md:mt-0 md:flex-1 md:justify-center">
-          {/* <div className="flex items-center border-gray-600 rounded-lg">
-            <Input
-              type="text"
-              placeholder={t("search")}
-              className="px-3 py-2 rounded-lg border-none focus:outline-none"
-            />
-            <Button className="bg-blue-500 text-white px-4 ml-2 rounded-lg">
-              {t("search")}
-            </Button>
-          </div> */}
           <SearchComponent />
         </div>
         <div className="mt-4 md:mt-0 md:ml-4 md:mr-3">
@@ -88,3 +81,15 @@ const Header = () => {
 };
 
 export default Header;
+{
+  /* <div className="flex items-center border-gray-600 rounded-lg">
+            <Input
+              type="text"
+              placeholder={t("search")}
+              className="px-3 py-2 rounded-lg border-none focus:outline-none"
+            />
+            <Button className="bg-blue-500 text-white px-4 ml-2 rounded-lg">
+              {t("search")}
+            </Button>
+          </div> */
+}

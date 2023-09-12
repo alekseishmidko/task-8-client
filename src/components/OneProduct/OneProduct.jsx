@@ -1,7 +1,7 @@
 import { Layout, Image, Form, Rate, Card, Button } from "antd";
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import RollBackButton from "../RollBackButton/RollBackButton";
+
 import ReactMarkdown from "react-markdown";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetOneProduct } from "../../store/ProductSlice/ProductSlice";
@@ -65,14 +65,8 @@ const OneProduct = () => {
           </div>
           {data === null ? (
             <div className="p-4 rounded-md my-4 sm:p-2 flex justify-end">
-              <Button
-                disabled={data === null}
-
-                // onClick={() =>
-                //   navigate(`/reviews/createbyproduct/${oneProduct._id}`)
-                // }
-              >
-                Login for create review
+              <Button disabled={data === null}>
+                {t("loginForcreateReview")}
               </Button>
             </div>
           ) : (
@@ -82,7 +76,7 @@ const OneProduct = () => {
                   navigate(`/reviews/createbyproduct/${oneProduct._id}`)
                 }
               >
-                Create Review
+                {t("createReview")}
               </Button>
             </div>
           )}

@@ -8,7 +8,6 @@ export const fetchGetAllReviews = createAsyncThunk(
       const response = await axios.get(`api/reviews/all?sortBy=${parameters}`);
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -20,7 +19,6 @@ export const fetchGetMyReviews = createAsyncThunk(
       const response = await axios.get("api/reviews/users/myReviews");
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -32,7 +30,6 @@ export const fetchGetOneReview = createAsyncThunk(
       const response = await axios.get(`api/reviews/${id}`);
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -44,7 +41,6 @@ export const fetchUpdateReview = createAsyncThunk(
       const response = await axios.put(`api/reviews/${id}`, values);
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -56,7 +52,6 @@ export const fetchDeleteReview = createAsyncThunk(
       const response = await axios.delete(`api/reviews/${id}`);
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -70,9 +65,7 @@ export const fetchHandleReviewsRating = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
-      // throw error;
     }
   }
 );
@@ -84,9 +77,7 @@ export const fetchCreateReview = createAsyncThunk(
       console.log(response);
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
-      // throw error;
     }
   }
 );
@@ -95,6 +86,20 @@ export const fetchGetOneUserReviews = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await axios.get(`api/users/${id}`);
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+export const fetchGetRelatedReviews = createAsyncThunk(
+  "review/fetchGetRelatedReviews",
+  async ({ id, productId }, thunkAPI) => {
+    try {
+      const response = await axios.post(`api/reviews/related/${id}`, {
+        productId,
+      });
 
       return response.data;
     } catch (error) {
@@ -118,6 +123,7 @@ const initialState = {
   reviewsRatings: [],
   oneUserReviews: [],
   isOneUserReviewsLoading: "loading",
+  relatedReviews: [],
 };
 
 const ReviewsSlice = createSlice({
@@ -272,6 +278,24 @@ const ReviewsSlice = createSlice({
       state.errors = action.payload;
       // state.message = action.payload;
       state.oneUserReviews = [];
+    });
+    // GET  RELATED REVIEWS
+    builder.addCase(fetchGetRelatedReviews.pending, (state) => {
+      state.isLoading = "loading";
+      state.errors = null;
+      state.relatedReviews = [];
+    });
+
+    builder.addCase(fetchGetRelatedReviews.fulfilled, (state, action) => {
+      state.isLoading = "loaded";
+      state.errors = null;
+      state.relatedReviews = action.payload.relatedReviews;
+    });
+    builder.addCase(fetchGetRelatedReviews.rejected, (state, action) => {
+      state.isLoading = "error";
+      state.errors = action.payload;
+      // state.message = action.payload;
+      state.relatedReviews = [];
     });
   },
 });
