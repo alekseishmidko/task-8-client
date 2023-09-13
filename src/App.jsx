@@ -18,16 +18,14 @@ import OneProductPage from "./Pages/OneProductPage";
 import { AuthProvider } from "./AuthContext";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
+import SearchPage from "./Pages/SearchPage";
 function App() {
   const { themeMode } = useSelector((state) => state.themeSlice);
-
-  console.log(theme);
   return (
     <>
       <ConfigProvider
         theme={{
-          algorithm:
-            themeMode === true ? theme.defaultAlgorithm : theme.darkAlgorithm,
+          algorithm: themeMode ? theme.defaultAlgorithm : theme.darkAlgorithm,
         }}
       >
         <I18nextProvider i18n={i18n}>
@@ -108,6 +106,9 @@ function App() {
                 </AuthProvider>
               )}
             />
+
+            <Route path="/search" element={<SearchPage />} />
+
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </I18nextProvider>
@@ -120,17 +121,14 @@ export default App;
 // оптимизировать бек, раскидать переменные
 // сделать сайт адаптивнее
 // логика лайков
-//  гугл, фейсбук,
+// гугл, гитхаб,
 // автодополнение набора тегов при редактировании обзора
 
-// стили и адаптив,
+// стили и адаптив, страница обзора
 // Админка. блокировать юзера?
-//  ограничить поиск и сделать отдельную страницу для всех результатов, клик снаружи = закрыто окно
-
+// сервер обернуть в trycatch , обернуть в handleError
 // поиск по тегам(опционально)
 
-//
-//  ??? вопрос по лайкам как сделать так чтобы сервер не падал при постановке лайка от разных пользователей ???
 //  ??? как хранить тему ???
 //
 
@@ -142,3 +140,4 @@ export default App;
 // ??? вопросы по рейтингам у продуктов или обзоров. как сделать так чтобы при изменении рейтинга через handleRatingReview результат
 // пересчитывался в средний рейтинг и отображался  в базе ??? +++
 // ??? вопрос как не ломать приложение при перезагрузке страницы, получается некоторые данные хранить в ЛС ??? +++
+//  ??? вопрос по лайкам как сделать так чтобы сервер не падал при постановке лайка от разных пользователей ??? +++

@@ -122,6 +122,7 @@ const OneReview = () => {
               ) : (
                 <div className="p-4 rounded-md border my-4 sm:p-2">
                   <h2>
+                    {" "}
                     <ReactMarkdown className="prose">
                       {oneReview.title}
                     </ReactMarkdown>
@@ -139,10 +140,8 @@ const OneReview = () => {
                   </Select>
                 </Form.Item>
               ) : (
-                <div className="p-4 rounded-md border my-4 sm:p-2">
-                  <ReactMarkdown className="prose">
-                    {oneReview.group}
-                  </ReactMarkdown>
+                <div className="p-4 rounded-md  my-4 sm:p-2">
+                  <p> {oneReview.group}</p>
                 </div>
               )}
 

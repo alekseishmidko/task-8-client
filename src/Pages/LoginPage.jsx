@@ -114,7 +114,7 @@ const LoginPage = () => {
                 icon={<FacebookOutlined style={{ marginBottom: 2 }} />}
                 style={{ backgroundColor: "#1877F2", color: "white" }}
               >
-                Facebook
+                GitHub
               </Button>
             </Col>
           </Row>

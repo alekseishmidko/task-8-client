@@ -22,7 +22,10 @@ const MainPage = () => {
         <div className="flex justify-center items-center">
           <div className="w-2/3">
             <TabContent />
-            <TagCloud tags={allUnicTags} />
+            {/* <TagCloud tags={allUnicTags} /> */}
+            <div className="m-auto flex justify-center">
+              <TagCloud tags={allUnicTags} />
+            </div>
           </div>
           {/* <div className="w-1/2"></div> */}
           {/* <div className="w-1/4">

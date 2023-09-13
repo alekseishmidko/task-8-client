@@ -31,25 +31,25 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gray-800 text-white py-4">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between mx-2">
-        <div className="flex items-center justify-center md:justify-start">
-          <div className="mx-2">
+    <header className="bg-gray-800 text-white">
+      <div className="container mx-auto flex md:flex-row items-center justify-between mx-2 h-14">
+        <div className="flex items-center justify-center">
+          <div className="ml-2">
             <BurgerMenu />
           </div>
           <span
-            className="text-lg font-semibold ml-2 cursor-pointer"
+            className="text-lg font-semibold ml-2 cursor-pointer md:inline hidden"
             onClick={() => navigate("/")}
           >
             My Website
           </span>
           <ThemeTumbler />
-
           <LangComponent />
         </div>
-        <div className="flex items-center justify-center mt-4 md:mt-0 md:flex-1 md:justify-center">
-          <SearchComponent />
+        <div className="flex items-center justify-center mt-4 md:mb-4 md:flex-1 md:justify-center sm:flex-1 sm:justify-center w-full sm:w-1/2">
+          <SearchComponent className="h-full w-full md:w-1/2 sm:w-full" />
         </div>
+
         <div className="mt-4 md:mt-0 md:ml-4 md:mr-3">
           {data !== null ? (
             <div className="flex items-center cursor-pointer">
@@ -64,12 +64,12 @@ const Header = () => {
             </div>
           ) : (
             <>
-              <Link to={"/login"}>
-                <Button className="text-white">{t("logIn")}</Button>
+              <Link to="/login">
+                <Button className="text-white">Log In</Button>
               </Link>
-              <Link to={"/register"}>
-                <Button className="bg-blue-500 text-white px-4 rounded-lg ml-2">
-                  {t("signUp")}
+              <Link to="/register">
+                <Button className="bg-blue-500 text-white px-4 rounded-lg ml-2 md:inline hidden">
+                  Sign Up
                 </Button>
               </Link>
             </>

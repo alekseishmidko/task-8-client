@@ -4,6 +4,7 @@ import { themeReducer } from "./ThemeSlice/themeSlice";
 import { ReviewsReducer } from "./ReviewsSlice/ReviewsSlice";
 import { productReducer } from "./ProductSlice/ProductSlice";
 import { commentReducer } from "./CommentsSlice/CommentsSlice";
+import { searchReducer } from "./SearchSlice/SearchSlice";
 const store = configureStore({
   reducer: {
     accountSlice: accountReducer,
@@ -11,6 +12,7 @@ const store = configureStore({
     reviewsSlice: ReviewsReducer,
     productsSlice: productReducer,
     commentsSlice: commentReducer,
+    searchSlice: searchReducer,
   },
 });
 

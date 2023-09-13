@@ -3,35 +3,42 @@ import { Button, Input, Select, Card } from "antd";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import debounce from "lodash.debounce";
-import axios from "../../axios";
+
 import { stylesBlock, stylesDiv, stylesDivMain } from "./propsForSearch";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchGetSearch } from "../../store/SearchSlice/SearchSlice";
 const SearchComponent = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [value, setValue] = React.useState("");
   const [show, setShow] = React.useState(false);
-
+  const dispatch = useDispatch();
   const [dataSource, setDataSource] = React.useState([]);
   const [dataSource2, setDataSource2] = React.useState([]);
+  const { searchedReviews, searchedComments, searchLoading } = useSelector(
+    (state) => state.searchSlice
+  );
+  // console.log(searchedReviews, searchedComments);
   const handleSearch = async () => {
-    console.log("search", value);
+    // console.log("search", value);
 
-    const reviews = await axios.get(`/api/search/reviews?q=${value}`);
+    // const reviews = await axios.get(`/api/search/reviews?q=${value}`);
+    await dispatch(fetchGetSearch(value));
 
     setShow(true);
-    setDataSource(reviews.data.reviews);
-    setDataSource2(reviews.data.comments);
+    setDataSource(searchedReviews.slice(0, 7));
+    setDataSource2(searchedComments.slice(0, 4));
   };
-  const inputRef = React.useRef();
+
+  const searchRef = React.useRef();
   const updateSearchValue = React.useCallback(
     debounce((string) => {
       setValue(string);
-      console.log("search", value);
+      // console.log("search", value);
     }, 100),
     []
   );
 
-  console.log(dataSource, dataSource2);
   const onChangeInput = (event) => {
     if (value === "") {
       setDataSource([]);
@@ -41,16 +48,29 @@ const SearchComponent = () => {
     updateSearchValue(event.target.value);
   };
 
+  React.useEffect(() => {
+    const handleClickOutSide = (event) => {
+      if (!event.composedPath().includes(searchRef.current)) {
+        setValue("");
+        // console.log("click outside");
+      }
+    };
+
+    document.body.addEventListener("click", handleClickOutSide);
+    return () => {
+      document.body.removeEventListener("click", handleClickOutSide);
+    };
+  }, []);
   return (
     <>
-      <div className=" border-gray-600 rounded-lg">
+      <div className=" border-gray-600 rounded-lg " ref={searchRef}>
         <Input.Search
-          ref={inputRef}
+          // ref={inputRef}
           placeholder="Search"
           value={value}
           onChange={onChangeInput}
           onSearch={handleSearch}
-          style={{ minWidth: "300px", maxWidth: "500px" }}
+          style={{ minWidth: "150px", maxWidth: "500px" }}
         />
         <div style={stylesBlock}>
           {show !== true ? null : (
@@ -95,6 +115,14 @@ const SearchComponent = () => {
                 </div>
               </div>
             ))}
+          <div>
+            {(dataSource2.length > 0 && value !== "") ||
+            (dataSource.length > 0 && value !== "") ? (
+              <div style={stylesDivMain} onClick={() => navigate("/search")}>
+                {t("allSearchResults")}
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
     </>
@@ -102,15 +130,3 @@ const SearchComponent = () => {
 };
 
 export default SearchComponent;
-// почистить код, стили
-//   const arr = dataSource2.map((item) => {
-//     return item.reviewId;
-//   });
-//   const uniqueIds = new Set();
-//   const filtered = arr.filter((item) => {
-//     if (!uniqueIds.has(item._id)) {
-//       uniqueIds.add(item._id);
-//       return true;
-//     }
-//     return false;
-//   });

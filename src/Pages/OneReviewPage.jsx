@@ -32,11 +32,7 @@ const OneReviewPage = () => {
           <RollBackButton />
         </Link>
         <OneReview />
-        <RelatedReviews
-          oneReview={oneReview}
-          productId={oneReview.productId}
-          id={id}
-        />
+        <RelatedReviews productId={oneReview.productId} id={id} />
 
         <CommentBlock />
       </Layout>

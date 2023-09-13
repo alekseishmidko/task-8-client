@@ -105,18 +105,21 @@ const productSlice = createSlice({
       state.errors = null;
       state.oneProduct = [];
       state.averageRatingFive = 0;
+      state.productsRatings = [];
     });
     builder.addCase(fetchGetOneProduct.fulfilled, (state, action) => {
       state.oneProductLoading = "loaded";
       state.errors = null;
       state.oneProduct = action.payload.product;
       state.averageRatingFive = action.payload.averageRatingFive;
+      state.productsRatings = action.payload.productsRatings;
     });
     builder.addCase(fetchGetOneProduct.rejected, (state, action) => {
       state.oneProductLoading = "error";
       state.errors = action.error.message;
       state.oneProduct = [];
       state.averageRatingFive = 0;
+      state.productsRatings = [];
       // state.message = action.payload;
     });
     // POST HANDLE RATING FIVE

@@ -1,10 +1,13 @@
-import { Layout, Image, Form, Rate, Card, Button } from "antd";
+import { Layout, Image, Form, Rate, Card, Button, message } from "antd";
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import { groupColor } from "./oneProductProps";
 import ReactMarkdown from "react-markdown";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchGetOneProduct } from "../../store/ProductSlice/ProductSlice";
+import {
+  fetchGetOneProduct,
+  fetchHandleProductsRating,
+} from "../../store/ProductSlice/ProductSlice";
 import { useTranslation } from "react-i18next";
 import Spinner from "../Spinner/Spinner";
 const OneProduct = () => {
@@ -15,17 +18,108 @@ const OneProduct = () => {
   React.useEffect(() => {
     dispatch(fetchGetOneProduct(path));
   }, [dispatch]);
-  const { oneProduct, averageRatingFive, oneProductLoading } = useSelector(
-    (state) => state.productsSlice
-  );
+  const { oneProduct, averageRatingFive, oneProductLoading, productsRatings } =
+    useSelector((state) => state.productsSlice);
   const { data } = useSelector((state) => state.accountSlice);
-  console.log(oneProduct._id);
+
+  const filtered = productsRatings.filter((item) => {
+    if (data === null) {
+      return;
+    } else return item.userId === data._id;
+  });
+
+  const handleRatingFive = async (id, value) => {
+    console.log(id, { ratingFive: value });
+    const res = await dispatch(fetchHandleProductsRating({ id, value }));
+    if (!res) {
+      return message.error(res.payload.message);
+    }
+    setTimeout(() => {
+      dispatch(fetchGetOneProduct(path));
+    }, 980);
+  };
   if (oneProductLoading === "loading") {
     return <Spinner />;
   }
   return (
     <>
-      <div className="flex items-center justify-center w-full max-w-4xl p-4 ">
+      <div className="max-w-md xs:max-w-lg sm:max-w-3xl md:max-w-3xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4 flex items-center justify-center">
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden relative">
+          <Image.PreviewGroup
+            preview={{
+              onChange: (current, prev) =>
+                console.log(`current index: ${current}, prev index: ${prev}`),
+            }}
+            items={oneProduct.images}
+          >
+            <Image
+              height={400}
+              src={
+                oneProduct.images[0] ||
+                "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              }
+            />
+          </Image.PreviewGroup>
+          <div className="p-4 ">
+            <h2 className="text-xl font-semibold text-gray-800 my-4">
+              <ReactMarkdown className="prose">
+                {oneProduct.title}
+              </ReactMarkdown>
+            </h2>
+            <span
+              className={` absolute top-0 right-2 border mt-4 rounded-full ${
+                groupColor[oneProduct.group]
+              } px-3 py-1 text-sm font-semibold text-gray-700 mr-1`}
+            >
+              {oneProduct.group}
+            </span>
+            <div className="px-2 pt-8">
+              <span className=" text-base font-semibold">
+                <Rate
+                  defaultValue={
+                    filtered.find((item) => item.productId === oneProduct._id)
+                      ?.ratingFive || 0
+                  }
+                  disabled={data === null || data === 0}
+                  onChange={(value) => handleRatingFive(oneProduct._id, value)}
+                />
+              </span>
+            </div>
+            <div className="mt-4 flex items-center justify-between">
+              <span className="text-gray-800 font-semibold">
+                <span>
+                  {t("averageRating")}: {averageRatingFive}
+                </span>
+              </span>
+              {data === null ? (
+                <div className="p-4 rounded-md my-4 sm:p-2 flex justify-end">
+                  <Button disabled={data === null}>
+                    {t("loginForcreateReview")}
+                  </Button>
+                </div>
+              ) : (
+                <div className="p-4 rounded-md my-4 sm:p-2 flex justify-end">
+                  <Button
+                    onClick={() =>
+                      navigate(`/reviews/createbyproduct/${oneProduct._id}`)
+                    }
+                  >
+                    {t("createReview")}
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default OneProduct;
+
+{
+  /* <div className="flex items-center justify-center w-full max-w-4xl p-4 ">
         <Card className="w-full border shadow-lg">
           <div className="mx-auto my-6 flex justify-center ">
             <Image.PreviewGroup
@@ -81,96 +175,5 @@ const OneProduct = () => {
             </div>
           )}
         </Card>
-      </div>
-    </>
-  );
-};
-
-export default OneProduct;
-{
-  /* <Layout>
-        <div className="flex justify-center min-h-screen">
-          <Link to={-1} className="absolute top-16 left-2 z-50">
-            <RollBackButton />
-          </Link>
-          <div className="w-full sm:w-3/4 md:w-3/4 lg:w-2/3 xl:w-2/3 p-4 my-auto">
-            <div className="bg-white rounded-lg shadow-lg">
-              <Image.PreviewGroup
-                preview={{
-                  onChange: (current, prev) =>
-                    console.log(
-                      `current index: ${current}, prev index: ${prev}`
-                    ),
-                }}
-                items={oneProduct.images}
-              >
-                <Image
-                  height={300}
-                  src={
-                    oneProduct.images ||
-                    "https://gw.alipayobjects.com/zos/antfincdn/LlvErxo8H9/photo-1503185912284-5271ff81b9a8.webp"
-                  }
-                />
-              </Image.PreviewGroup>
-              <div className="px-6 py-4">
-                <ReactMarkdown className="prose">
-                  {oneProduct.title}
-                </ReactMarkdown>
-              </div>
-              <div className="px-6 py-4">
-                <p className="text-gray-600">{oneProduct.group}</p>
-              </div>
-              <div className="px-6 py-4">
-                <p className="text-lg font-semibold">
-                  {t("averageRating")}:
-                  {averageRatingFive === null ? 0 : averageRatingFive}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Layout> */
-}
-{
-  /* <Layout>
-        <div className="flex justify-center h-screen">
-          <Link to={-1} className="absolute top-16 left-2 z-50">
-            <RollBackButton />
-          </Link>
-          <div className="w-full sm:w-3/4 md:w-3/4 lg:w-2/3 xl:w-2/3 p-4 my-auto">
-            <div className="bg-white rounded-lg shadow-lg flex">
-              <div className="w-1/2 p-6">
-                <ReactMarkdown className="prose">
-                  {oneProduct.title}
-                </ReactMarkdown>
-                <p className="text-gray-600">{oneProduct.group}</p>
-                <p className="text-lg font-semibold">
-                  {t("averageRating")}:
-                  {averageRatingFive === null ? 0 : averageRatingFive}
-                </p>
-              </div>
-
-              <div className="w-1/2 p-6">
-                <Image.PreviewGroup
-                  preview={{
-                    onChange: (current, prev) =>
-                      console.log(
-                        `current index: ${current}, prev index: ${prev}`
-                      ),
-                  }}
-                  items={oneProduct.images}
-                >
-                  <Image
-                    height={400}
-                    src={
-                      oneProduct.images ||
-                      "https://gw.alipayobjects.com/zos/antfincdn/LlvErxo8H9/photo-1503185912284-5271ff81b9a8.webp"
-                    }
-                  />
-                </Image.PreviewGroup>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Layout> */
+      </div> */
 }

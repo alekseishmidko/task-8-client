@@ -12,6 +12,7 @@ const RelatedReviews = ({ productId, id }) => {
   }, []);
   const { relatedReviews } = useSelector((state) => state.reviewsSlice);
   console.log(relatedReviews);
+
   return (
     <>
       {
@@ -19,10 +20,10 @@ const RelatedReviews = ({ productId, id }) => {
           <h2 className="text-lg font-semibold mb-4">
             {t("recommendedReviews")}
           </h2>
-          <div className="flex justify-between gap-6 overflow-x-auto">
+          <div className="flex flex-wrap ">
             {relatedReviews.map((item, index) => (
               <div
-                className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 mb-4 cursor-pointer"
+                className="w-full xs:w-1/1 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 px-4 mb-4 cursor-pointer"
                 key={index}
               >
                 <Link to={`/reviews/${item._id}`}>
@@ -49,3 +50,107 @@ const RelatedReviews = ({ productId, id }) => {
 };
 
 export default RelatedReviews;
+// const arr = [
+//   {
+//     _id: "65009f35d14f2372bb44d2c9",
+//     title: "SADFGH",
+//     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
+//     group: "movies",
+//     rating: 8,
+//     ratingFive: [],
+//     likes: 0,
+//     userId: "64e653ee72d53ec57fcd84c8",
+//     tags: [],
+//     images: [],
+//     comments: [],
+//     productId: "64ecfb9eb95ca780bde596da",
+//     createdAt: "2023-09-12T17:26:13.090Z",
+//     updatedAt: "2023-09-12T17:26:13.090Z",
+//     __v: 0,
+//   },
+//   {
+//     _id: "65009f35d14f2372bb44d2c9",
+//     title: "SADFGH",
+//     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
+//     group: "movies",
+//     rating: 8,
+//     ratingFive: [],
+//     likes: 0,
+//     userId: "64e653ee72d53ec57fcd84c8",
+//     tags: [],
+//     images: [],
+//     comments: [],
+//     productId: "64ecfb9eb95ca780bde596da",
+//     createdAt: "2023-09-12T17:26:13.090Z",
+//     updatedAt: "2023-09-12T17:26:13.090Z",
+//     __v: 0,
+//   },
+//   {
+//     _id: "65009f35d14f2372bb44d2c9",
+//     title: "SADFGH",
+//     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
+//     group: "movies",
+//     rating: 8,
+//     ratingFive: [],
+//     likes: 0,
+//     userId: "64e653ee72d53ec57fcd84c8",
+//     tags: [],
+//     images: [],
+//     comments: [],
+//     productId: "64ecfb9eb95ca780bde596da",
+//     createdAt: "2023-09-12T17:26:13.090Z",
+//     updatedAt: "2023-09-12T17:26:13.090Z",
+//     __v: 0,
+//   },
+//   {
+//     _id: "65009f35d14f2372bb44d2c9",
+//     title: "SADFGH",
+//     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
+//     group: "movies",
+//     rating: 8,
+//     ratingFive: [],
+//     likes: 0,
+//     userId: "64e653ee72d53ec57fcd84c8",
+//     tags: [],
+//     images: [],
+//     comments: [],
+//     productId: "64ecfb9eb95ca780bde596da",
+//     createdAt: "2023-09-12T17:26:13.090Z",
+//     updatedAt: "2023-09-12T17:26:13.090Z",
+//     __v: 0,
+//   },
+//   {
+//     _id: "65009f35d14f2372bb44d2c9",
+//     title: "SADFGH",
+//     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
+//     group: "movies",
+//     rating: 8,
+//     ratingFive: [],
+//     likes: 0,
+//     userId: "64e653ee72d53ec57fcd84c8",
+//     tags: [],
+//     images: [],
+//     comments: [],
+//     productId: "64ecfb9eb95ca780bde596da",
+//     createdAt: "2023-09-12T17:26:13.090Z",
+//     updatedAt: "2023-09-12T17:26:13.090Z",
+//     __v: 0,
+//   },
+//   {
+//     _id: "65009f35d14f2372bb44d2c9",
+//     title: "SADFGH",
+//     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
+//     group: "movies",
+//     rating: 8,
+//     ratingFive: [],
+//     likes: 0,
+//     userId: "64e653ee72d53ec57fcd84c8",
+//     tags: [],
+//     images: [],
+//     comments: [],
+//     productId: "64ecfb9eb95ca780bde596da",
+//     createdAt: "2023-09-12T17:26:13.090Z",
+//     updatedAt: "2023-09-12T17:26:13.090Z",
+//     __v: 0,
+//   },
+// ];
