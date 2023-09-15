@@ -20,14 +20,16 @@ const SearchComponent = () => {
   );
   // console.log(searchedReviews, searchedComments);
   const handleSearch = async () => {
-    // console.log("search", value);
+    console.log("search", value);
 
     // const reviews = await axios.get(`/api/search/reviews?q=${value}`);
-    await dispatch(fetchGetSearch(value));
+    const res = await dispatch(fetchGetSearch(value));
+    console.log(res, "res");
 
     setShow(true);
-    setDataSource(searchedReviews.slice(0, 7));
-    setDataSource2(searchedComments.slice(0, 4));
+    setDataSource(res.payload.reviews.slice(0, 7));
+    setDataSource2(res.payload.comments.slice(0, 4));
+    console.log(dataSource, dataSource2);
   };
 
   const searchRef = React.useRef();
@@ -52,7 +54,6 @@ const SearchComponent = () => {
     const handleClickOutSide = (event) => {
       if (!event.composedPath().includes(searchRef.current)) {
         setValue("");
-        // console.log("click outside");
       }
     };
 
@@ -65,12 +66,11 @@ const SearchComponent = () => {
     <>
       <div className=" border-gray-600 rounded-lg " ref={searchRef}>
         <Input.Search
-          // ref={inputRef}
-          placeholder="Search"
+          placeholder={t("search")}
           value={value}
           onChange={onChangeInput}
           onSearch={handleSearch}
-          style={{ minWidth: "150px", maxWidth: "500px" }}
+          style={{ minWidth: "200px", maxWidth: "500px" }}
         />
         <div style={stylesBlock}>
           {show !== true ? null : (

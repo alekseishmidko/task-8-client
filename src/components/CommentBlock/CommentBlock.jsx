@@ -48,7 +48,7 @@ const CommentBlock = () => {
     return <Spinner />;
   }
   return (
-    <div className="flex items-center justify-center w-full max-w-4xl p-4 ">
+    <div className="flex items-center justify-center w-full max-w-3xl p-4 ">
       <div className="bg-white rounded-lg shadow-lg p-4 mt-4 w-full">
         <h2 className="text-lg font-semibold mb-2">{t("commentaries")}: </h2>
         <div className="mb-4">
@@ -79,7 +79,7 @@ const CommentBlock = () => {
             <div key={index} className="bg-gray-100 rounded-md p-2 my-4">
               <p className="text-gray-800 font-bold">
                 {item.userId.name}
-                <span className="font-semibold">{t("write")}:</span>
+                <span className="pl-2 font-semibold">{t("write")}:</span>
               </p>
               <p className="text-gray-600">{item.comment}</p>
             </div>

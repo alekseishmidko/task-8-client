@@ -17,7 +17,7 @@ export const fetchGetReviewComments = createAsyncThunk(
 );
 
 export const fetchCreateComment = createAsyncThunk(
-  "review/fetchCreateComment",
+  "comment/fetchCreateComment",
   async (formData, thunkAPI) => {
     try {
       const response = await axios.post(`api/comments/`, formData);
@@ -30,9 +30,36 @@ export const fetchCreateComment = createAsyncThunk(
     }
   }
 );
+export const fetchHandleLike = createAsyncThunk(
+  "likes/fetchHandleLike",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.post(`api/likes/${id}`);
+      return response.data;
+    } catch (error) {
+      // Обработка ошибок, если необходимо
+      return thunkAPI.rejectWithValue(error.response.data);
+      // throw error;
+    }
+  }
+);
+export const fetchLikesCount = createAsyncThunk(
+  "likes/fetchLikesCount",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.get(`api/likes/${id}`);
+      return response.data;
+    } catch (error) {
+      // Обработка ошибок, если необходимо
+      return thunkAPI.rejectWithValue(error.response.data);
+      // throw error;
+    }
+  }
+);
 
 const initialState = {
   commentsLoading: "loading",
+  likesLoading: "loading",
   errors: null,
   message: "",
   reviewComments: [],
@@ -70,6 +97,21 @@ const commentSlice = createSlice({
     });
     builder.addCase(fetchCreateComment.rejected, (state, action) => {
       state.commentsLoading = "error";
+      state.errors = action.error.message;
+      //   state.message = action.payload.message;
+    });
+    // POST HANDLE LIKE
+    builder.addCase(fetchHandleLike.pending, (state) => {
+      state.likesLoading = "loading";
+      state.errors = null;
+    });
+    builder.addCase(fetchHandleLike.fulfilled, (state, action) => {
+      state.likesLoading = "loaded";
+      state.errors = null;
+      state.message = action.payload;
+    });
+    builder.addCase(fetchHandleLike.rejected, (state, action) => {
+      state.likesLoading = "error";
       state.errors = action.error.message;
       //   state.message = action.payload.message;
     });

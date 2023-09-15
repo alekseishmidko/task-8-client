@@ -1,7 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Input, Button, Row, Col, Layout } from "antd";
-import { GoogleOutlined, FacebookOutlined } from "@ant-design/icons";
+import {
+  GoogleOutlined,
+  FacebookOutlined,
+  GithubOutlined,
+} from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { layout, validateMessages } from "../midwares/formMidwares";
 import { fetchLogin } from "../store/AccountSlice/AccountSlice";
@@ -9,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import RollBackButton from "../components/RollBackButton/RollBackButton";
 import { AlertMessage } from "../components/AlertMessage/AlertMessage";
 import { useTranslation } from "react-i18next";
+import GoogleButton from "../components/GoogleButton/GoogleButton";
+import GitHubButton from "../components/GitHubButton/GitHubButton";
 const LoginPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -94,28 +100,10 @@ const LoginPage = () => {
           </Form.Item>
           <Row gutter={[16, 16]} style={{ width: 400 }}>
             <Col span={11}>
-              <Button
-                type="default"
-                block
-                icon={<GoogleOutlined />}
-                style={{
-                  backgroundColor: "#DB4437",
-                  color: "white",
-                  marginLeft: 3,
-                }}
-              >
-                Google
-              </Button>
+              <GoogleButton />
             </Col>
             <Col span={11}>
-              <Button
-                type="default"
-                block
-                icon={<FacebookOutlined style={{ marginBottom: 2 }} />}
-                style={{ backgroundColor: "#1877F2", color: "white" }}
-              >
-                GitHub
-              </Button>
+              <GitHubButton />
             </Col>
           </Row>
         </Form>

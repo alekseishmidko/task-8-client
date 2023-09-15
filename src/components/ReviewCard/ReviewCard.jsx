@@ -9,6 +9,7 @@ import {
 import BadgeLike from "../BadgeLike/BadgeLike";
 import { useNavigate, Link } from "react-router-dom";
 import { groupColor } from "../OneProduct/oneProductProps";
+import { fetchHandleLike } from "../../store/CommentsSlice/CommentsSlice";
 const ReviewCard = ({
   group,
   title,
@@ -17,6 +18,8 @@ const ReviewCard = ({
   _id,
   tags,
   images,
+  likes,
+  rating,
 }) => {
   const { data } = useSelector((state) => state.accountSlice) || 0;
   const { themeMode } = useSelector((state) => state.themeSlice);
@@ -53,9 +56,10 @@ const ReviewCard = ({
           onClick={() => navigate(`/reviews/${_id}`)}
         >
           <span
-            className={`absolute top-0 right-0  border my-1 rounded-full ${groupColor[group]} px-3 py-1 text-sm font-semibold text-gray-700 mr-1`}
+            className={`absolute top-0 right-0  bordered  rounded-full ${groupColor[group]} px-2 py-1 text-sm font-semibold text-gray-700 `}
           >
-            {group}
+            {group}{" "}
+            <span className="text-sm font-bold text-red-700">{rating}</span>
           </span>
           <img
             src={
@@ -97,9 +101,9 @@ const ReviewCard = ({
         </div>
         <div className="px-6 py-4 flex justify-between mt-4">
           <span className="text-base font-semibold">
-            average rating: {avgRatingFive === null ? 0 : avgRatingFive}
+            average rating: {avgRatingFive}
           </span>
-          <BadgeLike count={3} />
+          <BadgeLike count={likes} _id={_id} />
         </div>
       </div>
     </div>

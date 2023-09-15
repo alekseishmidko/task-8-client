@@ -17,11 +17,11 @@ export const stylesDivMain = {
 };
 export const stylesBlock = {
   marginTop: "5px",
-  minWidth: "300px",
+  minWidth: "200px",
   background: "#ffffff",
   zIndex: 50,
   position: "absolute",
-  width: "230px",
+  width: "220px",
   paddingLeft: "6px",
   color: "black",
   borderRadius: 3,

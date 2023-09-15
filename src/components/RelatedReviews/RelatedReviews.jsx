@@ -7,16 +7,15 @@ const RelatedReviews = ({ productId, id }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   React.useEffect(() => {
-    console.log(id, productId, "useEfss");
     dispatch(fetchGetRelatedReviews({ id, productId }));
   }, []);
   const { relatedReviews } = useSelector((state) => state.reviewsSlice);
-  console.log(relatedReviews);
+  // console.log(relatedReviews);
 
   return (
     <>
       {
-        <div className=" w-full max-w-4xl px-6">
+        <div className=" w-full max-w-3xl px-6">
           <h2 className="text-lg font-semibold mb-4">
             {t("recommendedReviews")}
           </h2>

@@ -6,9 +6,11 @@ import {
   Form,
   Select,
   Slider,
+  Modal,
   Rate,
   message,
   Image,
+  Badge,
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -16,14 +18,13 @@ import {
   fetchGetOneReview,
   fetchHandleReviewsRating,
 } from "../../store/ReviewsSlice/ReviewsSlice";
-
+import { groupColor } from "./oneReviewProps";
 import ReactMarkdown from "react-markdown";
 import Spinner from "../Spinner/Spinner";
 import { useTranslation } from "react-i18next";
 import BadgeLike from "../BadgeLike/BadgeLike";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import CommentBlock from "../CommentBlock/CommentBlock";
-import { AlertMessage } from "../AlertMessage/AlertMessage";
+
 const OneReview = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = React.useState(false);
@@ -52,20 +53,12 @@ const OneReview = () => {
       dispatch(fetchGetOneReview({ id }));
     }, 980);
   };
-
   const _id = oneReview._id;
   const arr = ["books", "music", "movies", "games"];
   const handleEditClick = () => {
     // if (isDis) {
     setIsEditing(true);
   };
-  // else {
-  // return AlertMessage(
-  //   "error",
-  //   "you don't have enough rights to make changes for this review"
-  // );
-  // }
-  // };
 
   const handleSaveClick = () => {
     form.validateFields().then((values) => {
@@ -75,12 +68,174 @@ const OneReview = () => {
       dispatch(fetchGetOneReview({ id }));
     });
   };
-  // console.log(id, oneReview, id === oneReview._id);
-  // const isDis = oneReview.userId === data._id || data.role !== "user";
-  // console.log(isDis);
+  //
+  const [open, setOpen] = React.useState(false);
+  const [confirmLoading, setConfirmLoading] = React.useState(false);
+
+  const showModal = () => {
+    setOpen(true);
+  };
+  const handleCancel = () => {
+    setOpen(false);
+  };
+  const handleOk = () => {
+    setConfirmLoading(true);
+    form.validateFields().then((values) => {
+      console.log(values);
+      dispatch(fetchUpdateReview({ id, values }));
+      dispatch(fetchGetOneReview({ id }));
+    });
+    setTimeout(() => {
+      setOpen(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
   return (
     <>
-      <div className="flex items-center justify-center w-full max-w-4xl p-4">
+      <div className="max-w-lg xs:max-w-lg sm:max-w-4xl md:max-w-4xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4 flex items-center w-full justify-center">
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden relative">
+          <Card className="w-full border shadow-lg">
+            <Image.PreviewGroup
+              preview={{
+                onChange: (current, prev) =>
+                  console.log(`current index: ${current}, prev index: ${prev}`),
+              }}
+              items={oneReview.images}
+            >
+              <Image
+                height={400}
+                src={
+                  oneReview.images[0] ||
+                  "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                }
+              />
+            </Image.PreviewGroup>
+            <div className="p-4 ">
+              <h2 className="text-xl font-semibold text-gray-800 my-4">
+                <ReactMarkdown className="prose">
+                  {oneReview.title}
+                </ReactMarkdown>
+              </h2>
+              <span
+                className={` absolute top-2 right-5 border mt-4 rounded-l-full ${
+                  groupColor[oneReview.group]
+                } px-3 py-1 text-sm font-semibold text-gray-700 mr-1`}
+              >
+                {oneReview.group}
+                <span className=" pl-2 text-lg font-bold text-red-700">
+                  {oneReview.rating}
+                </span>
+              </span>
+
+              <h2 className="text-xl font-semibold text-gray-800 my-4 ">
+                <ReactMarkdown className="prose">
+                  {oneReview.content}
+                </ReactMarkdown>
+              </h2>
+              <div className="px-2 pt-8">
+                <span className=" text-base font-semibold">
+                  <Rate
+                    defaultValue={
+                      filtered.find((item) => item.reviewId === _id)
+                        ?.ratingFive || 0
+                    }
+                    disabled={data === null || data === 0}
+                    onChange={(value) => handleRatingFive(_id, value)}
+                  />
+                </span>
+              </div>
+              <div className="mt-4 flex items-center justify-between">
+                <span className="text-gray-800 font-semibold">
+                  <span>
+                    {t("averageRating")}: {averageRatingFive}
+                  </span>
+                </span>
+                {/* <span>
+                  {t("authorRating")}: {oneReview.rating}
+                </span> */}
+                {
+                  <div className="p-4 rounded-md my-4 sm:p-2 flex justify-end">
+                    <Button onClick={showModal}>Edit</Button>
+                    <Modal
+                      okType="default"
+                      title="Title"
+                      open={open}
+                      onOk={handleOk}
+                      confirmLoading={confirmLoading}
+                      onCancel={handleCancel}
+                    >
+                      <Form
+                        form={form}
+                        initialValues={{
+                          title: oneReview.title,
+                          group: oneReview.group,
+                          content: oneReview.content,
+                          rating: oneReview.rating || 0,
+                        }}
+                        layout="vertical"
+                      >
+                        {
+                          <Form.Item label="Title" name="title">
+                            <Input defaultValue={oneReview.title} />
+                          </Form.Item>
+                        }
+                        {
+                          <Form.Item label="Group" name="group">
+                            <Select defaultValue={oneReview.group}>
+                              {arr.map((item, index) => (
+                                <Option key={index} value={item}>
+                                  {item}
+                                </Option>
+                              ))}
+                            </Select>
+                          </Form.Item>
+                        }
+
+                        {
+                          <Form.Item label="Content" name="content">
+                            <Input.TextArea defaultValue={oneReview.content} />
+                          </Form.Item>
+                        }
+
+                        <Form.Item
+                          label=" "
+                          name="rating"
+                          className="mt-4 px-1"
+                          defaultValue={oneReview.rating || 0}
+                        >
+                          {
+                            <Slider
+                              defaultValue={oneReview.rating}
+                              min={0}
+                              max={10}
+                              marks={{
+                                0: "0",
+                                2: "2",
+                                4: "4",
+                                6: "6",
+                                8: "8",
+                                10: "10",
+                              }}
+                              step={1}
+                            />
+                          }
+                        </Form.Item>
+                      </Form>
+                    </Modal>
+                  </div>
+                }
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default OneReview;
+{
+  /* <div className="flex items-center justify-center w-full max-w-4xl p-4">
         <Card className="w-full border shadow-lg">
           <div className="mx-auto my-6 flex justify-center">
             <Image.PreviewGroup
@@ -122,7 +277,6 @@ const OneReview = () => {
               ) : (
                 <div className="p-4 rounded-md border my-4 sm:p-2">
                   <h2>
-                    {" "}
                     <ReactMarkdown className="prose">
                       {oneReview.title}
                     </ReactMarkdown>
@@ -202,7 +356,7 @@ const OneReview = () => {
                 {t("averageRating")}:
                 {averageRatingFive === null ? 0 : averageRatingFive}
               </span>
-              <BadgeLike count={3} />
+              <BadgeLike count={oneReview.likes} _id={oneReview._id} />
             </div>
             {data !== null && (
               <div className="mt-4">
@@ -223,9 +377,5 @@ const OneReview = () => {
             )}
           </div>
         </Card>
-      </div>
-    </>
-  );
-};
-
-export default OneReview;
+      </div> */
+}
