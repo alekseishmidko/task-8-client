@@ -48,7 +48,7 @@ const CommentBlock = () => {
     return <Spinner />;
   }
   return (
-    <div className="flex items-center justify-center w-full max-w-3xl p-4 ">
+    <div className="flex items-center justify-center w-full max-w-4xl px-5 ">
       <div className="bg-white rounded-lg shadow-lg p-4 mt-4 w-full">
         <h2 className="text-lg font-semibold mb-2">{t("commentaries")}: </h2>
         <div className="mb-4">

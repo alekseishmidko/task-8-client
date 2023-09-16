@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { MenuOutlined } from "@ant-design/icons";
-import { Drawer } from "antd";
+import { Drawer, Button, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { CloseOutlined } from "@ant-design/icons";
+import ThemeTumbler from "../ThemeTumbler/ThemeTumbler";
+import LangComponent from "../LangComponent/LangComponent";
 const BurgerMenu = () => {
   const { t } = useTranslation();
   const { themeMode } = useSelector((state) => state.themeSlice);
@@ -24,14 +27,25 @@ const BurgerMenu = () => {
   ];
   return (
     <div>
-      <MenuOutlined onClick={showDrawer} className="text-2xl cursor-pointer" />
+      <MenuOutlined
+        onClick={showDrawer}
+        className="text-2xl xs:text-xl sm:text-xl cursor-pointer"
+      />
 
       <Drawer
-        title={t("menu")}
+        // title={t("menu")}
+
         placement="right"
-        closable={false}
+        closable={true}
+        closeIcon={<CloseOutlined />}
         onClose={onClose}
         visible={visible}
+        extra={
+          <Space>
+            <ThemeTumbler />
+            <LangComponent />
+          </Space>
+        }
       >
         <ul className="list-none">
           {burgerArr.map((item, index) => (

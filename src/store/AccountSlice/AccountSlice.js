@@ -12,7 +12,7 @@ export const fetchLogin = createAsyncThunk(
       });
 
       localStorage.setItem("token", response.data.token);
-      // localStorage.setItem("data", JSON.stringify(response.data.user));
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -25,7 +25,6 @@ export const fetchCurrent = createAsyncThunk(
     try {
       const response = await axios.get("api/users/current");
 
-      // localStorage.setItem("data", JSON.stringify(response.data.user));
       return response.data;
     } catch (error) {
       // return thunkAPI.rejectWithValue(error.response.data);
@@ -44,10 +43,9 @@ export const fetchRegistration = createAsyncThunk(
         name,
       });
 
-      // localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response.data.token);
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
       // throw error;
     }
@@ -61,7 +59,6 @@ export const fetchGetAllUsers = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
       // throw error;
     }
@@ -102,6 +99,25 @@ export const fetchGetLikes = createAsyncThunk(
       // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
       // throw error;
+    }
+  }
+);
+
+export const fetchSignGoogle = createAsyncThunk(
+  "account/fetchSignGoogle",
+  async ({ email, id, picture, verified_email, name }, thunkAPI) => {
+    try {
+      const response = await axios.post("api/users/google", {
+        email,
+        id,
+        picture,
+        verified_email,
+        name,
+      });
+      localStorage.setItem("token", response.data.token);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -237,6 +253,23 @@ const accountSlice = createSlice({
       state.errors = action.error.message;
       state.message = action.payload.message;
       state.userLikes = 0;
+    });
+    // POST SIGN GOOGLE
+    builder.addCase(fetchSignGoogle.pending, (state) => {
+      state.authLoading = "loading";
+      state.errors = null;
+      state.data = null;
+    });
+    builder.addCase(fetchSignGoogle.fulfilled, (state, action) => {
+      state.authLoading = "loaded";
+      state.errors = null;
+      state.data = action.payload.user;
+    });
+    builder.addCase(fetchSignGoogle.rejected, (state, action) => {
+      state.authLoading = "error";
+      state.errors = action.error.message;
+      state.data = null;
+      state.message = action.payload.message;
     });
   },
 });

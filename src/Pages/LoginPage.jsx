@@ -15,6 +15,7 @@ import { AlertMessage } from "../components/AlertMessage/AlertMessage";
 import { useTranslation } from "react-i18next";
 import GoogleButton from "../components/GoogleButton/GoogleButton";
 import GitHubButton from "../components/GitHubButton/GitHubButton";
+
 const LoginPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();

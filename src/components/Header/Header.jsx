@@ -43,33 +43,43 @@ const Header = () => {
           >
             My Website
           </span>
-          <ThemeTumbler />
-          <LangComponent />
+
+          <div className="sm:inline hidden xs:inline hidden">
+            <ThemeTumbler />{" "}
+          </div>
+
+          <div className="mx-2 ">
+            <LangComponent />
+          </div>
         </div>
-        <div className="flex items-center justify-center mt-4 md:mb-4 md:flex-1 md:justify-center sm:flex-1 sm:justify-center w-full sm:w-1/2">
+        <div className="flex items-center justify-center ">
           <SearchComponent className="h-full w-full md:w-1/2 sm:w-full" />
         </div>
 
-        <div className="mt-4 md:mt-0 md:ml-4 md:mr-3">
+        <div className="">
           {data !== null ? (
-            <div className="flex items-center cursor-pointer">
+            <div className="flex items-center cursor-pointer sm: flex justify-center items-center">
               <div onClick={() => onClickUserLogo()}>
-                <UserOutlined className="text-white mr-2" />
-                <span className="text-white">{data.name || ""}</span>
+                <UserOutlined className="text-white mr-2  sm:pl-3 xs: mr-2 xs:ml-1 sm:ml-1" />
+                <span className="text-white sm:inline hidden">
+                  {data.name || ""}
+                </span>
               </div>
               <LogoutOutlined
                 onClick={onClickLogout}
-                className="text-white pl-5"
+                className="text-white pl-5 sm:mr-2 xs: mr-2"
               />
             </div>
           ) : (
             <>
               <Link to="/login">
-                <Button className="text-white">Log In</Button>
+                <Button className="text-white px-3 text-sm mx-2 sm:w-22 md:w-30 ">
+                  {t("logIn")}
+                </Button>
               </Link>
               <Link to="/register">
-                <Button className="bg-blue-500 text-white px-4 rounded-lg ml-2 md:inline hidden">
-                  Sign Up
+                <Button className="bg-blue-500 text-white px-2 rounded-lg mx-2 md:inline hidden text-sm sm:w-22 md:w-30 lg:w-22">
+                  {t("signUp")}
                 </Button>
               </Link>
             </>
@@ -93,3 +103,17 @@ export default Header;
             </Button>
           </div> */
 }
+// mt-4 md:mb-4 md:flex-1 md:justify-center sm:flex-1 sm:justify-center w-full sm:w-1/2
+//
+// <div className="flex items-center cursor-pointer">
+//   <div onClick={() => onClickUserLogo()}>
+//     <UserOutlined className="text-white mr-2" />
+//     <span className="text-white  sm:inline hidden">
+//       {data.name || ""}
+//     </span>
+//   </div>
+//   <LogoutOutlined
+//     onClick={onClickLogout}
+//     className="text-white pl-5 mr-2"
+//   />
+// </div>

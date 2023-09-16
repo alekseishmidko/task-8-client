@@ -10,7 +10,7 @@ import {
   Rate,
   message,
   Image,
-  Badge,
+  Tag,
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -24,6 +24,7 @@ import Spinner from "../Spinner/Spinner";
 import { useTranslation } from "react-i18next";
 import BadgeLike from "../BadgeLike/BadgeLike";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { StarOutlined } from "@ant-design/icons";
 
 const OneReview = () => {
   const [form] = Form.useForm();
@@ -55,19 +56,19 @@ const OneReview = () => {
   };
   const _id = oneReview._id;
   const arr = ["books", "music", "movies", "games"];
-  const handleEditClick = () => {
-    // if (isDis) {
-    setIsEditing(true);
-  };
+  // const handleEditClick = () => {
+  //   // if (isDis) {
+  //   setIsEditing(true);
+  // };
 
-  const handleSaveClick = () => {
-    form.validateFields().then((values) => {
-      console.log(values);
-      dispatch(fetchUpdateReview({ id, values }));
-      setIsEditing(false);
-      dispatch(fetchGetOneReview({ id }));
-    });
-  };
+  // const handleSaveClick = () => {
+  //   form.validateFields().then((values) => {
+  //     console.log(values);
+  //     dispatch(fetchUpdateReview({ id, values }));
+  //     setIsEditing(false);
+  //     dispatch(fetchGetOneReview({ id }));
+  //   });
+  // };
   //
   const [open, setOpen] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
@@ -90,11 +91,15 @@ const OneReview = () => {
       setConfirmLoading(false);
     }, 2000);
   };
+  const isDis =
+    (data !== null && data._id === oneReview.userId) ||
+    (data !== null && data.role !== "user");
+  console.log(isDis, "isDis");
   return (
     <>
-      <div className="max-w-lg xs:max-w-lg sm:max-w-4xl md:max-w-4xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4 flex items-center w-full justify-center">
+      <div className="w-full max-w-4xl mx-auto p-4 xs:max-w-lg sm:max-w-4xl md:max-w-4xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4  ">
         <div className="bg-white shadow-lg rounded-lg overflow-hidden relative">
-          <Card className="w-full border shadow-lg">
+          <Card className="w-full border shadow-lg ">
             <Image.PreviewGroup
               preview={{
                 onChange: (current, prev) =>
@@ -102,13 +107,15 @@ const OneReview = () => {
               }}
               items={oneReview.images}
             >
-              <Image
-                height={400}
-                src={
-                  oneReview.images[0] ||
-                  "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                }
-              />
+              <div className="w-full flex justify-center">
+                <Image
+                  style={{ height: "45vh" }}
+                  src={
+                    oneReview.images[0] ||
+                    "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                  }
+                />
+              </div>
             </Image.PreviewGroup>
             <div className="p-4 ">
               <h2 className="text-xl font-semibold text-gray-800 my-4">
@@ -116,13 +123,22 @@ const OneReview = () => {
                   {oneReview.title}
                 </ReactMarkdown>
               </h2>
+              <div className="">
+                {oneReview.tags.map((item, index) => (
+                  <span key={index}>
+                    <Tag bordered={false} key={index} className=" mr-2">
+                      {item}
+                    </Tag>
+                  </span>
+                ))}
+              </div>
               <span
-                className={` absolute top-2 right-5 border mt-4 rounded-l-full ${
+                className={`absolute top-2 right-5 border mt-4 rounded-l-full ${
                   groupColor[oneReview.group]
                 } px-3 py-1 text-sm font-semibold text-gray-700 mr-1`}
               >
                 {oneReview.group}
-                <span className=" pl-2 text-lg font-bold text-red-700">
+                <span className="pl-2 text-lg font-bold text-red-700">
                   {oneReview.rating}
                 </span>
               </span>
@@ -133,7 +149,7 @@ const OneReview = () => {
                 </ReactMarkdown>
               </h2>
               <div className="px-2 pt-8">
-                <span className=" text-base font-semibold">
+                <span className="text-base font-semibold">
                   <Rate
                     defaultValue={
                       filtered.find((item) => item.reviewId === _id)
@@ -147,83 +163,70 @@ const OneReview = () => {
               <div className="mt-4 flex items-center justify-between">
                 <span className="text-gray-800 font-semibold">
                   <span>
-                    {t("averageRating")}: {averageRatingFive}
+                    {t("averageRating")}: {averageRatingFive} <StarOutlined />
                   </span>
                 </span>
-                {/* <span>
-                  {t("authorRating")}: {oneReview.rating}
-                </span> */}
-                {
-                  <div className="p-4 rounded-md my-4 sm:p-2 flex justify-end">
-                    <Button onClick={showModal}>Edit</Button>
-                    <Modal
-                      okType="default"
-                      title="Title"
-                      open={open}
-                      onOk={handleOk}
-                      confirmLoading={confirmLoading}
-                      onCancel={handleCancel}
+                <div className="p-4 rounded-md my-4 sm:p-2 flex justify-end">
+                  <Button disabled={!isDis} onClick={showModal}>
+                    Edit
+                  </Button>
+                  <Modal
+                    okType="default"
+                    title="Title"
+                    open={open}
+                    onOk={handleOk}
+                    confirmLoading={confirmLoading}
+                    onCancel={handleCancel}
+                  >
+                    <Form
+                      form={form}
+                      initialValues={{
+                        title: oneReview.title,
+                        group: oneReview.group,
+                        content: oneReview.content,
+                        rating: oneReview.rating || 0,
+                      }}
+                      layout="vertical"
                     >
-                      <Form
-                        form={form}
-                        initialValues={{
-                          title: oneReview.title,
-                          group: oneReview.group,
-                          content: oneReview.content,
-                          rating: oneReview.rating || 0,
-                        }}
-                        layout="vertical"
+                      <Form.Item label="Title" name="title">
+                        <Input defaultValue={oneReview.title} />
+                      </Form.Item>
+                      <Form.Item label="Group" name="group">
+                        <Select defaultValue={oneReview.group}>
+                          {arr.map((item, index) => (
+                            <Option key={index} value={item}>
+                              {item}
+                            </Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                      <Form.Item label="Content" name="content">
+                        <Input.TextArea defaultValue={oneReview.content} />
+                      </Form.Item>
+                      <Form.Item
+                        label=" "
+                        name="rating"
+                        className="mt-4 px-1"
+                        defaultValue={oneReview.rating || 0}
                       >
-                        {
-                          <Form.Item label="Title" name="title">
-                            <Input defaultValue={oneReview.title} />
-                          </Form.Item>
-                        }
-                        {
-                          <Form.Item label="Group" name="group">
-                            <Select defaultValue={oneReview.group}>
-                              {arr.map((item, index) => (
-                                <Option key={index} value={item}>
-                                  {item}
-                                </Option>
-                              ))}
-                            </Select>
-                          </Form.Item>
-                        }
-
-                        {
-                          <Form.Item label="Content" name="content">
-                            <Input.TextArea defaultValue={oneReview.content} />
-                          </Form.Item>
-                        }
-
-                        <Form.Item
-                          label=" "
-                          name="rating"
-                          className="mt-4 px-1"
-                          defaultValue={oneReview.rating || 0}
-                        >
-                          {
-                            <Slider
-                              defaultValue={oneReview.rating}
-                              min={0}
-                              max={10}
-                              marks={{
-                                0: "0",
-                                2: "2",
-                                4: "4",
-                                6: "6",
-                                8: "8",
-                                10: "10",
-                              }}
-                              step={1}
-                            />
-                          }
-                        </Form.Item>
-                      </Form>
-                    </Modal>
-                  </div>
-                }
+                        <Slider
+                          defaultValue={oneReview.rating}
+                          min={0}
+                          max={10}
+                          marks={{
+                            0: "0",
+                            2: "2",
+                            4: "4",
+                            6: "6",
+                            8: "8",
+                            10: "10",
+                          }}
+                          step={1}
+                        />
+                      </Form.Item>
+                    </Form>
+                  </Modal>
+                </div>
               </div>
             </div>
           </Card>

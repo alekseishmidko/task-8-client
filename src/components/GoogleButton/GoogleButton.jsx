@@ -4,10 +4,15 @@ import { GoogleOutlined } from "@ant-design/icons";
 import { useGoogleLogin } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { fetchSignGoogle } from "../../store/AccountSlice/AccountSlice";
+import { useNavigate } from "react-router-dom";
 const GoogleButton = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      console.log(tokenResponse);
+      console.log(tokenResponse, "tokenresponce");
       try {
         const userInfoResponse = await axios.get(
           "https://www.googleapis.com/oauth2/v2/userinfo",
@@ -21,6 +26,10 @@ const GoogleButton = () => {
         if (userInfoResponse.status === 200) {
           const userInfo = userInfoResponse.data;
           console.log(userInfo);
+          dispatch(fetchSignGoogle(userInfo));
+          setTimeout(() => {
+            navigate(-1);
+          }, 750);
         } else {
           console.error("Не удалось получить информацию о пользователе");
         }
@@ -30,7 +39,6 @@ const GoogleButton = () => {
           error
         );
       }
-      // хешировать токен и использовать вместо пароля
     },
   });
   return (
@@ -51,13 +59,6 @@ const GoogleButton = () => {
 };
 
 export default GoogleButton;
-// {
-/* <GoogleLogin
-onSuccess={(credentialResponse) => {
-  console.log(credentialResponse);
-}}
-onError={() => {
-  console.log("Login Failed");
-}}
-/> */
-// }
+
+// id 113207383771076086984
+// "ya29.a0AfB_byA_s9DuXpYC7Wb3JurmhPkEftChL-ADVBXV8-zFHD92MDfeUFeQseffNOj7jT8NgdnRuS2zlXmwZWWMh-_jonYlXoWTVO0oMNGyT4UyqgnI9BeqRa929ur39R5glFhd8sKsnXJ0q7ISjqpiVHV1g54tmLNy2q0aCgYKATgSARASFQGOcNnCBNDWXUdnxE1kIltuUbjuUw0170"

@@ -30,12 +30,10 @@ const TabContent = () => {
                 <div className="grid grid-cols-1 gap-4">
                   <Carousel afterChange={onChange} effect="fade" dots={true}>
                     {last6Reviews.map((item, index) => (
-                      <div
-                        key={index}
-                        // className="flex flex-col justify-center items-center flex-grow"
-                      >
-                        <ReviewCard {...item} />
-                        <div style={contentStyle} key={index}></div>
+                      <div key={index}>
+                        <div className="w-full h-full flex items-center justify-center">
+                          <ReviewCard {...item} />
+                        </div>
                       </div>
                     ))}
                   </Carousel>
@@ -46,8 +44,7 @@ const TabContent = () => {
                     {pop6Reviews.map((item, index) => (
                       <div
                         key={index}
-
-                        // className="flex flex-col justify-center items-center flex-grow"
+                        className="w-full h-full flex items-center justify-center"
                       >
                         <ReviewCard {...item} />
                         <div style={contentStyle} key={index}></div>

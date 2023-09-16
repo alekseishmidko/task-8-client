@@ -10,6 +10,7 @@ import BadgeLike from "../BadgeLike/BadgeLike";
 import { useNavigate, Link } from "react-router-dom";
 import { groupColor } from "../OneProduct/oneProductProps";
 import { fetchHandleLike } from "../../store/CommentsSlice/CommentsSlice";
+import { StarOutlined } from "@ant-design/icons";
 const ReviewCard = ({
   group,
   title,
@@ -76,8 +77,8 @@ const ReviewCard = ({
               </ReactMarkdown>
             </div>
           </div>
-          <div className="px-6">
-            <span className="">
+          <div className="px-6 min-h-[24px]">
+            <div className="">
               {tags.map((item, index) => (
                 <span key={index}>
                   <Tag bordered={false} key={index} className=" mr-2">
@@ -85,7 +86,7 @@ const ReviewCard = ({
                   </Tag>
                 </span>
               ))}
-            </span>
+            </div>
           </div>
         </div>
         <div className="px-6 py-4">
@@ -101,7 +102,7 @@ const ReviewCard = ({
         </div>
         <div className="px-6 py-4 flex justify-between mt-4">
           <span className="text-base font-semibold">
-            average rating: {avgRatingFive}
+            average rating: {avgRatingFive} <StarOutlined />
           </span>
           <BadgeLike count={likes} _id={_id} />
         </div>

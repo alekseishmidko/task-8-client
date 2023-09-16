@@ -15,7 +15,7 @@ const RelatedReviews = ({ productId, id }) => {
   return (
     <>
       {
-        <div className=" w-full max-w-3xl px-6">
+        <div className=" w-full max-w-4xl px-6">
           <h2 className="text-lg font-semibold mb-4">
             {t("recommendedReviews")}
           </h2>

@@ -10,23 +10,27 @@ const GitHubButton = () => {
   const clientSecret = "4639938eeac58cb7c4c998830eef87bea3712969";
   const callbackURL = window.location.href;
   console.log(provider, profile);
-  const onLoginStart = React.useCallback(() => {
-    console.log(provider, profile);
 
+  const onLoginStart = React.useCallback(() => {
+    console.log(profile);
     axios
-      .get("https://api.github.com/user", {
+      .get(`https://api.github.com/user`, {
         headers: {
-          Authorization: `Bearer ${profile.access_token}`,
-        },
-        params: {
-          scope: "user:email",
+          Authorization: `token ${profile.access_token}`,
         },
       })
       .then((response) => {
-        console.log(response.data);
+        // Здесь вы можете обработать ответ от GitHub API
+        const userData = response.data;
+        console.log("Полученная информация о пользователе GitHub:", userData);
+
+        // Далее, вы можете использовать полученные данные
       })
       .catch((error) => {
-        console.error(error);
+        console.error(
+          "Ошибка при получении данных пользователя GitHub:",
+          error
+        );
       });
   }, []);
 
@@ -37,7 +41,7 @@ const GitHubButton = () => {
   //   }, []);
   return (
     <LoginSocialGithub
-      isOnlyGetToken
+      isOnlyGetToken={true}
       client_id={clientID || ""}
       client_secret={clientSecret || ""}
       redirect_uri={callbackURL}
@@ -92,3 +96,5 @@ export default GitHubButton;
 // SHA256:G2lcy+W3C2a5C23Jrt9LOsOVTCjwwNlmnijq00krYEE=
 // Iv1.4b9ddc9580f72838
 // 4639938eeac58cb7c4c998830eef87bea3712969
+
+// token "ghu_76zJ3k81SsBW3brYiRkfqhjCNDBhUJ3PvEvi"
