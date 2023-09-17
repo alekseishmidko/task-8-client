@@ -250,8 +250,8 @@ const accountSlice = createSlice({
     });
     builder.addCase(fetchGetLikes.rejected, (state, action) => {
       state.isLoading = "error";
-      state.errors = action.error.message;
-      state.message = action.payload.message;
+      state.errors = action.error?.message;
+      state.message = action.payload?.message;
       state.userLikes = 0;
     });
     // POST SIGN GOOGLE

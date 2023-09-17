@@ -56,6 +56,17 @@ export const fetchLikesCount = createAsyncThunk(
     }
   }
 );
+export const fetchGetAllLikes = createAsyncThunk(
+  "likes/fetchGetAllLikes",
+  async (thunkAPI) => {
+    try {
+      const response = await axios.get(`api/likes/all`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const initialState = {
   commentsLoading: "loading",
@@ -63,6 +74,7 @@ const initialState = {
   errors: null,
   message: "",
   reviewComments: [],
+  allLikes: [],
 };
 const commentSlice = createSlice({
   name: "productSlice",
@@ -114,6 +126,22 @@ const commentSlice = createSlice({
       state.likesLoading = "error";
       state.errors = action.error.message;
       //   state.message = action.payload.message;
+    });
+    // GET ALL LIKES
+    builder.addCase(fetchGetAllLikes.pending, (state) => {
+      state.likesLoading = "loading";
+      state.errors = null;
+      state.allLikes = [];
+    });
+    builder.addCase(fetchGetAllLikes.fulfilled, (state, action) => {
+      state.likesLoading = "loaded";
+      state.errors = null;
+      state.allLikes = action.payload;
+    });
+    builder.addCase(fetchGetAllLikes.rejected, (state, action) => {
+      state.likesLoading = "error";
+      state.errors = action.error.message;
+      state.allLikes = [];
     });
   },
 });

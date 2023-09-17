@@ -1,4 +1,4 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Layout, Space } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -21,6 +21,7 @@ const CommentBlock = () => {
   );
   const dispatch = useDispatch();
   const data = useSelector((state) => state.accountSlice.data);
+  const { themeMode } = useSelector((state) => state.themeSlice);
   const reviewId = useParams().id;
   const onFinish = async (formData) => {
     try {
@@ -48,45 +49,60 @@ const CommentBlock = () => {
     return <Spinner />;
   }
   return (
-    <div className="flex items-center justify-center w-full max-w-4xl px-5 ">
-      <div className="bg-white rounded-lg shadow-lg p-4 mt-4 w-full">
-        <h2 className="text-lg font-semibold mb-2">{t("commentaries")}: </h2>
-        <div className="mb-4">
-          <Form onFinish={onFinish}>
-            <Form.Item
-              name={["comment"]}
-              rules={[{ type: "string", required: true }]}
-            >
-              <Input.TextArea
-                allowClear
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-                rows="3"
-                placeholder={t("leaveYourComment")}
-              />
-            </Form.Item>
-            <Form.Item>
-              <Button
-                disabled={data === null}
-                type="primary"
-                htmlType="submit"
-                className="bg-blue-500 text-white  px-4 mt-2 rounded-md hover:bg-blue-600 focus:outline-none"
+    <>
+      <div
+        className="flex items-center justify-center w-full max-w-4xl px-5 border-red-500 rounded-lg shadow-lg"
+        style={{
+          color: themeMode ? "" : "white",
+          background: !themeMode ? "" : "white",
+        }}
+      >
+        <div className=" rounded-lg mt-4 w-full  ">
+          <h2 className="text-lg font-semibold mb-2">{t("commentaries")}: </h2>
+          <div className="mb-4">
+            <Form onFinish={onFinish}>
+              <Form.Item
+                name={["comment"]}
+                rules={[{ type: "string", required: true }]}
               >
-                {t("submit")}
-              </Button>
-            </Form.Item>
-          </Form>
-          {reviewComments.map((item, index) => (
-            <div key={index} className="bg-gray-100 rounded-md p-2 my-4">
-              <p className="text-gray-800 font-bold">
-                {item.userId.name}
-                <span className="pl-2 font-semibold">{t("write")}:</span>
-              </p>
-              <p className="text-gray-600">{item.comment}</p>
-            </div>
-          ))}
+                <Input.TextArea
+                  allowClear
+                  className="w-full px-3 py-2  focus:outline-none focus:border-blue-500"
+                  rows="3"
+                  placeholder={t("leaveYourComment")}
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button
+                  disabled={data === null}
+                  type="primary"
+                  htmlType="submit"
+                  className="bg-blue-500 text-white  px-4 mt-2 rounded-md hover:bg-blue-600 focus:outline-none"
+                >
+                  {t("submit")}
+                </Button>
+              </Form.Item>
+            </Form>
+            {reviewComments.map((item, index) => (
+              <div
+                key={index}
+                className=" rounded-md p-2 my-4  border border-gray-300"
+                style={{
+                  color: !themeMode ? "white" : "",
+                  background: !themeMode ? "" : "",
+                }}
+              >
+                <p className=" font-bold">
+                  {item.userId.name}
+                  <span className="pl-2 font-semibold">{t("write")}:</span>
+                </p>
+                <p className="font-semibold">{item.comment}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

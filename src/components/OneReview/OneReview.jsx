@@ -33,7 +33,7 @@ const OneReview = () => {
   const { Option } = Select;
   const { id } = useParams();
   const dispatch = useDispatch();
-
+  const { themeMode } = useSelector((state) => state.themeSlice);
   const { oneReview, averageRatingFive, isOneReviewLoading, reviewsRatings } =
     useSelector((state) => state.reviewsSlice);
 
@@ -56,20 +56,6 @@ const OneReview = () => {
   };
   const _id = oneReview._id;
   const arr = ["books", "music", "movies", "games"];
-  // const handleEditClick = () => {
-  //   // if (isDis) {
-  //   setIsEditing(true);
-  // };
-
-  // const handleSaveClick = () => {
-  //   form.validateFields().then((values) => {
-  //     console.log(values);
-  //     dispatch(fetchUpdateReview({ id, values }));
-  //     setIsEditing(false);
-  //     dispatch(fetchGetOneReview({ id }));
-  //   });
-  // };
-  //
   const [open, setOpen] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
 
@@ -94,12 +80,19 @@ const OneReview = () => {
   const isDis =
     (data !== null && data._id === oneReview.userId) ||
     (data !== null && data.role !== "user");
-  console.log(isDis, "isDis");
+  const onClickLike = () => {
+    setTimeout(() => {
+      dispatch(fetchGetOneReview({ id }));
+    }, 3350);
+  };
   return (
     <>
-      <div className="w-full max-w-4xl mx-auto p-4 xs:max-w-lg sm:max-w-4xl md:max-w-4xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4  ">
+      <div className="w-full max-w-4xl mx-auto p-4 xs:max-w-lg sm:max-w-4xl md:max-w-4xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4">
         <div className="bg-white shadow-lg rounded-lg overflow-hidden relative">
-          <Card className="w-full border shadow-lg ">
+          <Card
+            className="w-full border shadow-lg "
+            style={{ color: !themeMode ? "white" : "" }}
+          >
             <Image.PreviewGroup
               preview={{
                 onChange: (current, prev) =>
@@ -118,7 +111,7 @@ const OneReview = () => {
               </div>
             </Image.PreviewGroup>
             <div className="p-4 ">
-              <h2 className="text-xl font-semibold text-gray-800 my-4">
+              <h2 className="text-xl font-semibold  my-4">
                 <ReactMarkdown className="prose">
                   {oneReview.title}
                 </ReactMarkdown>
@@ -135,7 +128,7 @@ const OneReview = () => {
               <span
                 className={`absolute top-2 right-5 border mt-4 rounded-l-full ${
                   groupColor[oneReview.group]
-                } px-3 py-1 text-sm font-semibold text-gray-700 mr-1`}
+                } px-3 py-1 text-sm font-semibold  mr-1`}
               >
                 {oneReview.group}
                 <span className="pl-2 text-lg font-bold text-red-700">
@@ -143,7 +136,7 @@ const OneReview = () => {
                 </span>
               </span>
 
-              <h2 className="text-xl font-semibold text-gray-800 my-4 ">
+              <h2 className="text-xl font-semibold  my-4 ">
                 <ReactMarkdown className="prose">
                   {oneReview.content}
                 </ReactMarkdown>
@@ -161,7 +154,7 @@ const OneReview = () => {
                 </span>
               </div>
               <div className="mt-4 flex items-center justify-between">
-                <span className="text-gray-800 font-semibold">
+                <span className="font-semibold">
                   <span>
                     {t("averageRating")}: {averageRatingFive} <StarOutlined />
                   </span>
@@ -227,6 +220,9 @@ const OneReview = () => {
                     </Form>
                   </Modal>
                 </div>
+              </div>
+              <div onClick={onClickLike}>
+                <BadgeLike _id={oneReview._id} count={oneReview.likes} />
               </div>
             </div>
           </Card>

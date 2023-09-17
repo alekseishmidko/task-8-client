@@ -21,7 +21,7 @@ const OneProduct = () => {
   const { oneProduct, averageRatingFive, oneProductLoading, productsRatings } =
     useSelector((state) => state.productsSlice);
   const { data } = useSelector((state) => state.accountSlice);
-
+  // const { themeMode } = useSelector((state) => state.themeSlice);
   const filtered = productsRatings.filter((item) => {
     if (data === null) {
       return;
@@ -43,7 +43,10 @@ const OneProduct = () => {
   }
   return (
     <>
-      <div className="max-w-md xs:max-w-lg sm:max-w-3xl md:max-w-3xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4 flex items-center justify-center">
+      <div
+        className="max-w-md xs:max-w-lg sm:max-w-3xl md:max-w-3xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4 flex items-center justify-center"
+        // style={{ color: !themeMode ? "white" : "" }}
+      >
         <div className="bg-white shadow-lg rounded-lg overflow-hidden relative">
           <Image.PreviewGroup
             preview={{

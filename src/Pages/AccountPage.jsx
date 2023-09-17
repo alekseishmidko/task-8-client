@@ -67,8 +67,8 @@ const AccountPage = () => {
           </Link>
         </div>
 
-        <div className="flex p-8 mt-12">
-          <div className="w-1/3 pr-8">
+        <div className="flex flex-col sm:flex-row p-4 mt-12">
+          <div className="w-full sm:w-1/3 sm:pr-8">
             <div style={{ position: "relative", display: "inline-block" }}>
               <Avatar size={64} />
 
@@ -90,7 +90,7 @@ const AccountPage = () => {
             </div>
             <h2
               style={{ color: themeMode === false ? "#fff" : "" }}
-              className="text-xl font-semibold mt-4"
+              className="text-xl font-semibold ml-4 mt-4"
             >
               {data.name}
             </h2>
@@ -102,11 +102,11 @@ const AccountPage = () => {
             <p
               style={{ color: themeMode === false ? "#fff" : "", marginTop: 4 }}
             >
-              {data.role}
+              {t("role")}: {data.role}
             </p>
           </div>
 
-          <div className="w-1/2">
+          <div className="w-full sm:w-2/3 mt-4 sm:mt-0">
             <h3 className="text-xl font-semibold mb-4">{t("myReviews")}</h3>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Space, Modal } from "antd";
+import { Table, Space, Modal, Layout } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchDeleteUser,
@@ -129,12 +129,16 @@ const AdminTable = () => {
   return (
     <div className="w-3/4">
       <h2 className="ml-4 mb-8">{t("adminPanel")}</h2>
+      {/* <div className="overflow-x-auto"> */}
       <Table
         columns={columns}
         dataSource={allUsers}
         pagination={false}
         rowClassName={rowClassName}
+        scroll={{ x: "calc(700px + 10%)" }}
+        size="middle"
       />
+      {/* </div> */}
     </div>
   );
 };

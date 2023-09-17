@@ -171,7 +171,13 @@ const MyReviewsTable = () => {
   }, [dispatch]);
   return (
     <div>
-      <Table columns={columns} dataSource={myReviews} pagination={false} />
+      <Table
+        columns={columns}
+        dataSource={myReviews}
+        pagination={false}
+        scroll={{ x: "calc(700px + 10%)" }}
+        size="middle"
+      />
     </div>
   );
 };

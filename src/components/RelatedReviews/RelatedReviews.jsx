@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchGetRelatedReviews } from "../../store/ReviewsSlice/ReviewsSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Card, Image } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
 const RelatedReviews = ({ productId, id }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(fetchGetRelatedReviews({ id, productId }));
@@ -12,33 +15,177 @@ const RelatedReviews = ({ productId, id }) => {
   const { relatedReviews } = useSelector((state) => state.reviewsSlice);
   // console.log(relatedReviews);
 
+  // const arr = [
+  //   {
+  //     _id: "65009f35d14f2372bb44d2c9",
+  //     title: "SADFGH",
+  //     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
+  //     group: "movies",
+  //     rating: 8,
+  //     ratingFive: [],
+  //     likes: 0,
+  //     userId: "64e653ee72d53ec57fcd84c8",
+  //     tags: [],
+  //     images: [],
+  //     comments: [],
+  //     productId: "64ecfb9eb95ca780bde596da",
+  //     createdAt: "2023-09-12T17:26:13.090Z",
+  //     updatedAt: "2023-09-12T17:26:13.090Z",
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "65009f35d14f2372bb44d2c9",
+  //     title: "SADFGH",
+  //     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
+  //     group: "movies",
+  //     rating: 8,
+  //     ratingFive: [],
+  //     likes: 0,
+  //     userId: "64e653ee72d53ec57fcd84c8",
+  //     tags: [],
+  //     images: [],
+  //     comments: [],
+  //     productId: "64ecfb9eb95ca780bde596da",
+  //     createdAt: "2023-09-12T17:26:13.090Z",
+  //     updatedAt: "2023-09-12T17:26:13.090Z",
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "65009f35d14f2372bb44d2c9",
+  //     title: "SADFGH",
+  //     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
+  //     group: "movies",
+  //     rating: 8,
+  //     ratingFive: [],
+  //     likes: 0,
+  //     userId: "64e653ee72d53ec57fcd84c8",
+  //     tags: [],
+  //     images: [],
+  //     comments: [],
+  //     productId: "64ecfb9eb95ca780bde596da",
+  //     createdAt: "2023-09-12T17:26:13.090Z",
+  //     updatedAt: "2023-09-12T17:26:13.090Z",
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "65009f35d14f2372bb44d2c9",
+  //     title: "SADFGH",
+  //     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
+  //     group: "movies",
+  //     rating: 8,
+  //     ratingFive: [],
+  //     likes: 0,
+  //     userId: "64e653ee72d53ec57fcd84c8",
+  //     tags: [],
+  //     images: [],
+  //     comments: [],
+  //     productId: "64ecfb9eb95ca780bde596da",
+  //     createdAt: "2023-09-12T17:26:13.090Z",
+  //     updatedAt: "2023-09-12T17:26:13.090Z",
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "65009f35d14f2372bb44d2c9",
+  //     title: "SADFGH",
+  //     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
+  //     group: "movies",
+  //     rating: 8,
+  //     ratingFive: [],
+  //     likes: 0,
+  //     userId: "64e653ee72d53ec57fcd84c8",
+  //     tags: [],
+  //     images: [],
+  //     comments: [],
+  //     productId: "64ecfb9eb95ca780bde596da",
+  //     createdAt: "2023-09-12T17:26:13.090Z",
+  //     updatedAt: "2023-09-12T17:26:13.090Z",
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: "65009f35d14f2372bb44d2c9",
+  //     title: "SADFGH",
+  //     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
+  //     group: "movies",
+  //     rating: 8,
+  //     ratingFive: [],
+  //     likes: 0,
+  //     userId: "64e653ee72d53ec57fcd84c8",
+  //     tags: [],
+  //     images: [],
+  //     comments: [],
+  //     productId: "64ecfb9eb95ca780bde596da",
+  //     createdAt: "2023-09-12T17:26:13.090Z",
+  //     updatedAt: "2023-09-12T17:26:13.090Z",
+  //     __v: 0,
+  //   },
+  // ];
+
   return (
     <>
       {
-        <div className=" w-full max-w-4xl px-6">
-          <h2 className="text-lg font-semibold mb-4">
+        // <div className=" w-full max-w-4xl px-6">
+        //   <h2 className="text-lg font-semibold mb-4">
+        //     {t("recommendedReviews")}
+        //   </h2>
+        //   <div className="flex flex-wrap ">
+        //     {relatedReviews.map((item, index) => (
+        //       <div
+        //         className="w-full xs:w-1/1 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 px-4 mb-4 cursor-pointer"
+        //         key={index}
+        //       >
+        //         <Link to={`/reviews/${item._id}`}>
+        //           <div className="w-full bg-white border rounded-md shadow-md p-3 text-center">
+        //             <Image
+        //               preview={false}
+        //               src={
+        //                 item.images[0] ||
+        //                 "https://res.cloudinary.com/dmpjxhwal/image/upload/v1694009851/cucokdvpp2ekz0jymskn.jpg"
+        //               }
+        //               alt={item.title}
+        //               className="mx-auto h-20 w-20 object-cover rounded-full"
+        //             />
+        //             <h3 className="text-md font-semibold mt-2">{item.title}</h3>
+        //             <p className="text-gray-600">{item.group}</p>
+        //           </div>
+        //         </Link>
+        //       </div>
+        //     ))}
+        //   </div>
+        // </div>
+
+        <div className=" w-full max-w-4xl ">
+          <h2 className="text-lg font-semibold mb-4 pl-4">
             {t("recommendedReviews")}
           </h2>
-          <div className="flex flex-wrap ">
+          <div className="flex flex-wrap  ">
             {relatedReviews.map((item, index) => (
               <div
-                className="w-full xs:w-1/1 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 px-4 mb-4 cursor-pointer"
+                className="w-full xs:w-1/1 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 px-2 mb-4 cursor-pointer"
                 key={index}
               >
-                <Link to={`/reviews/${item._id}`}>
-                  <div className="w-full bg-white border rounded-md shadow-md p-3 text-center">
-                    <img
+                <Card
+                  size="small"
+                  onClick={() => navigate(`/reviews/${item._id}`)}
+                >
+                  <div className="flex justify-center relative ">
+                    <Image
+                      preview={false}
                       src={
                         item.images[0] ||
                         "https://res.cloudinary.com/dmpjxhwal/image/upload/v1694009851/cucokdvpp2ekz0jymskn.jpg"
                       }
                       alt={item.title}
-                      className="mx-auto h-20 w-20 object-cover rounded-full"
+                      className="relative rounded "
                     />
-                    <h3 className="text-md font-semibold mt-2">{item.title}</h3>
-                    <p className="text-gray-600">{item.group}</p>
                   </div>
-                </Link>
+
+                  <div className="flex justify-center">
+                    <p className="text-lg font-bold p-2">{item.title}</p>
+                  </div>
+                  <div className="flex justify-center">
+                    <p className="text-md font-semibold">{item.group}</p>
+                  </div>
+                </Card>
               </div>
             ))}
           </div>
@@ -49,107 +196,3 @@ const RelatedReviews = ({ productId, id }) => {
 };
 
 export default RelatedReviews;
-// const arr = [
-//   {
-//     _id: "65009f35d14f2372bb44d2c9",
-//     title: "SADFGH",
-//     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
-//     group: "movies",
-//     rating: 8,
-//     ratingFive: [],
-//     likes: 0,
-//     userId: "64e653ee72d53ec57fcd84c8",
-//     tags: [],
-//     images: [],
-//     comments: [],
-//     productId: "64ecfb9eb95ca780bde596da",
-//     createdAt: "2023-09-12T17:26:13.090Z",
-//     updatedAt: "2023-09-12T17:26:13.090Z",
-//     __v: 0,
-//   },
-//   {
-//     _id: "65009f35d14f2372bb44d2c9",
-//     title: "SADFGH",
-//     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
-//     group: "movies",
-//     rating: 8,
-//     ratingFive: [],
-//     likes: 0,
-//     userId: "64e653ee72d53ec57fcd84c8",
-//     tags: [],
-//     images: [],
-//     comments: [],
-//     productId: "64ecfb9eb95ca780bde596da",
-//     createdAt: "2023-09-12T17:26:13.090Z",
-//     updatedAt: "2023-09-12T17:26:13.090Z",
-//     __v: 0,
-//   },
-//   {
-//     _id: "65009f35d14f2372bb44d2c9",
-//     title: "SADFGH",
-//     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
-//     group: "movies",
-//     rating: 8,
-//     ratingFive: [],
-//     likes: 0,
-//     userId: "64e653ee72d53ec57fcd84c8",
-//     tags: [],
-//     images: [],
-//     comments: [],
-//     productId: "64ecfb9eb95ca780bde596da",
-//     createdAt: "2023-09-12T17:26:13.090Z",
-//     updatedAt: "2023-09-12T17:26:13.090Z",
-//     __v: 0,
-//   },
-//   {
-//     _id: "65009f35d14f2372bb44d2c9",
-//     title: "SADFGH",
-//     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
-//     group: "movies",
-//     rating: 8,
-//     ratingFive: [],
-//     likes: 0,
-//     userId: "64e653ee72d53ec57fcd84c8",
-//     tags: [],
-//     images: [],
-//     comments: [],
-//     productId: "64ecfb9eb95ca780bde596da",
-//     createdAt: "2023-09-12T17:26:13.090Z",
-//     updatedAt: "2023-09-12T17:26:13.090Z",
-//     __v: 0,
-//   },
-//   {
-//     _id: "65009f35d14f2372bb44d2c9",
-//     title: "SADFGH",
-//     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
-//     group: "movies",
-//     rating: 8,
-//     ratingFive: [],
-//     likes: 0,
-//     userId: "64e653ee72d53ec57fcd84c8",
-//     tags: [],
-//     images: [],
-//     comments: [],
-//     productId: "64ecfb9eb95ca780bde596da",
-//     createdAt: "2023-09-12T17:26:13.090Z",
-//     updatedAt: "2023-09-12T17:26:13.090Z",
-//     __v: 0,
-//   },
-//   {
-//     _id: "65009f35d14f2372bb44d2c9",
-//     title: "SADFGH",
-//     content: "SDFDGFHGJHKGHFGDFSDAS TJYMTNBRDVSC",
-//     group: "movies",
-//     rating: 8,
-//     ratingFive: [],
-//     likes: 0,
-//     userId: "64e653ee72d53ec57fcd84c8",
-//     tags: [],
-//     images: [],
-//     comments: [],
-//     productId: "64ecfb9eb95ca780bde596da",
-//     createdAt: "2023-09-12T17:26:13.090Z",
-//     updatedAt: "2023-09-12T17:26:13.090Z",
-//     __v: 0,
-//   },
-// ];

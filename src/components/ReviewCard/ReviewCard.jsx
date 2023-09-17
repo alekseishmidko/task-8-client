@@ -48,7 +48,7 @@ const ReviewCard = ({
 
   return (
     <div
-      className="relative w-92 h-116 rounded overflow-hidden shadow-lg my-4 mx-2"
+      className=" w-92 h-116 rounded overflow-hidden shadow-lg my-4 mx-2"
       style={{ color: !themeMode ? "white" : "" }}
     >
       <div className="flex flex-col justify-between h-full cursor-pointer">
@@ -56,20 +56,25 @@ const ReviewCard = ({
           className="cursor-pointer"
           onClick={() => navigate(`/reviews/${_id}`)}
         >
-          <span
-            className={`absolute top-0 right-0  bordered  rounded-full ${groupColor[group]} px-2 py-1 text-sm font-semibold text-gray-700 `}
-          >
-            {group}{" "}
-            <span className="text-sm font-bold text-red-700">{rating}</span>
-          </span>
-          <img
-            src={
-              images[0] ||
-              "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-            }
-            className="h-48 w-full object-cover object-center"
-            alt={title}
-          />
+          <div className="flex justify-center p-2  relative">
+            <img
+              src={
+                images[0] ||
+                "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              }
+              className="h-64 w-auto object-cover object-center"
+              alt={title}
+            />
+            <span
+              className={`absolute top-0 right-0  bordered  rounded-full ${groupColor[group]} px-2 py-1 text-sm font-semibold text-gray-700 `}
+            >
+              {group}
+              <span className="text-sm font-bold text-red-700 ml-1">
+                {rating}
+              </span>
+            </span>
+          </div>
+
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2">
               <ReactMarkdown className="prose font-semibold text-2xl mb-2">
