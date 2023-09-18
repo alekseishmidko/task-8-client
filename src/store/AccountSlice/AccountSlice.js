@@ -92,7 +92,7 @@ export const fetchHandleStatusUser = createAsyncThunk(
   "api/users/fetchHandleStatusUser",
   async (id, thunkAPI) => {
     try {
-      const response = await axios.post(`api/users/${id}`);
+      const response = await axios.post(`api/users/status/${id}`);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -249,19 +249,19 @@ const accountSlice = createSlice({
       state.message = action.payload.message;
     });
     // POST HANDLE STATUS USER
-    builder.addCase(fetchHandleStatusUser.pending, (state) => {
-      state.isLoading = "loading";
-      state.errors = null;
-    });
-    builder.addCase(fetchHandleStatusUser.fulfilled, (state, action) => {
-      state.isLoading = "loaded";
-      state.errors = null;
-    });
-    builder.addCase(fetchHandleStatusUser.rejected, (state, action) => {
-      state.isLoading = "error";
-      state.errors = action.error.message;
-      state.message = action.payload.message;
-    });
+    // builder.addCase(fetchHandleStatusUser.pending, (state) => {
+    //   state.isLoading = "loading";
+    //   state.errors = null;
+    // });
+    // builder.addCase(fetchHandleStatusUser.fulfilled, (state, action) => {
+    //   state.isLoading = "loaded";
+    //   state.errors = null;
+    // });
+    // builder.addCase(fetchHandleStatusUser.rejected, (state, action) => {
+    //   state.isLoading = "error";
+    //   state.errors = action.error.message;
+    //   state.message = action.payload.message;
+    // });
     // GET ALL USER LIKES
     builder.addCase(fetchGetLikes.pending, (state) => {
       state.isLoading = "loading";

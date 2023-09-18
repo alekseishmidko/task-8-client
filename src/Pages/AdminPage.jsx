@@ -4,18 +4,21 @@ import AdminTable from "../components/AdminTable/AdminTable";
 import { Link } from "react-router-dom";
 import { RollbackOutlined } from "@ant-design/icons";
 import RollBackButton from "../components/RollBackButton/RollBackButton";
-
+import Header from "../components/Header/Header";
 const AdminPage = () => {
   return (
-    <Layout>
-      <Link to={-1}>
-        <RollBackButton />
-      </Link>
+    <>
+      <Header />
+      <Layout>
+        <Link to={-1} className="absolute top-16 left-2 z-50">
+          <RollBackButton />
+        </Link>
 
-      <div className="flex justify-center items-center h-screen">
-        <AdminTable />
-      </div>
-    </Layout>
+        <div className="flex justify-center items-center h-screen">
+          <AdminTable />
+        </div>
+      </Layout>
+    </>
   );
 };
 

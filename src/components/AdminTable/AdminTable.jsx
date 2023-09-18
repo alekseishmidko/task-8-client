@@ -139,7 +139,9 @@ const AdminTable = () => {
                 className=" text-orange-600 "
                 onClick={() => handleChangeStatus(record._id)}
               >
-                {record.status === "active" ? " make disabled" : " make active"}
+                {record.status === "active"
+                  ? t("makeDisabled")
+                  : t("makeActive")}
               </span>
             </a>
             <a>

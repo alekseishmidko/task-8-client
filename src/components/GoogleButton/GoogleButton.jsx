@@ -27,7 +27,10 @@ const GoogleButton = () => {
         if (userInfoResponse.status === 200) {
           const userInfo = userInfoResponse.data;
           console.log(userInfo);
-          dispatch(fetchSignGoogle(userInfo));
+          const res = await dispatch(fetchSignGoogle(userInfo));
+          if (res.error) {
+            return AlertMessage("error", res.payload.message);
+          }
           setTimeout(() => {
             navigate(-1);
           }, 750);

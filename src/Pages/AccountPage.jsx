@@ -29,16 +29,17 @@ const AccountPage = () => {
   }, []);
   return (
     <>
+      <Header />
       <Layout className="min-h-screen">
-        <Link to={"/"}>
+        <Link to={"/"} className="absolute top-16 left-2 z-50">
           <RollBackButton />
         </Link>
 
         <div
           style={{
             position: "absolute",
-            top: 20,
-            right: 20,
+            top: 80,
+            right: 10,
             color: themeMode === false ? "#fff" : "",
           }}
         >
@@ -59,7 +60,7 @@ const AccountPage = () => {
               </span>
             </Link>
           ) : null}
-          <Link to={"/"}>
+          {/* <Link to={"/"}>
             <LogoutOutlined
               style={{
                 transform: "scale(1.4)",
@@ -68,7 +69,7 @@ const AccountPage = () => {
               onClick={onClickLogout}
               className="text-white mx-3 "
             />
-          </Link>
+          </Link> */}
         </div>
 
         <div className="flex flex-col sm:flex-row p-4 mt-12">

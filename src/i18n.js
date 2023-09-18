@@ -65,6 +65,8 @@ i18n.use(initReactI18next).init({
         results: "Results",
         foundInComments: "Found in comments",
         allSearchResults: "All search results",
+        makeDisabled: "Block",
+        makeActive: "Activate",
       },
     },
     ru: {
@@ -129,6 +131,8 @@ i18n.use(initReactI18next).init({
         results: "Результаты",
         foundInComments: "Найдено в комментариях",
         allSearchResults: "Все результаты",
+        makeDisabled: "Заблокировать",
+        makeActive: "Активировать",
       },
     },
   },
