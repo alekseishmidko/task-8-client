@@ -24,7 +24,7 @@ const BadgeLike = ({ count, _id }) => {
     );
   }
   const isLiked = findObjectInArray(allLikes, userId, reviewId);
-  console.log(allLikes, userId, reviewId);
+  // console.log(allLikes, userId, reviewId);
   const dispatch = useDispatch();
   const handleLike = async () => {
     if (data !== null) {
@@ -51,7 +51,7 @@ const BadgeLike = ({ count, _id }) => {
         disabled={data === null}
         style={{
           fontSize: 21,
-          color: isLiked === true ? "red" : "",
+          color: isLiked === true ? "lightGold" : "",
           marginLeft: "4px",
           marginBottom: "4px",
         }}

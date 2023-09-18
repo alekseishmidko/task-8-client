@@ -46,13 +46,17 @@ const AccountPage = () => {
           data.role === "superadmin" ||
           data.role === "" ? (
             <Link to={"/admin"}>
-              <TeamOutlined
-                style={{
-                  transform: "scale(1.5)",
-                  color: themeMode === false ? "#fff" : "black",
-                }}
-                className="text-white mx-3"
-              />
+              <span className="font-semibold">
+                {" "}
+                <TeamOutlined
+                  style={{
+                    transform: "scale(1.5)",
+                    color: themeMode === false ? "#fff" : "black",
+                  }}
+                  className="text-white mx-3 "
+                />
+                <span className="hidden sm:inline">{t("adminPanel")}</span>
+              </span>
             </Link>
           ) : null}
           <Link to={"/"}>

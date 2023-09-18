@@ -26,6 +26,7 @@ const ReviewCard = ({
   const { themeMode } = useSelector((state) => state.themeSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // console.log(avgRatingFive);
 
   //
   const { reviewsRatings } = useSelector((state) => state.reviewsSlice);
@@ -78,7 +79,7 @@ const ReviewCard = ({
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2">
               <ReactMarkdown className="prose font-semibold text-2xl mb-2">
-                {title.length > 15 ? title.slice(0, 17) + "..." : title}
+                {title.length > 15 ? title : title}
               </ReactMarkdown>
             </div>
           </div>
@@ -106,8 +107,9 @@ const ReviewCard = ({
           </span>
         </div>
         <div className="px-6 py-4 flex justify-between mt-4">
-          <span className="text-base font-semibold">
-            average rating: {avgRatingFive} <StarOutlined />
+          <span className="text-base font-bold">
+            average rating: {avgRatingFive === null ? 0 : avgRatingFive}
+            <StarOutlined className=" p-2" />
           </span>
           <BadgeLike count={likes} _id={_id} />
         </div>

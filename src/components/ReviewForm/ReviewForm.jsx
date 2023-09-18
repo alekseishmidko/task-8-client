@@ -1,7 +1,16 @@
 import React from "react";
-import { Form, Input, Select, Button, Rate, Upload, Layout } from "antd";
+import {
+  Form,
+  Input,
+  Select,
+  Button,
+  Rate,
+  Upload,
+  Layout,
+  message,
+} from "antd";
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
-import { categories, props } from "./propsForReviewForm";
+
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCreateReview } from "../../store/ReviewsSlice/ReviewsSlice";
 import instance from "../../axios";
@@ -11,21 +20,31 @@ import { useNavigate, Link, useLocation, useParams } from "react-router-dom";
 import RollBackButton from "../RollBackButton/RollBackButton";
 import Spinner from "../Spinner/Spinner";
 import { useTranslation } from "react-i18next";
+
 const { TextArea } = Input;
 const { Dragger } = Upload;
 //
 const ReviewForm = () => {
+  const { allProducts, allProductsLoading } = useSelector(
+    (state) => state.productsSlice
+  );
+  console.log(allProducts);
   const { t } = useTranslation();
   const [images, setUploadedImages] = React.useState([]);
+  console.log(images, "images");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const pathname = useLocation().pathname;
+  const paramsId = useParams().id;
+
   const onFinish = async (values) => {
     try {
+      console.log(values);
       values.images = images;
-      pathname.slice(0, -32) === "/admin"
-        ? values.productId
-        : (values.productId = paramsId);
-      pathname.slice(0, -32) === "/admin"
+      if (product) {
+        values.productId = product?._id;
+      }
+      pathname?.slice(0, -32) === "/admin"
         ? (values.createByAdminId = paramsId)
         : (values.createByAdminId = 0);
       console.log(values);
@@ -42,10 +61,9 @@ const ReviewForm = () => {
       return console.error("error while fetchCreateReview:", error);
     }
   };
-  const pathname = useLocation().pathname;
-  const paramsId = useParams().id;
+
   console.log(pathname, "pathname", paramsId, "paramsId");
-  console.log(pathname.slice(0, -32));
+  console.log(pathname.slice(0, -24), "-24");
   // /reviews/create
   // /admin/64e6538a72d53ec57fcd84c5/create
   //  /reviews/createbyproduct/64ecfb9eb95ca780bde596da
@@ -53,17 +71,64 @@ const ReviewForm = () => {
     const parameters = "";
     dispatch(fetchGetAllProducts({ parameters }));
   }, []);
-  const { allProducts, allProductsLoading } = useSelector(
-    (state) => state.productsSlice
-  );
-  const product =
-    allProducts.filter((item) => {
-      return item._id === paramsId;
-    })[0] || {};
-  console.log(product.title, product.group, "prodeuct title, group");
+
+  const product = allProducts.filter((item) => {
+    return item?._id === paramsId;
+  })[0];
+  console.log(product?.title, product?._id, "prodeuct title, group");
   if (allProductsLoading === "loading") {
     return <Spinner />;
   }
+  const categories = [
+    { title: "Books", value: "books" },
+    { title: "Games", value: "games" },
+    { title: "Movies", value: "movies" },
+    { title: "Music", value: "music" },
+  ];
+  const props = {
+    name: "files",
+    multiple: true,
+    maxCount: 4,
+    beforeUpload: (file) => {
+      const maxSize = 2 * 1024 * 1024;
+      if (file.size > maxSize) {
+        message.error("File size exceeds the limit (5MB).");
+        return false;
+      }
+      const allowedTypes = ["image/jpeg", "image/png"];
+
+      if (!allowedTypes.includes(file.type)) {
+        message.error("Only JPEG, PNG files are allowed.");
+        return false; // Отмена загрузки
+      }
+
+      return true;
+    },
+    action: `${instance.defaults.baseURL}/api/reviews/upload`,
+    onChange(info) {
+      const { status, response } = info.file;
+      if (status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+      if (status === "done") {
+        message.success(`${info.file.name} file uploaded successfully.`);
+        const flat = info.fileList
+          .map((item) => {
+            return item.response;
+          })
+
+          .flatMap((item) => item)
+          .filter((item) => item !== undefined);
+
+        setUploadedImages(flat);
+      } else if (status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    onDrop(e) {
+      console.log("Dropped files", e.dataTransfer.files);
+    },
+  };
   return (
     <div className="w-full max-w-screen-sm mx-auto p-4">
       <Link to={-1} className="absolute top-16 left-2 z-50">
@@ -98,9 +163,9 @@ const ReviewForm = () => {
             // rules={[{ required: true, message: "Add name of product" }]}
           >
             <Input
-              value={product._id}
+              // value={product._id}
               disabled
-              defaultValue={`${product.title}[${product.group}]`}
+              defaultValue={`${product?.title}[${product?.group}]`}
             />
           </Form.Item>
         )}

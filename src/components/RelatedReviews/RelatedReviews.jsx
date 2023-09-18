@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Card, Image } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
+import ReactMarkdown from "react-markdown";
 const RelatedReviews = ({ productId, id }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -180,7 +181,9 @@ const RelatedReviews = ({ productId, id }) => {
                   </div>
 
                   <div className="flex justify-center">
-                    <p className="text-lg font-bold p-2">{item.title}</p>
+                    <ReactMarkdown className="mt-2 prose">
+                      {item.title}
+                    </ReactMarkdown>
                   </div>
                   <div className="flex justify-center">
                     <p className="text-md font-semibold">{item.group}</p>

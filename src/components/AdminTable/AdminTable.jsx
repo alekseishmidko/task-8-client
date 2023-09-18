@@ -5,6 +5,7 @@ import {
   fetchDeleteUser,
   fetchGetAllUsers,
   fetchHandleRoleUser,
+  fetchHandleStatusUser,
 } from "../../store/AccountSlice/AccountSlice";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
@@ -42,11 +43,19 @@ const AdminTable = () => {
       dispatch(fetchGetAllUsers());
     }, 1000);
   };
+  const handleChangeStatus = (recordId) => {
+    console.log(recordId);
+    dispatch(fetchHandleStatusUser(recordId));
+    setTimeout(() => {
+      dispatch(fetchGetAllUsers());
+    }, 1000);
+  };
   const columns = [
     {
       title: t("name"),
       dataIndex: "name",
       key: "name",
+
       sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ["descend"],
     },
@@ -62,6 +71,7 @@ const AdminTable = () => {
       title: t("role"),
       dataIndex: "role",
       key: "role",
+      width: 140,
       filters: [
         {
           text: "user",
@@ -83,6 +93,28 @@ const AdminTable = () => {
         </span>
       ),
     },
+    {
+      title: t("status"),
+      dataIndex: "status",
+      key: "status",
+      width: 140,
+      filters: [
+        {
+          text: "active",
+          value: "active",
+        },
+        {
+          text: "disabled",
+          value: "disabled",
+        },
+      ],
+      onFilter: (value, record) => record.status.indexOf(value) === 0,
+      render: (text) => (
+        <span style={{ fontWeight: text === "disabled" ? "normal" : "bold" }}>
+          {text}
+        </span>
+      ),
+    },
 
     {
       title: t("action"),
@@ -100,6 +132,14 @@ const AdminTable = () => {
                 onClick={() => handleChangeRole(record._id)}
               >
                 {record.role === "user" ? t("assignAdmin") : t("assignUser")}
+              </span>
+            </a>
+            <a>
+              <span
+                className=" text-orange-600 "
+                onClick={() => handleChangeStatus(record._id)}
+              >
+                {record.status === "active" ? " make disabled" : " make active"}
               </span>
             </a>
             <a>
@@ -127,8 +167,8 @@ const AdminTable = () => {
   };
 
   return (
-    <div className="w-3/4">
-      <h2 className="ml-4 mb-8">{t("adminPanel")}</h2>
+    <div className="w-full">
+      <h2 className="ml-4 mb-8 font-semibold">{t("adminPanel")}</h2>
       {/* <div className="overflow-x-auto"> */}
       <Table
         columns={columns}

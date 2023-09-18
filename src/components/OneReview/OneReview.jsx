@@ -65,14 +65,14 @@ const OneReview = () => {
   const handleCancel = () => {
     setOpen(false);
   };
-  const handleOk = () => {
+  const handleOk = async () => {
     setConfirmLoading(true);
     form.validateFields().then((values) => {
       console.log(values);
       dispatch(fetchUpdateReview({ id, values }));
-      dispatch(fetchGetOneReview({ id }));
     });
     setTimeout(() => {
+      dispatch(fetchGetOneReview({ id }));
       setOpen(false);
       setConfirmLoading(false);
     }, 2000);

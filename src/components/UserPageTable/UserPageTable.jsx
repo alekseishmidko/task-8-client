@@ -53,6 +53,7 @@ const UserPageTable = () => {
       title: t("group"),
       dataIndex: "group",
       key: "group",
+
       filters: [
         {
           text: t("movies"),
@@ -77,13 +78,14 @@ const UserPageTable = () => {
       title: t("content"),
       dataIndex: "content",
       key: "content",
+
       render: (text) => (
         <ReactMarkdown
           className="prose"
           ellipsis={true}
-          style={{ maxWidth: 200 }}
+          style={{ maxWidth: 300 }}
         >
-          {text}
+          {text.length > 500 ? text.slice(0, 449) + "..." : text}
         </ReactMarkdown>
       ),
     },
@@ -91,6 +93,7 @@ const UserPageTable = () => {
       title: t("tags"),
       key: "tags",
       dataIndex: "tags",
+
       render: (_, { tags }) => (
         <>
           {tags.map((tag) => {
@@ -113,6 +116,7 @@ const UserPageTable = () => {
     {
       title: t("action"),
       key: "action",
+
       render: (_, record) => (
         <Space size="middle">
           <a onClick={() => navigate(`record/${record._id}`)}>
@@ -144,12 +148,21 @@ const UserPageTable = () => {
     dispatch(fetchGetOneUserReviews(id));
   }, [dispatch]);
   return (
-    <div className="w-3/4">
-      <h2 className="ml-4 mb-8 text-xl">{t("reviewsOfUser")} :</h2>
-      <Button className="pb-2 mb-3" onClick={() => navigate("create")}>
-        `Create a review using the selected user name (${id})`
-      </Button>
-      <Table columns={columns} dataSource={oneUserReviews} pagination={false} />
+    <div className="w-full">
+      <div className="">
+        {" "}
+        <Button className="pb-2 mb-3" onClick={() => navigate("create")}>
+          `Create a review using the selected user name `
+        </Button>
+      </div>
+      <Table
+        title={() => t("reviewsOfUser")}
+        columns={columns}
+        dataSource={oneUserReviews}
+        pagination={false}
+        scroll={{ y: "calc(500px)", x: "calc(700px)" }}
+        size="middle"
+      />
     </div>
   );
 };
