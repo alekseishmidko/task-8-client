@@ -11,8 +11,8 @@ const GitHubButton = () => {
     <>
       <TwitterLogin
         authCallback={authHandler}
-        consumerKey={"potU3YuI37rOobkkohTNjbPw0"}
-        consumerSecret={"lasjxSutTVmSTVryzzvKRoVQ0gyDKxmPiTyS5QskWE1lhGvMo7"}
+        consumerKey={"WWE3TjBJcGVRaUVvb0lKcUlvZ246MTpjaQ"}
+        consumerSecret={"OsLnOC8MH1HPqA-EznCEDVFKChwg1TJNnujMN4QGLlpQfBMA5g"}
       >
         <Button> Twitter</Button>
       </TwitterLogin>
@@ -20,30 +20,6 @@ const GitHubButton = () => {
   );
 };
 
+// WWE3TjBJcGVRaUVvb0lKcUlvZ246MTpjaQ id
+// OsLnOC8MH1HPqA-EznCEDVFKChwg1TJNnujMN4QGLlpQfBMA5g secret
 export default GitHubButton;
-// import { LoginSocialLinkedin } from "reactjs-social-login"
-// const [provider, setProvider] = React.useState("");
-// const [profile, setProfile] = React.useState(null);
-// const clientID = "77cw33ntfxo8y9";
-// const clientSecret = "tkGC1iqeMhloCger";
-// const callbackURL = "http://localhost:5173/login";
-// console.log(provider, profile, window.location.href);
-// const onLoginStart = React.useCallback(() => {}, []);
-{
-  /* <LoginSocialLinkedin
-isOnlyGetToken
-client_id={clientID || ""}
-client_secret={clientSecret || ""}
-redirect_uri={callbackURL}
-onLoginStart={onLoginStart}
-onResolve={({ provider, data }) => {
-  setProvider(provider);
-  setProfile(data);
-}}
-onReject={(err) => {
-  console.log(err);
-}}
->
-<Button> linkedIn</Button>
-</LoginSocialLinkedin> */
-}
