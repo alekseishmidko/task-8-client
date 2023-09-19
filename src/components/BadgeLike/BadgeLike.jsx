@@ -51,7 +51,7 @@ const BadgeLike = ({ count, _id }) => {
         disabled={data === null}
         style={{
           fontSize: 21,
-          color: isLiked === true ? "lightGold" : "",
+          color: isLiked === true ? "darkRed" : "",
           marginLeft: "4px",
           marginBottom: "4px",
         }}

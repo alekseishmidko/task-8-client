@@ -61,7 +61,7 @@ const Header = () => {
           {data !== null ? (
             <div className="flex items-center cursor-pointer sm: flex justify-center items-center">
               <div onClick={() => onClickUserLogo()}>
-                <UserOutlined className="text-white mr-2  sm:pl-3 xs: mr-2 xs:ml-1 sm:ml-1" />
+                <UserOutlined className="text-white mr-2  sm:pl-3 xs: mr-2 xs:ml-3 sm:ml-3 " />
                 <span className="text-white sm:inline hidden">
                   {data.name || ""}
                 </span>

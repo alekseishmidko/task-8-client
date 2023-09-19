@@ -114,7 +114,8 @@ const ReviewCard = ({
         </div>
         <div className="px-6 py-4 flex justify-between mt-4">
           <span className="text-base font-bold">
-            {t("averageRating")}: {avgRatingFive === null ? 0 : avgRatingFive}
+            {t("averageRating")}:{" "}
+            {avgRatingFive === null ? 0 : avgRatingFive.toFixed(1)}
             <StarOutlined className=" p-2" />
           </span>
           <BadgeLike count={likes} _id={_id} />
