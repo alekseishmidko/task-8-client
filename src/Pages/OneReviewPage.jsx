@@ -21,14 +21,14 @@ const OneReviewPage = () => {
   React.useEffect(() => {
     dispatch(fetchGetOneReview({ id }));
   }, [dispatch, id]);
-  if (isOneReviewLoading === "loading") {
-    return <Spinner />;
-  }
+  // if (isOneReviewLoading === "loading") {
+  //   return <Spinner />;
+  // }
   return (
     <>
       <Header />
       <Layout className="flex justify-center items-center min-h-screen">
-        <Link to={-1} className="absolute top-16 left-2 z-50">
+        <Link to={-1} className="absolute top-14 left-1 z-50">
           <RollBackButton />
         </Link>
         <OneReview />

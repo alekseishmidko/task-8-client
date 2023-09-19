@@ -124,6 +124,8 @@ const initialState = {
   oneUserReviews: [],
   isOneUserReviewsLoading: "loading",
   relatedReviews: [],
+  findUserName: "",
+  findUserRole: "",
 };
 
 const ReviewsSlice = createSlice({
@@ -266,18 +268,24 @@ const ReviewsSlice = createSlice({
       state.isOneReviewLoading = "loading";
       state.errors = null;
       state.oneUserReviews = [];
+      state.findUserName = "";
+      state.findUserRole = "";
     });
 
     builder.addCase(fetchGetOneUserReviews.fulfilled, (state, action) => {
       state.isOneReviewLoading = "loaded";
       state.errors = null;
       state.oneUserReviews = action.payload.oneUserReviews;
+      state.findUserName = action.payload.findUserName;
+      state.findUserRole = action.payload.findUserRole;
     });
     builder.addCase(fetchGetOneUserReviews.rejected, (state, action) => {
       state.isOneReviewLoading = "error";
       state.errors = action.payload;
       // state.message = action.payload;
       state.oneUserReviews = [];
+      state.findUserName = "";
+      state.findUserRole = "";
     });
     // GET  RELATED REVIEWS
     builder.addCase(fetchGetRelatedReviews.pending, (state) => {

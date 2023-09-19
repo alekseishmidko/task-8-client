@@ -11,6 +11,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { groupColor } from "../OneProduct/oneProductProps";
 import { fetchHandleLike } from "../../store/CommentsSlice/CommentsSlice";
 import { StarOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 const ReviewCard = ({
   group,
   title,
@@ -26,6 +27,7 @@ const ReviewCard = ({
   const { themeMode } = useSelector((state) => state.themeSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   // console.log(avgRatingFive);
 
   //
@@ -78,9 +80,13 @@ const ReviewCard = ({
 
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2">
-              <ReactMarkdown className="prose font-semibold text-2xl mb-2">
-                {title.length > 15 ? title : title}
-              </ReactMarkdown>
+              <span className=" font-semibold text-2xl mb-2">
+                {title.length > 30
+                  ? title
+                      .replace(/[.,\/#!$%\^&\*;:{}=\_`~()]/g, "")
+                      .slice(0, 30) + "..."
+                  : title.replace(/[\*;{}=\_]/g, "")}
+              </span>
             </div>
           </div>
           <div className="px-6 min-h-[24px]">
@@ -108,7 +114,7 @@ const ReviewCard = ({
         </div>
         <div className="px-6 py-4 flex justify-between mt-4">
           <span className="text-base font-bold">
-            average rating: {avgRatingFive === null ? 0 : avgRatingFive}
+            {t("averageRating")}: {avgRatingFive === null ? 0 : avgRatingFive}
             <StarOutlined className=" p-2" />
           </span>
           <BadgeLike count={likes} _id={_id} />

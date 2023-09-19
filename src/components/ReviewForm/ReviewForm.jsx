@@ -6,8 +6,8 @@ import {
   Button,
   Rate,
   Upload,
-  Layout,
   message,
+  AutoComplete,
 } from "antd";
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
 
@@ -28,6 +28,10 @@ const ReviewForm = () => {
   const { allProducts, allProductsLoading } = useSelector(
     (state) => state.productsSlice
   );
+  const { allUnicTags } = useSelector((state) => state.reviewsSlice);
+  const [inputMessage, setInputMessage] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [isInputValid, setIsInputValid] = React.useState(true);
   console.log(allProducts);
   const { t } = useTranslation();
   const [images, setUploadedImages] = React.useState([]);
@@ -40,6 +44,7 @@ const ReviewForm = () => {
   const onFinish = async (values) => {
     try {
       console.log(values);
+      values.content = inputMessage;
       values.images = images;
       if (product) {
         values.productId = product?._id;
@@ -129,9 +134,22 @@ const ReviewForm = () => {
       console.log("Dropped files", e.dataTransfer.files);
     },
   };
+  const handleValidate = (value) => {
+    // Вы можете добавить свою логику валидации здесь.
+    // В этом примере, мы просто проверяем, что значение не пустое.
+    if (!value) {
+      setIsInputValid(false);
+      setErrorMessage("Please add your review!");
+    } else {
+      setIsInputValid(true);
+      setErrorMessage("");
+    }
+  };
+  // const arr = ["1", "2", "3", "req"];
+  const tagChildren = allUnicTags.map((tag) => ({ value: tag }));
   return (
-    <div className="w-full max-w-screen-sm mx-auto p-4">
-      <Link to={-1} className="absolute top-16 left-2 z-50">
+    <div className="w-full max-w-screen-sm mx-auto p-4 mt-12">
+      <Link to={-1} className="absolute top-14 left-2 z-50">
         <RollBackButton />
       </Link>
       <Form layout="vertical" onFinish={onFinish} className="mx-4">
@@ -183,15 +201,31 @@ const ReviewForm = () => {
           </Select>
         </Form.Item>
 
-        <Form.Item
-          label={t("content")}
-          name="content"
-          rules={[{ required: true, message: "Add your review" }]}
+        {/*  */}
+        <label htmlFor="content">
+          <span className="text-red-500 font-bold">* </span>Content
+        </label>
+        <AutoComplete
+          value={inputMessage}
+          options={tagChildren}
+          onSearch={(value) => setInputMessage(value)}
+          onSelect={(value) => setInputMessage((prev) => prev + value)}
+          onPressEnter={onFinish}
+          size="large"
+          className={`w-full ${isInputValid ? "" : "border-red-500"}`}
+          bordered={true}
+          onBlur={() => handleValidate(inputMessage)}
         >
-          <TextArea rows={4} />
-        </Form.Item>
-
-        <Form.Item label={t("uploadYourImages")} name="files">
+          <TextArea
+            rows={4}
+            label={t("content")}
+            name="content"
+            rules={[{ required: true, message: "Add your review" }]}
+          />
+        </AutoComplete>
+        {!isInputValid && <div className="text-red-500">{errorMessage}</div>}
+        {/*  */}
+        <Form.Item label={t("uploadYourImages")} name="files" className="mt-4">
           <Dragger {...props}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined />

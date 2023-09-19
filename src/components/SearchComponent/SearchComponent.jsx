@@ -7,6 +7,7 @@ import debounce from "lodash.debounce";
 import { stylesBlock, stylesDiv, stylesDivMain } from "./propsForSearch";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetSearch } from "../../store/SearchSlice/SearchSlice";
+import ReactMarkdown from "react-markdown";
 const SearchComponent = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -24,12 +25,12 @@ const SearchComponent = () => {
 
     // const reviews = await axios.get(`/api/search/reviews?q=${value}`);
     const res = await dispatch(fetchGetSearch(value));
-    console.log(res, "res");
+    // console.log(res, "res");
 
     setShow(true);
     setDataSource(res.payload.reviews.slice(0, 7));
     setDataSource2(res.payload.comments.slice(0, 4));
-    console.log(dataSource, dataSource2);
+    // console.log(dataSource, dataSource2);
   };
 
   const searchRef = React.useRef();
@@ -91,7 +92,9 @@ const SearchComponent = () => {
                 onClick={() => navigate(`/reviews/${item._id}`)}
               >
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <span key={index}>{item.title}</span>
+                  <span key={index}>
+                    <ReactMarkdown>{item.title}</ReactMarkdown>
+                  </span>
                 </div>
               </div>
             ))}
@@ -110,7 +113,7 @@ const SearchComponent = () => {
               >
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <span key={index}>
-                    {item.title}[{item.group}]
+                    <ReactMarkdown>{item.title}</ReactMarkdown>
                   </span>
                 </div>
               </div>

@@ -21,7 +21,7 @@ export const stylesBlock = {
   background: "#ffffff",
   zIndex: 50,
   position: "absolute",
-  width: "220px",
+  width: "200px",
   paddingLeft: "6px",
   color: "black",
   borderRadius: 3,

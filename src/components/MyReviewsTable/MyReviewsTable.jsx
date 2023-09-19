@@ -112,7 +112,7 @@ const MyReviewsTable = () => {
           ellipsis={true}
           style={{ maxWidth: 150 }}
         >
-          {text.length > 540 ? text.slice(0, 340) + "..." : { text }}
+          {text.length > 300 ? text.slice(0, 297) + "..." : { text }}
         </ReactMarkdown>
       ),
     },

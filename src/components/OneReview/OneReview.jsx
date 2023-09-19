@@ -85,12 +85,15 @@ const OneReview = () => {
       dispatch(fetchGetOneReview({ id }));
     }, 3350);
   };
+  if (isOneReviewLoading === "loading") {
+    return <Spinner />;
+  }
   return (
     <>
-      <div className="w-full max-w-4xl mx-auto p-4 xs:max-w-lg sm:max-w-4xl md:max-w-4xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4">
+      <div className="w-full max-w-4xl mx-auto p-4 xs:max-w-lg sm:max-w-4xl md:max-w-4xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4 mt-8">
         <div className="bg-white shadow-lg rounded-lg overflow-hidden relative">
           <Card
-            className="w-full border shadow-lg "
+            className="w-full  border shadow-lg "
             style={{ color: !themeMode ? "white" : "" }}
           >
             <Image.PreviewGroup
@@ -104,7 +107,7 @@ const OneReview = () => {
                 <Image
                   style={{ height: "45vh" }}
                   src={
-                    oneReview.images[0] ||
+                    oneReview?.images[0] ||
                     "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
                   }
                 />

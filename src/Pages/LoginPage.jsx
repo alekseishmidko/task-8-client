@@ -53,6 +53,60 @@ const LoginPage = () => {
           layout="vertical"
           name="nest-messages"
           onFinish={onFinish}
+          className="w-5/6 max-w-md mx-auto p-4 border border-gray-300 rounded-lg"
+          validateMessages={validateMessages}
+        >
+          <Form.Item
+            name={["email"]}
+            label={t("Email")}
+            rules={[{ type: "email", required: true }]}
+            className="mb-4"
+          >
+            <Input
+              className="w-full p-2 border rounded"
+              placeholder={t("enterYourEmail")}
+            />
+          </Form.Item>
+          <Form.Item
+            name={["password"]}
+            label={t("Password")}
+            rules={[{ type: "string", required: true }]}
+            className="mb-4"
+          >
+            <Input
+              className="w-full p-2 border rounded"
+              type="password"
+              placeholder={t("enterYourPassword")}
+              allowClear
+            />
+          </Form.Item>
+
+          <Form.Item wrapperCol={{ offset: 4 }}>
+            <h4 className="mb-2">
+              {t("haventAcc")}
+              <Link to={"/register"} className="ml-3 text-blue-500">
+                {t("createAccount")}
+              </Link>
+            </h4>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="w-2/3 rounded bg-blue-500 hover:bg-blue-600 mt-4"
+            >
+              {t("submit")}
+            </Button>
+          </Form.Item>
+          <div className="flex justify-center  gap-3 mt-6">
+            <GoogleButton />
+
+            <GitHubButton />
+          </div>
+        </Form>
+
+        {/* <Form
+          layout="vertical"
+          name="nest-messages"
+          onFinish={onFinish}
           style={{
             width: 400,
             padding: 20,
@@ -107,7 +161,7 @@ const LoginPage = () => {
               <GitHubButton />
             </Col>
           </Row>
-        </Form>
+        </Form> */}
       </div>
     </Layout>
   );

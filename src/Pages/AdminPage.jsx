@@ -10,7 +10,7 @@ const AdminPage = () => {
     <>
       <Header />
       <Layout>
-        <Link to={-1} className="absolute top-16 left-2 z-50">
+        <Link to={-1} className="absolute top-14 left-1 z-50">
           <RollBackButton />
         </Link>
 

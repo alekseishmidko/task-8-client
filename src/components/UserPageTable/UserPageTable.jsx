@@ -11,7 +11,10 @@ import {
 const UserPageTable = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { oneUserReviews } = useSelector((state) => state.reviewsSlice);
+  const { oneUserReviews, findUserName, findUserRole } = useSelector(
+    (state) => state.reviewsSlice
+  );
+  const { data } = useSelector((state) => state.accountSlice);
   console.log(oneUserReviews);
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -24,7 +27,7 @@ const UserPageTable = () => {
   };
   const handleOk = (recordId) => {
     setConfirmLoading(true);
-    console.log(recordId);
+    // console.log(recordId);
     dispatch(fetchDeleteReview(recordId));
     setTimeout(() => {
       setOpen(false);
@@ -143,20 +146,33 @@ const UserPageTable = () => {
     },
   ];
   const id = useParams().id;
+  const isReq =
+    data.role === "superadmin" ||
+    (data.role === "admin" && findUserRole === "user");
 
   React.useEffect(() => {
     dispatch(fetchGetOneUserReviews(id));
   }, [dispatch]);
   return (
-    <div className="w-full">
-      <div className="">
-        {" "}
-        <Button className="pb-2 mb-3" onClick={() => navigate("create")}>
-          `Create a review using the selected user name `
-        </Button>
-      </div>
+    <div className="w-full mt-20 pt-2">
+      {isReq && (
+        <div className="">
+          <Button
+            type="text"
+            className="pb-2 ml-2 mb-3 font-semibold"
+            onClick={() => navigate("create")}
+          >
+            {t("CreateReviewBy")} {findUserName}
+          </Button>
+        </div>
+      )}
       <Table
-        title={() => t("reviewsOfUser")}
+        title={() => (
+          <span className="pb-2 mb-3 font-semibold">
+            {" "}
+            {t("reviewsOfUser")} {findUserName}
+          </span>
+        )}
         columns={columns}
         dataSource={oneUserReviews}
         pagination={false}

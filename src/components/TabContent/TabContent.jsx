@@ -14,11 +14,7 @@ const TabContent = () => {
   const { last6Reviews, pop6Reviews, isLoading } = useSelector(
     (state) => state.reviewsSlice
   );
-  const contentStyle = {
-    background: "gray",
-    padding: "10px",
-    borderRadius: "8px",
-  };
+
   if (isLoading === "loading") <Spinner />;
   return (
     <div className="w-full">
@@ -28,7 +24,13 @@ const TabContent = () => {
             <div className="py-3">
               {item === "latest" ? (
                 <div className="grid grid-cols-1 gap-4">
-                  <Carousel afterChange={onChange} effect="fade" dots={true}>
+                  <Carousel
+                    afterChange={onChange}
+                    effect="scrollx"
+                    dots={false}
+                    autoplay
+                    autoplaySpeed={2500}
+                  >
                     {last6Reviews.map((item, index) => (
                       <div key={index}>
                         <div className="w-full h-full flex items-center justify-center">
@@ -40,14 +42,19 @@ const TabContent = () => {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-4">
-                  <Carousel afterChange={onChange} effect="fade" dots={true}>
+                  <Carousel
+                    afterChange={onChange}
+                    effect="scrollx"
+                    dots={false}
+                    autoplay
+                    autoplaySpeed={2500}
+                  >
                     {pop6Reviews.map((item, index) => (
                       <div
                         key={index}
                         className="w-full h-full flex items-center justify-center"
                       >
                         <ReviewCard {...item} />
-                        <div style={contentStyle} key={index}></div>
                       </div>
                     ))}
                   </Carousel>

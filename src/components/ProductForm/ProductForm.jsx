@@ -91,10 +91,10 @@ const ProductForm = () => {
   };
   return (
     <div className="w-full max-w-screen-sm mx-auto p-6  min-h-screen">
-      <Link to={-1} className="absolute top-16 left-2 z-50">
+      <Link to={-1} className="absolute top-14 left-1 z-50">
         <RollBackButton />
       </Link>
-      <Form layout="vertical" onFinish={onFinish} className="mx-4">
+      <Form layout="vertical" onFinish={onFinish} className="mx-4 mt-10">
         <Form.Item
           label={t("productTitle")}
           name="title"

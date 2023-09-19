@@ -45,13 +45,8 @@ const RegisterPage = () => {
         <Form
           layout="vertical"
           name="nest-messages"
+          className="w-5/6 max-w-md mx-auto p-4 border border-gray-300 rounded-lg"
           onFinish={onFinish}
-          style={{
-            width: 400,
-            padding: 20,
-            border: "1px solid #ccc",
-            borderRadius: 8,
-          }}
           validateMessages={validateMessages}
         >
           <Form.Item
@@ -91,7 +86,7 @@ const RegisterPage = () => {
             <Button
               type="primary"
               htmlType="submit"
-              className="w-full rounded bg-blue-500 hover:bg-blue-600 mt-4"
+              className="w-2/3 rounded bg-blue-500 hover:bg-blue-600 mt-4"
             >
               {t("submit")}
             </Button>

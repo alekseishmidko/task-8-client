@@ -6,6 +6,7 @@ import {
   RollbackOutlined,
   LogoutOutlined,
   TeamOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import Header from "../components/Header/Header";
 import { Link, useNavigate } from "react-router-dom";
@@ -31,7 +32,7 @@ const AccountPage = () => {
     <>
       <Header />
       <Layout className="min-h-screen">
-        <Link to={"/"} className="absolute top-16 left-2 z-50">
+        <Link to={"/"} className="absolute top-14 left-1 z-50">
           <RollBackButton />
         </Link>
 
@@ -60,22 +61,12 @@ const AccountPage = () => {
               </span>
             </Link>
           ) : null}
-          {/* <Link to={"/"}>
-            <LogoutOutlined
-              style={{
-                transform: "scale(1.4)",
-                color: themeMode === false ? "#fff" : "black",
-              }}
-              onClick={onClickLogout}
-              className="text-white mx-3 "
-            />
-          </Link> */}
         </div>
 
         <div className="flex flex-col sm:flex-row p-4 mt-12">
-          <div className="w-full sm:w-1/3 sm:pr-8">
+          <div className="w-full sm:w-1/3 sm:pr-8 mt-4">
             <div style={{ position: "relative", display: "inline-block" }}>
-              <Avatar size={64} />
+              <Avatar size={64} icon={<UserOutlined />} />
 
               {userLikes > 0 && (
                 <span

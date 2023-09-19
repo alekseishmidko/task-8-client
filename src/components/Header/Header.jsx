@@ -5,6 +5,7 @@ import {
   LogoutOutlined,
   BulbFilled,
   GlobalOutlined,
+  LoginOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { handleTheme } from "../../store/ThemeSlice/themeSlice";
@@ -73,7 +74,7 @@ const Header = () => {
           ) : (
             <>
               <Link to="/login">
-                <Button className="text-white px-3 text-sm mx-2 sm:w-22 md:w-30 ">
+                <Button className="text-white px-3 text-sm mx-2 mr-4 xs:w-13  sm:w-22 md:w-30 ">
                   {t("logIn")}
                 </Button>
               </Link>
