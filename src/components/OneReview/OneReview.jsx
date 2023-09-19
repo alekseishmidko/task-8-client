@@ -29,6 +29,8 @@ import { StarOutlined } from "@ant-design/icons";
 const OneReview = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [confirmLoading, setConfirmLoading] = React.useState(false);
   const { t } = useTranslation();
   const { Option } = Select;
   const { id } = useParams();
@@ -38,6 +40,10 @@ const OneReview = () => {
     useSelector((state) => state.reviewsSlice);
 
   const { data } = useSelector((state) => state.accountSlice);
+  if (isOneReviewLoading === "loading") {
+    return <Spinner />;
+  }
+
   const filtered = reviewsRatings.filter((item) => {
     if (data === null) {
       return;
@@ -56,8 +62,6 @@ const OneReview = () => {
   };
   const _id = oneReview._id;
   const arr = ["books", "music", "movies", "games"];
-  const [open, setOpen] = React.useState(false);
-  const [confirmLoading, setConfirmLoading] = React.useState(false);
 
   const showModal = () => {
     setOpen(true);
@@ -85,9 +89,7 @@ const OneReview = () => {
       dispatch(fetchGetOneReview({ id }));
     }, 3350);
   };
-  if (isOneReviewLoading === "loading") {
-    return <Spinner />;
-  }
+
   return (
     <>
       <div className="w-full max-w-4xl mx-auto p-4 xs:max-w-lg sm:max-w-4xl md:max-w-4xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4 mt-8">

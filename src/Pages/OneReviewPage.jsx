@@ -21,9 +21,9 @@ const OneReviewPage = () => {
   React.useEffect(() => {
     dispatch(fetchGetOneReview({ id }));
   }, [dispatch, id]);
-  // if (isOneReviewLoading === "loading") {
-  //   return <Spinner />;
-  // }
+  if (isOneReviewLoading === "loading") {
+    return <Spinner />;
+  }
   return (
     <>
       <Header />
