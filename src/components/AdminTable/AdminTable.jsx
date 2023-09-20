@@ -150,13 +150,13 @@ const AdminTable = () => {
               </span>
               <Modal
                 okType="default"
-                title={record._id}
+                title={t("delete")}
                 open={open}
                 onOk={() => handleOk(record._id)}
                 confirmLoading={confirmLoading}
                 onCancel={handleCancel}
               >
-                <p>Are you sure?</p>
+                <p>{t("areYouSure")}</p>
               </Modal>
             </a>
           </Space>

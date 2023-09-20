@@ -60,17 +60,3 @@ const GitHubButton = () => {
 // appId="1476472349804388"
 // secret 8ea01b5b3d00d8b6e8fe4f0d0c3776b0
 export default GitHubButton;
-// import { FacebookProvider, LoginButton } from "react-facebook";
-{
-  /* <FacebookProvider appId="1476472349804388">
-  <LoginButton
-    scope="email"
-    onError={handleError}
-    onSuccess={handleSuccess}
-  >
-    <Button> FaceBook</Button>
-  </LoginButton>
-</FacebookProvider>
-</>
-); */
-}

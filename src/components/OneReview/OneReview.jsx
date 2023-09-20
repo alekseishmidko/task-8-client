@@ -161,7 +161,8 @@ const OneReview = () => {
               <div className="mt-4 flex items-center justify-between">
                 <span className="font-semibold">
                   <span>
-                    {t("averageRating")}: {averageRatingFive} <StarOutlined />
+                    {t("averageRating")}: {averageRatingFive.toFixed(1)}{" "}
+                    <StarOutlined />
                   </span>
                 </span>
                 <div className="p-4 rounded-md my-4 sm:p-2 flex justify-end">

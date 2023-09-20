@@ -70,6 +70,7 @@ i18n.use(initReactI18next).init({
         CreateReviewBy: "Create a review as",
         foundInAReviews: "Found in a reviews",
         foundInAComments: "Found in a comments",
+        areYouSure: "Are You sure?",
       },
     },
     ru: {
@@ -139,6 +140,7 @@ i18n.use(initReactI18next).init({
         CreateReviewBy: "Создать обзор как",
         foundInAReviews: "Найдено в обзорах",
         foundInAComments: " Найдено в комментариях",
+        areYouSure: "Вы уверены ?",
       },
     },
   },
