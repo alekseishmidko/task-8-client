@@ -19,21 +19,30 @@ const UserPageTable = () => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const showModal = () => {
-    setOpen(true);
-  };
-  const handleCancel = () => {
-    setOpen(false);
-  };
-  const handleOk = (recordId) => {
-    setConfirmLoading(true);
-    // console.log(recordId);
+  // const showModal = () => {
+  //   setOpen(true);
+  // };
+  // const handleCancel = () => {
+  //   setOpen(false);
+  // };
+  // const handleOk = (recordId) => {
+  //   setConfirmLoading(true);
+  //   // console.log(recordId);
+  //   dispatch(fetchDeleteReview(recordId));
+  //   setTimeout(() => {
+  //     setOpen(false);
+  //     setConfirmLoading(false);
+  //     dispatch(fetchGetOneUserReviews(id));
+  //   }, 1000);
+  // };
+
+  const deleteUser = (recordId) => {
     dispatch(fetchDeleteReview(recordId));
     setTimeout(() => {
       setOpen(false);
-      setConfirmLoading(false);
+
       dispatch(fetchGetOneUserReviews(id));
-    }, 1000);
+    }, 1500);
   };
   const columns = [
     {
@@ -127,10 +136,13 @@ const UserPageTable = () => {
           </a>
 
           <a>
-            <span className="text-red-400" onClick={showModal}>
-              Delete
+            <span
+              className="text-red-400"
+              onClick={() => deleteUser(record._id)}
+            >
+              {t("delete")}
             </span>
-            <Modal
+            {/* <Modal
               okType="default"
               title={record.title}
               open={open}
@@ -139,7 +151,7 @@ const UserPageTable = () => {
               onCancel={handleCancel}
             >
               <p>Are you sure?</p>
-            </Modal>
+            </Modal> */}
           </a>
         </Space>
       ),

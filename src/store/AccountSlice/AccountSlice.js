@@ -201,7 +201,7 @@ const accountSlice = createSlice({
       state.authLoading = "error";
       state.errors = action.error.message;
       state.data = null;
-      state.message = action.payload.message;
+      // state.message = action.payload.message;
     });
     // GET ALL USERS
     builder.addCase(fetchGetAllUsers.pending, (state) => {
