@@ -1,8 +1,11 @@
 import React from "react";
 import axios from "axios";
 import { Button } from "antd";
-import { LoginSocialFacebook } from "reactjs-social-login";
-import { FacebookLoginButton } from "react-social-login-buttons";
+import { LoginSocialFacebook, LoginSocialTwitter } from "reactjs-social-login";
+import {
+  FacebookLoginButton,
+  TwitterLoginButton,
+} from "react-social-login-buttons";
 const GitHubButton = () => {
   const [provider, setProvider] = React.useState("");
   const [profile, setProfile] = React.useState(null);
@@ -24,7 +27,7 @@ const GitHubButton = () => {
         }
         onLoginStart={onLoginStart}
         onLogoutSuccess={onLogoutSuccess}
-        redirect_uri={"http://localhost:5173/login"}
+        redirect_uri={"https://17--task-8-netlify.netlify.app/login"}
         onResolve={({ provider, data }) => {
           setProvider(provider);
           setProfile(data);
@@ -35,6 +38,22 @@ const GitHubButton = () => {
       >
         <FacebookLoginButton />
       </LoginSocialFacebook>
+
+      <LoginSocialTwitter
+        isOnlyGetToken
+        client_id={"WWE3TjBJcGVRaUVvb0lKcUlvZ246MTpjaQ" || ""}
+        redirect_uri={"https://17--task-8-netlify.netlify.app/login"}
+        onLoginStart={onLoginStart}
+        onResolve={({ provider, data }) => {
+          setProvider(provider);
+          setProfile(data);
+        }}
+        onReject={(err) => {
+          console.log(err);
+        }}
+      >
+        <TwitterLoginButton />
+      </LoginSocialTwitter>
     </>
   );
 };
