@@ -142,16 +142,6 @@ const UserPageTable = () => {
             >
               {t("delete")}
             </span>
-            {/* <Modal
-              okType="default"
-              title={record.title}
-              open={open}
-              onOk={() => handleOk(record._id)}
-              confirmLoading={confirmLoading}
-              onCancel={handleCancel}
-            >
-              <p>Are you sure?</p>
-            </Modal> */}
           </a>
         </Space>
       ),
