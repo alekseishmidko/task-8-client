@@ -14,14 +14,14 @@ import CommentBlock from "../components/CommentBlock/CommentBlock";
 import RelatedReviews from "../components/RelatedReviews/RelatedReviews";
 
 const OneReviewPage = () => {
-  const { oneReview, averageRatingFive, isOneReviewLoading, reviewsRatings } =
+  const { oneReview, averageRatingFive, isOneReviewLoadingM, reviewsRatings } =
     useSelector((state) => state.reviewsSlice);
   const dispatch = useDispatch();
   const { id } = useParams();
   React.useEffect(() => {
     dispatch(fetchGetOneReview({ id }));
   }, [dispatch, id]);
-  if (isOneReviewLoading === "loading") {
+  if (isOneReviewLoadingM === "loading") {
     return <Spinner />;
   }
   return (

@@ -71,6 +71,7 @@ i18n.use(initReactI18next).init({
         foundInAReviews: "Found in a reviews",
         foundInAComments: "Found in a comments",
         areYouSure: "Are You sure?",
+        openAndUpdate: "Open and update",
       },
     },
     ru: {
@@ -141,6 +142,7 @@ i18n.use(initReactI18next).init({
         foundInAReviews: "Найдено в обзорах",
         foundInAComments: " Найдено в комментариях",
         areYouSure: "Вы уверены ?",
+        openAndUpdate: "Открыть и изменить",
       },
     },
   },

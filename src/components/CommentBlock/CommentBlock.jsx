@@ -93,7 +93,7 @@ const CommentBlock = () => {
                 }}
               >
                 <p className=" font-bold">
-                  {item.userId.name}
+                  {item?.userId?.name}
                   <span className="pl-2 font-semibold">{t("write")}:</span>
                 </p>
                 <p className="font-semibold">{item.comment}</p>

@@ -19,6 +19,7 @@ const MyReviewsTable = () => {
   const { t } = useTranslation();
   // console.log(myReviews);
   const onClickRev = (recordId) => {
+    // dispatch(fetchGetOneReview({ recordId }));
     navigate(recordId);
   };
   // modal
@@ -26,7 +27,7 @@ const MyReviewsTable = () => {
   //   setOpen(true);
   // };
   const deleteReview = (recordId) => {
-    // console.log(recordId, "rec Id");
+    console.log(recordId, "rec Id");
     dispatch(fetchDeleteReview(recordId));
     setTimeout(() => {
       setOpen(false);
@@ -34,20 +35,6 @@ const MyReviewsTable = () => {
       dispatch(fetchGetMyReviews());
     }, 1500);
   };
-  // const handleOk = (recordId) => {
-  //   console.log(recordId, "rec Id");
-  //   setConfirmLoading(true);
-  //   // dispatch(fetchDeleteReview(recordId));
-  //   setTimeout(() => {
-  //     setOpen(false);
-  //     setConfirmLoading(false);
-  //     // dispatch(fetchGetMyReviews());
-  //   }, 2000);
-  // };
-
-  // const handleCancel = () => {
-  //   setOpen(false);
-  // };
 
   const columns = [
     {
@@ -152,26 +139,14 @@ const MyReviewsTable = () => {
       render: (_, record) => (
         <Space size="small">
           <a onClick={() => onClickRev(record._id)}>
-            <span className="text-blue-500 ">Open and Update </span>
+            <span className="text-blue-500 ">{t("openAndUpdate")} </span>
           </a>
           <a>
             <span
               className="text-red-400"
-              // onClick={() => showModal(record._id)}
               onClick={() => deleteReview(record._id)}
             >
-              Delete
-              {/* <Modal
-                okType="default"
-                // title={t("delete")}
-                title={record.title}
-                open={open}
-                onOk={() => handleOk(record._id)}
-                confirmLoading={confirmLoading}
-                onCancel={handleCancel}
-              >
-                <p>Are you sure?</p>
-              </Modal> */}
+              {t("delete")}
             </span>
           </a>
         </Space>

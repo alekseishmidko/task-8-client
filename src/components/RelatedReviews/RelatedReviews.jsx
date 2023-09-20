@@ -37,17 +37,17 @@ const RelatedReviews = ({ productId, id }) => {
                   <Image
                     preview={false}
                     src={
-                      item.images[0] ||
+                      item?.images[0] ||
                       "https://res.cloudinary.com/dmpjxhwal/image/upload/v1694009851/cucokdvpp2ekz0jymskn.jpg"
                     }
-                    alt={item.title}
+                    alt={item?.title}
                     className="relative rounded "
                   />
                 </div>
 
                 <div className="flex justify-center">
                   <ReactMarkdown className="mt-2 prose">
-                    {item.title}
+                    {item?.title}
                   </ReactMarkdown>
                 </div>
                 <div className="flex justify-center">

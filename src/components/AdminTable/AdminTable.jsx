@@ -36,6 +36,13 @@ const AdminTable = () => {
   const handleCancel = () => {
     setOpen(false);
   };
+  const deleteUser = (recordId) => {
+    // console.log(recordId, "record");
+    dispatch(fetchDeleteUser(recordId));
+    setTimeout(() => {
+      dispatch(fetchGetAllUsers());
+    }, 1500);
+  };
   //
   const handleChangeRole = (recordId) => {
     dispatch(fetchHandleRoleUser(recordId));
@@ -45,7 +52,7 @@ const AdminTable = () => {
   };
   const handleChangeStatus = (recordId) => {
     console.log(recordId);
-    dispatch(fetchHandleStatusUser(recordId));
+    // dispatch(fetchHandleStatusUser(recordId));
     setTimeout(() => {
       dispatch(fetchGetAllUsers());
     }, 1000);
@@ -139,25 +146,20 @@ const AdminTable = () => {
                 className=" text-orange-600 "
                 onClick={() => handleChangeStatus(record._id)}
               >
-                {record.status === "active"
-                  ? t("makeDisabled")
-                  : t("makeActive")}
+                {record.status === "active" ? (
+                  <span>{t("makeDisabled")}</span>
+                ) : (
+                  <span>{t("makeActive")}</span>
+                )}
               </span>
             </a>
             <a>
-              <span className="text-red-600" onClick={showModal}>
+              <span
+                className="text-red-600"
+                onClick={() => deleteUser(record._id)}
+              >
                 {t("delete")}
               </span>
-              <Modal
-                okType="default"
-                title={t("delete")}
-                open={open}
-                onOk={() => handleOk(record._id)}
-                confirmLoading={confirmLoading}
-                onCancel={handleCancel}
-              >
-                <p>{t("areYouSure")}</p>
-              </Modal>
             </a>
           </Space>
         ),

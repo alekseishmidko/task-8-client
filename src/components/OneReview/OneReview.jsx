@@ -36,11 +36,11 @@ const OneReview = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { themeMode } = useSelector((state) => state.themeSlice);
-  const { oneReview, averageRatingFive, isOneReviewLoading, reviewsRatings } =
+  const { oneReview, averageRatingFive, isOneReviewLoadingM, reviewsRatings } =
     useSelector((state) => state.reviewsSlice);
   const { data } = useSelector((state) => state.accountSlice);
 
-  if (isOneReviewLoading === "loading") {
+  if (isOneReviewLoadingM === "loading") {
     return <Spinner />;
   }
 
