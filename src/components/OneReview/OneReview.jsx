@@ -38,8 +38,8 @@ const OneReview = () => {
   const { themeMode } = useSelector((state) => state.themeSlice);
   const { oneReview, averageRatingFive, isOneReviewLoading, reviewsRatings } =
     useSelector((state) => state.reviewsSlice);
-
   const { data } = useSelector((state) => state.accountSlice);
+
   if (isOneReviewLoading === "loading") {
     return <Spinner />;
   }

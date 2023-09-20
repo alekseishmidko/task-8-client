@@ -11,7 +11,7 @@ import {
 import Header from "../components/Header/Header";
 import { Link, useNavigate } from "react-router-dom";
 import MyReviewsTable from "../components/MyReviewsTable/MyReviewsTable";
-import { HeartOutlined, LikeOutlined } from "@ant-design/icons";
+import { HeartOutlined } from "@ant-design/icons";
 import { useAuth } from "../AuthContext";
 import { useTranslation } from "react-i18next";
 import RollBackButton from "../components/RollBackButton/RollBackButton";
@@ -80,7 +80,7 @@ const AccountPage = () => {
                     padding: "1px 5px",
                   }}
                 >
-                  <LikeOutlined /> {userLikes}
+                  <HeartOutlined /> {userLikes}
                 </span>
               )}
             </div>
