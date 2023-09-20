@@ -12,7 +12,6 @@ const GitHubButton = () => {
     <>
       <FacebookLogin
         appId="1476472349804388"
-        useRedirect
         initParams={{
           version: "v10.0",
           xfbml: true,
@@ -23,9 +22,6 @@ const GitHubButton = () => {
         loginOptions={{
           return_scopes: true,
         }}
-      />
-      <FacebookLogin
-        appId="1476472349804388"
         onSuccess={(response) => {
           console.log("Login Success!", response);
         }}
