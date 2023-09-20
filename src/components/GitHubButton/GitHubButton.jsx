@@ -12,7 +12,7 @@ const GitHubButton = () => {
   }
   return (
     <>
-      <FacebookProvider appId="123456789">
+      <FacebookProvider appId="1476472349804388">
         <LoginButton
           scope="email"
           onError={handleError}
@@ -24,48 +24,5 @@ const GitHubButton = () => {
     </>
   );
 };
-
+// secret 8ea01b5b3d00d8b6e8fe4f0d0c3776b0
 export default GitHubButton;
-{
-  /* <TwitterLogin
-authCallback={authHandler}
-consumerKey={"WWE3TjBJcGVRaUVvb0lKcUlvZ246MTpjaQ"}
-consumerSecret={"OsLnOC8MH1HPqA-EznCEDVFKChwg1TJNnujMN4QGLlpQfBMA5g"}
->
-<Button> Twitter</Button>
-</TwitterLogin> */
-}
-// API Key
-// pZDjiLJaqHHx2Vx7cgzjjXpLu
-// API Key Secret
-// n3mG7D6Fqv12yFtXEmUZotDDeBZrjkCRR1Tljb8eO
-
-// // const authHandler = (err, data) => {
-//   window.open("", "_blank").focus();
-//   console.log(err, data);
-// };
-// const onClick = async () => {
-//   const authHeader = {
-//     oauth_callback: "https://17--task-8-netlify.netlify.app/login",
-//     oauth_consumer_key: "pZDjiLJaqHHx2Vx7cgzjjXpLu",
-//     oauth_nonce: "ea9ec8429b68d6b77cd5600adbbb0456",
-//     oauth_signature: "F1Li3tvehgcraF8DMJ7OyxO4w9Y%3D",
-//     oauth_signature_method: "HMAC-SHA1",
-//     oauth_timestamp: Date.now(),
-//     oauth_version: "1.0",
-//   };
-//   const header = Object.entries(authHeader)
-//     .map(([key, value]) => `${key}= ${value}`)
-//     .join(",");
-//   const res = await axios.post(
-//     "https://api.twitter.com/oauth/request_token",
-//     {
-//       headers: {
-//         Authorization: `OAuth ${header}`,
-//       },
-//       responseType: "blob",
-//     }
-//   );
-//   const _url = window.URL.createObjectURL(res.data);
-//   window.open(_url, "_blank").focus(); // window.open + focus
-// };
