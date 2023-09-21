@@ -22,7 +22,7 @@ const TabContent = () => {
         {optionsArr.map((item, i) => (
           <TabPane tab={item} key={i}>
             <div className="py-3">
-              {item === "latest" ? (
+              {item == "latest" ? (
                 <div className="grid grid-cols-1 gap-4">
                   <Carousel
                     afterChange={onChange}

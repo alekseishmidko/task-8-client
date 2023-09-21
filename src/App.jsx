@@ -109,9 +109,8 @@ function App() {
             />
 
             <Route path="/search" element={<SearchPage />} />
-
-            <Route path="*" element={<NotFoundPage />} />
             <Route path="/info" element={<InfoPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </I18nextProvider>
       </ConfigProvider>

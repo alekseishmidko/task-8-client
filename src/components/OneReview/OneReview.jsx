@@ -70,15 +70,12 @@ const OneReview = () => {
     setOpen(false);
   };
   const handleOk = async () => {
-    setConfirmLoading(true);
     form.validateFields().then((values) => {
       console.log(values);
       dispatch(fetchUpdateReview({ id, values }));
     });
     setTimeout(() => {
       dispatch(fetchGetOneReview({ id }));
-      setOpen(false);
-      setConfirmLoading(false);
     }, 2000);
   };
   const isDis =

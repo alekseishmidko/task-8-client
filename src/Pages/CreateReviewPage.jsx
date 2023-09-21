@@ -9,9 +9,6 @@ const CreateReviewPage = () => {
   if (authLoading === "loading") {
     return <Spinner />;
   }
-  //   if (data === null) {
-  //     return <h1>222</h1>;
-  //   }
   return (
     <>
       <Header />

@@ -19,7 +19,8 @@ const RegisterPage = () => {
     try {
       const res = await dispatch(fetchRegistration(formData));
       if (res.error) {
-        return AlertMessage("error", res.payload.message);
+        console.log(res.payload);
+        return AlertMessage("error", res.payload);
       }
       setTimeout(() => {
         navigate("/");

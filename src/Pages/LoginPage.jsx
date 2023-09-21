@@ -25,7 +25,7 @@ const LoginPage = () => {
       const res = await dispatch(fetchLogin(formData));
 
       if (res.error) {
-        return AlertMessage("error", res.payload.message);
+        return AlertMessage("error", res.payload);
       }
       setTimeout(() => {
         navigate(-1);

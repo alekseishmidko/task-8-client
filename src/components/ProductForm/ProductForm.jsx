@@ -30,14 +30,14 @@ const ProductForm = () => {
       values.images = images;
       console.log("Form values:", values);
       const res = await dispatch(fetchCreateProduct(values));
+
+      if (res.error) {
+        return AlertMessage("error", res.payload.message || res.payload);
+      }
       AlertMessage("success", "Product is created");
       setTimeout(() => {
         navigate("/products");
       }, 850);
-
-      if (res.error) {
-        return AlertMessage("error", res.payload.message);
-      }
     } catch (error) {
       return console.error("error while fetchCreateProduct:", error);
     }

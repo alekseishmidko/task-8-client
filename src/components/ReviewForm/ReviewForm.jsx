@@ -55,13 +55,15 @@ const ReviewForm = () => {
       console.log(values);
       const res = await dispatch(fetchCreateReview(values));
       console.log(res, "res");
+
+      if (res.error) {
+        return AlertMessage("error", res.payload.message || res.payload);
+      }
+
+      AlertMessage("success", "Review is created");
       setTimeout(() => {
         navigate("/reviews");
       }, 850);
-      if (res.error) {
-        return AlertMessage("error", res.payload.message);
-      }
-      AlertMessage("success", "Review is created");
     } catch (error) {
       return console.error("error while fetchCreateReview:", error);
     }
@@ -135,8 +137,6 @@ const ReviewForm = () => {
     },
   };
   const handleValidate = (value) => {
-    // Вы можете добавить свою логику валидации здесь.
-    // В этом примере, мы просто проверяем, что значение не пустое.
     if (!value) {
       setIsInputValid(false);
       setErrorMessage("Please add your review!");
@@ -145,7 +145,7 @@ const ReviewForm = () => {
       setErrorMessage("");
     }
   };
-  // const arr = ["1", "2", "3", "req"];
+
   const tagChildren = allUnicTags.map((tag) => ({ value: tag }));
   return (
     <div className="w-full max-w-screen-sm mx-auto p-4 mt-12">
@@ -231,7 +231,7 @@ const ReviewForm = () => {
               <InboxOutlined />
             </p>
             <p className="ant-upload-text">
-              Click or drag images to this area to upload
+              Click or drag images(.jpg and .png only!) to this area to upload
             </p>
           </Dragger>
         </Form.Item>

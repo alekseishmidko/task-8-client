@@ -28,7 +28,7 @@ const ReviewCard = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  // console.log(avgRatingFive);
+  console.log(avgRatingFive);
 
   //
   const { reviewsRatings } = useSelector((state) => state.reviewsSlice);
@@ -114,8 +114,10 @@ const ReviewCard = ({
         </div>
         <div className="px-6 py-4 flex justify-between mt-4">
           <span className="text-base font-bold">
-            {t("averageRating")}:{" "}
-            {avgRatingFive === null ? 0 : avgRatingFive.toFixed(1)}
+            {t("averageRating")}:
+            <span className="ml-1">
+              {avgRatingFive === null ? 0 : avgRatingFive?.toFixed(1)}
+            </span>
             <StarOutlined className=" p-2" />
           </span>
           <BadgeLike count={likes} _id={_id} />
