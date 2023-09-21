@@ -33,7 +33,7 @@ const AdminTable = () => {
     }, 1000);
   };
   const handleChangeStatus = (recordId) => {
-    console.log(recordId);
+    // console.log(recordId);
     dispatch(fetchHandleStatusUser(recordId));
     setTimeout(() => {
       dispatch(fetchGetAllUsers());

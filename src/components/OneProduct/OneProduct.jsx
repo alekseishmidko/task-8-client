@@ -29,7 +29,6 @@ const OneProduct = () => {
   });
 
   const handleRatingFive = async (id, value) => {
-    console.log(id, { ratingFive: value });
     const res = await dispatch(fetchHandleProductsRating({ id, value }));
     if (!res) {
       return message.error(res.payload.message);
@@ -43,10 +42,7 @@ const OneProduct = () => {
   }
   return (
     <>
-      <div
-        className="max-w-md xs:max-w-lg sm:max-w-3xl md:max-w-3xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4 flex items-center justify-center"
-        // style={{ color: !themeMode ? "white" : "" }}
-      >
+      <div className="max-w-md xs:max-w-lg sm:max-w-3xl md:max-w-3xl lg:max-w-4xl xl:max-w-4xl mx-auto p-4 flex items-center justify-center">
         <div className="bg-white shadow-lg rounded-lg overflow-hidden relative">
           <Image.PreviewGroup
             preview={{

@@ -24,12 +24,12 @@ const BadgeLike = ({ count, _id }) => {
     );
   }
   const isLiked = findObjectInArray(allLikes, userId, reviewId);
-  // console.log(allLikes, userId, reviewId);
+
   const dispatch = useDispatch();
   const handleLike = async () => {
     if (data !== null) {
       await dispatch(fetchHandleLike(_id));
-      console.log(_id);
+
       setTimeout(() => {
         const parameters = "";
         dispatch(fetchGetAllReviews({ parameters }));

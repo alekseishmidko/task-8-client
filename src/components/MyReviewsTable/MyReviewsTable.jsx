@@ -17,17 +17,12 @@ const MyReviewsTable = () => {
   const navigate = useNavigate();
   const { myReviews, allUnicTags } = useSelector((state) => state.reviewsSlice);
   const { t } = useTranslation();
-  // console.log(myReviews);
+
   const onClickRev = (recordId) => {
-    // dispatch(fetchGetOneReview({ recordId }));
     navigate(recordId);
   };
-  // modal
-  // const showModal = () => {
-  //   setOpen(true);
-  // };
+
   const deleteReview = (recordId) => {
-    console.log(recordId, "rec Id");
     dispatch(fetchDeleteReview(recordId));
     setTimeout(() => {
       setOpen(false);

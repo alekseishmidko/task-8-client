@@ -28,7 +28,7 @@ const MenuBarProduct = () => {
 
   const handleMenuOptions = (parameters, item) => {
     setMenuOptions(item);
-    console.log(parameters, item);
+    // console.log(parameters, item);
     dispatch(fetchGetAllProducts({ parameters }));
   };
   return (
