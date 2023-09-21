@@ -54,7 +54,7 @@ const GitHubButton = () => {
         appId={"1476472349804388" || ""}
         fieldsProfile={"id,first_name,last_name,middle_name,name,email"}
         onLoginStart={onLoginStart}
-        redirect_uri={"https://17--task-8-netlify.netlify.app/login"}
+        redirect_uri={"https://18--task-8-netlify.netlify.app/login"}
         onResolve={({ provider, data }) => {
           setProvider(provider);
           setProfile(data);

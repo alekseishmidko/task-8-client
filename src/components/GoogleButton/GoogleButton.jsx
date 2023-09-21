@@ -48,7 +48,6 @@ const GoogleButton = () => {
     <Button
       onClick={() => login()}
       type="default"
-      // icon={<GoogleOutlined />}
       style={{
         backgroundColor: "#DB4437",
 
