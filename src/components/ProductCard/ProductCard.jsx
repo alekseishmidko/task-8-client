@@ -39,51 +39,6 @@ const ProductCard = ({ image, group, title, avgRatingFive, _id, images }) => {
     music: "bg-yellow-200",
   };
   return (
-    // <div
-    //   className="w-3/4 sm:w-full mt-4 cursor-pointer"
-    //   onClick={() => navigate(_id)}
-    // >
-    //   <div
-    //     className="max-w-sm rounded overflow-hidden border my-3 mr-2"
-    //     style={{ color: !themeMode ? "white" : "" }}
-    //   >
-    //     <img
-    //       style={{ height: "140px" }}
-    //       className="w-full"
-    //       src={
-    //         images[0] ||
-    //         "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-    //       }
-    //       alt={title}
-    //     />
-    //     <div className="px-6 py-4">
-    //       <ReactMarkdown className="prose font-bold text-xl mb-2">
-    //         {title}
-    //       </ReactMarkdown>
-    //     </div>
-    //     <div className="px-6 pt-4 pb-2">
-    //       <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-    //         {group}
-    //       </span>
-    //     </div>
-    //     <div className="px-6 py-4">
-    //       <span className=" text-base font-semibold">
-    //         <Rate
-    //           defaultValue={
-    //             filtered.find((item) => item.productId === _id)?.ratingFive || 0
-    //           }
-    //           disabled={data === null || data === 0}
-    //           onChange={(value) => handleRatingFive(_id, value)}
-    //         />
-    //       </span>
-    //     </div>
-    //     <div className="px-6 py-4">
-    //       <span className=" text-base font-semibold">
-    //         {t("averageRating")}: {avgRatingFive === null ? 0 : avgRatingFive}
-    //       </span>
-    //     </div>
-    //   </div>
-    // </div>
     <div
       className="relative w-92 h-116 rounded overflow-hidden shadow-lg my-4 mx-2"
       style={{ color: !themeMode ? "white" : "" }}
@@ -116,7 +71,8 @@ const ProductCard = ({ image, group, title, avgRatingFive, _id, images }) => {
 
           <div className="px-6 py-4 flex justify-between mt-4">
             <span className="text-base font-semibold">
-              average rating: {avgRatingFive === null ? 0 : avgRatingFive}
+              average rating:
+              {avgRatingFive === null ? 0 : avgRatingFive?.toFixed(1)}
             </span>
           </div>
         </div>

@@ -87,23 +87,28 @@ const OneProduct = () => {
             <div className="mt-4 flex items-center justify-between">
               <span className="text-gray-800 font-semibold">
                 <span>
-                  {t("averageRating")}: {averageRatingFive}
+                  {t("averageRating")}: {averageRatingFive?.toFixed(1)}
                 </span>
               </span>
               {data === null ? (
                 <div className="p-4 rounded-md my-4 sm:p-2 flex justify-end">
-                  <Button disabled={data === null}>
+                  <Button
+                    disabled={data === null}
+                    type="primary"
+                    style={{ color: "black" }}
+                  >
                     {t("loginForcreateReview")}
                   </Button>
                 </div>
               ) : (
                 <div className="p-4 rounded-md my-4 sm:p-2 flex justify-end">
                   <Button
+                    type="default"
                     onClick={() =>
                       navigate(`/reviews/createbyproduct/${oneProduct._id}`)
                     }
                   >
-                    {t("createReview")}
+                    <span style={{ color: "black" }}>{t("createReview")}</span>
                   </Button>
                 </div>
               )}
