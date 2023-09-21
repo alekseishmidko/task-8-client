@@ -20,7 +20,7 @@ const RegisterPage = () => {
       const res = await dispatch(fetchRegistration(formData));
       if (res.error) {
         console.log(res.payload);
-        return AlertMessage("error", res.payload);
+        return AlertMessage("error", res.payload?.message || res.payload);
       }
       setTimeout(() => {
         navigate("/");
