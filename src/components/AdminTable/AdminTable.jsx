@@ -18,24 +18,6 @@ const AdminTable = () => {
     dispatch(fetchGetAllUsers());
   }, [dispatch]);
 
-  //   modal
-  const [open, setOpen] = React.useState(false);
-  const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const showModal = () => {
-    setOpen(true);
-  };
-  const handleOk = (recordId) => {
-    setConfirmLoading(true);
-    dispatch(fetchDeleteUser(recordId));
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-      dispatch(fetchGetAllUsers());
-    }, 1000);
-  };
-  const handleCancel = () => {
-    setOpen(false);
-  };
   const deleteUser = (recordId) => {
     // console.log(recordId, "record");
     dispatch(fetchDeleteUser(recordId));
@@ -52,7 +34,7 @@ const AdminTable = () => {
   };
   const handleChangeStatus = (recordId) => {
     console.log(recordId);
-    // dispatch(fetchHandleStatusUser(recordId));
+    dispatch(fetchHandleStatusUser(recordId));
     setTimeout(() => {
       dispatch(fetchGetAllUsers());
     }, 1000);

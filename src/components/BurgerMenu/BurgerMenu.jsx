@@ -23,7 +23,7 @@ const BurgerMenu = () => {
     { title: t("home"), path: "/" },
     { title: t("products"), path: "/products" },
     { title: t("reviews"), path: "/reviews" },
-    { title: "Info", path: "/" },
+    { title: "Info", path: "/info" },
   ];
   return (
     <div>
@@ -33,8 +33,6 @@ const BurgerMenu = () => {
       />
 
       <Drawer
-        // title={t("menu")}
-
         placement="right"
         closable={true}
         closeIcon={<CloseOutlined />}

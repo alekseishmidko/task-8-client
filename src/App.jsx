@@ -19,6 +19,7 @@ import { AuthProvider } from "./AuthContext";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 import SearchPage from "./Pages/SearchPage";
+import InfoPage from "./Pages/InfoPage";
 function App() {
   const { themeMode } = useSelector((state) => state.themeSlice);
   return (
@@ -110,6 +111,7 @@ function App() {
             <Route path="/search" element={<SearchPage />} />
 
             <Route path="*" element={<NotFoundPage />} />
+            <Route path="/info" element={<InfoPage />} />
           </Routes>
         </I18nextProvider>
       </ConfigProvider>
@@ -118,5 +120,3 @@ function App() {
 }
 
 export default App;
-
-// дописать код для фейсбук, сделать стр инфо или удалить ее
