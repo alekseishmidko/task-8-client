@@ -28,7 +28,7 @@ const MenuBarProduct = () => {
 
   const handleMenuOptions = (parameters, item) => {
     setMenuOptions(item);
-    // console.log(parameters, item);
+
     dispatch(fetchGetAllProducts({ parameters }));
   };
   return (
@@ -63,33 +63,3 @@ const MenuBarProduct = () => {
 };
 
 export default MenuBarProduct;
-{
-  /* <Modal
-            okType="default"
-            title="Create a new Product"
-            open={open}
-            onOk={handleOk}
-            confirmLoading={confirmLoading}
-            onCancel={handleCancel}
-          >
-            <Form form={form} layout="vertical" onFinish={onFinish}>
-              <Form.Item label="Title" name="title">
-                <Input />
-              </Form.Item>
-
-              <Form.Item label="Group" name="group">
-                <Select>
-                  {categories.map((item, index) => (
-                    <Option key={index} value={item}>
-                      {item}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-
-              <Form.Item label="Content" name="content">
-                <Input.TextArea />
-              </Form.Item>
-            </Form>
-          </Modal> */
-}

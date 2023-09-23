@@ -19,7 +19,7 @@ const GitHubButton = () => {
           "https://graph.facebook.com/v12.0/me",
           {
             params: {
-              fields: "id,name,email", // Укажите необходимые поля
+              fields: "id,name,email",
             },
             headers: {
               Authorization: `Bearer ${tokenResponse.accessToken}`,
@@ -51,10 +51,10 @@ const GitHubButton = () => {
   return (
     <>
       <LoginSocialFacebook
-        appId={"1476472349804388" || ""}
+        appId={import.meta.env.FACEBOOK_CLIENT_ID || ""}
         fieldsProfile={"id,first_name,last_name,middle_name,name,email"}
         onLoginStart={onLoginStart}
-        redirect_uri={"https://18--task-8-netlify.netlify.app/login"}
+        redirect_uri={import.meta.env.REDIRECT_URI}
         onResolve={({ provider, data }) => {
           setProvider(provider);
           setProfile(data);

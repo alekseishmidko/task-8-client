@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Menu } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-// import { arr } from "./menuBarProps";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetAllReviews } from "../../store/ReviewsSlice/ReviewsSlice";
 import { useNavigate } from "react-router-dom";

@@ -12,7 +12,6 @@ const GoogleButton = () => {
   const dispatch = useDispatch();
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      console.log(tokenResponse, "tokenresponce");
       try {
         const userInfoResponse = await axios.get(
           "https://www.googleapis.com/oauth2/v2/userinfo",
@@ -25,7 +24,7 @@ const GoogleButton = () => {
 
         if (userInfoResponse.status === 200) {
           const userInfo = userInfoResponse.data;
-          console.log(userInfo);
+
           const res = await dispatch(fetchSignGoogle(userInfo));
           if (res.error) {
             return AlertMessage("error", res.payload.message);

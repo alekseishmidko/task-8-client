@@ -19,18 +19,15 @@ const SearchComponent = () => {
   const { searchedReviews, searchedComments, searchLoading } = useSelector(
     (state) => state.searchSlice
   );
-  // console.log(searchedReviews, searchedComments);
+
   const handleSearch = async () => {
     console.log("search", value);
 
-    // const reviews = await axios.get(`/api/search/reviews?q=${value}`);
     const res = await dispatch(fetchGetSearch(value));
-    // console.log(res, "res");
 
     setShow(true);
     setDataSource(res.payload.reviews.slice(0, 7));
     setDataSource2(res.payload.comments.slice(0, 4));
-    // console.log(dataSource, dataSource2);
   };
 
   const searchRef = React.useRef();

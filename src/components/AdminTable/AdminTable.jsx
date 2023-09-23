@@ -19,7 +19,6 @@ const AdminTable = () => {
   }, [dispatch]);
 
   const deleteUser = (recordId) => {
-    // console.log(recordId, "record");
     dispatch(fetchDeleteUser(recordId));
     setTimeout(() => {
       dispatch(fetchGetAllUsers());
@@ -33,7 +32,6 @@ const AdminTable = () => {
     }, 1000);
   };
   const handleChangeStatus = (recordId) => {
-    // console.log(recordId);
     dispatch(fetchHandleStatusUser(recordId));
     setTimeout(() => {
       dispatch(fetchGetAllUsers());

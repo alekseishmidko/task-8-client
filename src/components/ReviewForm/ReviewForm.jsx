@@ -43,7 +43,7 @@ const ReviewForm = () => {
 
   const onFinish = async (values) => {
     try {
-      console.log(values);
+      
       values.content = inputMessage;
       values.images = images;
       if (product) {
@@ -52,9 +52,9 @@ const ReviewForm = () => {
       pathname?.slice(0, -32) === "/admin"
         ? (values.createByAdminId = paramsId)
         : (values.createByAdminId = 0);
-      console.log(values);
+    
       const res = await dispatch(fetchCreateReview(values));
-      console.log(res, "res");
+     
 
       if (res.error) {
         return AlertMessage("error", res.payload.message || res.payload);
@@ -69,8 +69,7 @@ const ReviewForm = () => {
     }
   };
 
-  console.log(pathname, "pathname", paramsId, "paramsId");
-  console.log(pathname.slice(0, -24), "-24");
+
   // /reviews/create
   // /admin/64e6538a72d53ec57fcd84c5/create
   //  /reviews/createbyproduct/64ecfb9eb95ca780bde596da
@@ -201,7 +200,7 @@ const ReviewForm = () => {
           </Select>
         </Form.Item>
 
-        {/*  */}
+  
         <label htmlFor="content">
           <span className="text-red-500 font-bold">* </span>Content
         </label>
@@ -224,7 +223,7 @@ const ReviewForm = () => {
           />
         </AutoComplete>
         {!isInputValid && <div className="text-red-500">{errorMessage}</div>}
-        {/*  */}
+  
         <Form.Item label={t("uploadYourImages")} name="files" className="mt-4">
           <Dragger {...props}>
             <p className="ant-upload-drag-icon">

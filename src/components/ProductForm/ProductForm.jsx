@@ -28,7 +28,6 @@ const ProductForm = () => {
   const onFinish = async (values) => {
     try {
       values.images = images;
-      console.log("Form values:", values);
       const res = await dispatch(fetchCreateProduct(values));
 
       if (res.error) {
@@ -62,7 +61,7 @@ const ProductForm = () => {
 
       if (!allowedTypes.includes(file.type)) {
         message.error("Only JPEG, PNG files are allowed.");
-        return false; // Отмена загрузки
+        return false;
       }
 
       return true;

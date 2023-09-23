@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <GoogleOAuthProvider
         redirectUri="http://localhost:3000/"
-        clientId="626897306233-8trdafrirc4i6enpnpsg7ca668udrn3p.apps.googleusercontent.com"
+        clientId={import.meta.env.GOOGLE_CLIENT_ID}
       >
         <Provider store={store}>
           <App />

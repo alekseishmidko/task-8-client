@@ -11,8 +11,6 @@ import {
 import { useTranslation } from "react-i18next";
 const { Text } = Typography;
 const MyReviewsTable = () => {
-  const [open, setOpen] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { myReviews, allUnicTags } = useSelector((state) => state.reviewsSlice);
@@ -25,8 +23,6 @@ const MyReviewsTable = () => {
   const deleteReview = (recordId) => {
     dispatch(fetchDeleteReview(recordId));
     setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
       dispatch(fetchGetMyReviews());
     }, 1500);
   };
