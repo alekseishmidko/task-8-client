@@ -51,10 +51,10 @@ const GitHubButton = () => {
   return (
     <>
       <LoginSocialFacebook
-        appId={import.meta.env.FACEBOOK_CLIENT_ID || ""}
+        appId={import.meta.env.VITE_FACEBOOK_CLIENT_ID || ""}
         fieldsProfile={"id,first_name,last_name,middle_name,name,email"}
         onLoginStart={onLoginStart}
-        redirect_uri={import.meta.env.REDIRECT_URI}
+        redirect_uri={import.meta.env.VITE_REDIRECT_URI}
         onResolve={({ provider, data }) => {
           setProvider(provider);
           setProfile(data);
