@@ -17,30 +17,10 @@ const UserPageTable = () => {
   const { data } = useSelector((state) => state.accountSlice);
   console.log(oneUserReviews);
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  // const showModal = () => {
-  //   setOpen(true);
-  // };
-  // const handleCancel = () => {
-  //   setOpen(false);
-  // };
-  // const handleOk = (recordId) => {
-  //   setConfirmLoading(true);
-  //   // console.log(recordId);
-  //   dispatch(fetchDeleteReview(recordId));
-  //   setTimeout(() => {
-  //     setOpen(false);
-  //     setConfirmLoading(false);
-  //     dispatch(fetchGetOneUserReviews(id));
-  //   }, 1000);
-  // };
 
   const deleteUser = (recordId) => {
     dispatch(fetchDeleteReview(recordId));
     setTimeout(() => {
-      setOpen(false);
-
       dispatch(fetchGetOneUserReviews(id));
     }, 1500);
   };

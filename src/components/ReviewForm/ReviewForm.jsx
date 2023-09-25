@@ -43,7 +43,6 @@ const ReviewForm = () => {
 
   const onFinish = async (values) => {
     try {
-      
       values.content = inputMessage;
       values.images = images;
       if (product) {
@@ -52,9 +51,8 @@ const ReviewForm = () => {
       pathname?.slice(0, -32) === "/admin"
         ? (values.createByAdminId = paramsId)
         : (values.createByAdminId = 0);
-    
+
       const res = await dispatch(fetchCreateReview(values));
-     
 
       if (res.error) {
         return AlertMessage("error", res.payload.message || res.payload);
@@ -68,7 +66,6 @@ const ReviewForm = () => {
       return console.error("error while fetchCreateReview:", error);
     }
   };
-
 
   // /reviews/create
   // /admin/64e6538a72d53ec57fcd84c5/create
@@ -105,7 +102,7 @@ const ReviewForm = () => {
 
       if (!allowedTypes.includes(file.type)) {
         message.error("Only JPEG, PNG files are allowed.");
-        return false; // Отмена загрузки
+        return false;
       }
 
       return true;
@@ -200,7 +197,6 @@ const ReviewForm = () => {
           </Select>
         </Form.Item>
 
-  
         <label htmlFor="content">
           <span className="text-red-500 font-bold">* </span>Content
         </label>
@@ -223,7 +219,7 @@ const ReviewForm = () => {
           />
         </AutoComplete>
         {!isInputValid && <div className="text-red-500">{errorMessage}</div>}
-  
+
         <Form.Item label={t("uploadYourImages")} name="files" className="mt-4">
           <Dragger {...props}>
             <p className="ant-upload-drag-icon">

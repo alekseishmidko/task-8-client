@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Space, Modal, Layout } from "antd";
+import { Table, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchDeleteUser,
@@ -8,7 +8,7 @@ import {
   fetchHandleStatusUser,
 } from "../../store/AccountSlice/AccountSlice";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../AuthContext";
+
 import { useTranslation } from "react-i18next";
 const AdminTable = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const AdminTable = () => {
       dispatch(fetchGetAllUsers());
     }, 1500);
   };
-  //
+
   const handleChangeRole = (recordId) => {
     dispatch(fetchHandleRoleUser(recordId));
     setTimeout(() => {
@@ -153,7 +153,6 @@ const AdminTable = () => {
   return (
     <div className="w-full">
       <h2 className="ml-4 mb-8 font-semibold">{t("adminPanel")}</h2>
-      {/* <div className="overflow-x-auto"> */}
       <Table
         columns={columns}
         dataSource={allUsers}
@@ -162,7 +161,6 @@ const AdminTable = () => {
         scroll={{ x: "calc(700px + 10%)" }}
         size="middle"
       />
-      {/* </div> */}
     </div>
   );
 };

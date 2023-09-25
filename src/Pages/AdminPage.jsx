@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Table } from "antd";
+import { Layout } from "antd";
 import AdminTable from "../components/AdminTable/AdminTable";
 import { Link } from "react-router-dom";
 

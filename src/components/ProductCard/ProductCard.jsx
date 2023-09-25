@@ -8,7 +8,7 @@ import {
 } from "../../store/ProductSlice/ProductSlice";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-const ProductCard = ({ image, group, title, avgRatingFive, _id, images }) => {
+const ProductCard = ({ group, title, avgRatingFive, _id, images }) => {
   const { t } = useTranslation();
   const { data } = useSelector((state) => state.accountSlice);
   const { themeMode } = useSelector((state) => state.themeSlice);
