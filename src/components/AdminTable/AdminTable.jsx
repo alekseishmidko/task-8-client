@@ -18,24 +18,15 @@ const AdminTable = () => {
     dispatch(fetchGetAllUsers());
   }, [dispatch]);
 
-  const deleteUser = (recordId) => {
+  const deleteUser = async (recordId) => {
     dispatch(fetchDeleteUser(recordId));
-    setTimeout(() => {
-      dispatch(fetchGetAllUsers());
-    }, 1500);
   };
 
   const handleChangeRole = (recordId) => {
     dispatch(fetchHandleRoleUser(recordId));
-    setTimeout(() => {
-      dispatch(fetchGetAllUsers());
-    }, 1000);
   };
   const handleChangeStatus = (recordId) => {
     dispatch(fetchHandleStatusUser(recordId));
-    setTimeout(() => {
-      dispatch(fetchGetAllUsers());
-    }, 1000);
   };
   const columns = [
     {

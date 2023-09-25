@@ -18,7 +18,6 @@ const BadgeLike = ({ count, _id }) => {
   const userId = data?._id;
   const reviewId = _id;
   function findObjectInArray(array, userId, reviewId) {
-    // Используем метод массива some() для поиска объекта, который соответствует условиям
     return array.some(
       (item) => item.userId === userId && item.reviewId === reviewId
     );

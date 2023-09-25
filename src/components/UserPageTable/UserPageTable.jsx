@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
-import { Space, Table, Tag, Typography, Modal, Button } from "antd";
+import { Space, Table, Tag, Button } from "antd";
 import { useTranslation } from "react-i18next";
 import {
   fetchDeleteReview,
   fetchGetOneUserReviews,
 } from "../../store/ReviewsSlice/ReviewsSlice";
 const UserPageTable = () => {
+  const id = useParams().id;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { oneUserReviews, findUserName, findUserRole } = useSelector(
@@ -19,10 +20,9 @@ const UserPageTable = () => {
   const { t } = useTranslation();
 
   const deleteUser = (recordId) => {
-    dispatch(fetchDeleteReview(recordId));
-    setTimeout(() => {
+    dispatch(fetchDeleteReview(recordId)).then(() => {
       dispatch(fetchGetOneUserReviews(id));
-    }, 1500);
+    });
   };
   const columns = [
     {
@@ -127,7 +127,7 @@ const UserPageTable = () => {
       ),
     },
   ];
-  const id = useParams().id;
+
   const isReq =
     data.role === "superadmin" ||
     (data.role === "admin" && findUserRole === "user");

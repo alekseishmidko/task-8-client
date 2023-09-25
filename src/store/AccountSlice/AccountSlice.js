@@ -69,6 +69,7 @@ export const fetchDeleteUser = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await axios.delete(`api/users/${id}`);
+      thunkAPI.dispatch(fetchGetAllUsers());
       return response.data;
     } catch (error) {
       // Обработка ошибок, если необходимо
@@ -81,6 +82,7 @@ export const fetchHandleRoleUser = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await axios.put(`api/users/${id}`);
+      thunkAPI.dispatch(fetchGetAllUsers());
       return response.data;
     } catch (error) {
       // Обработка ошибок, если необходимо
@@ -93,6 +95,7 @@ export const fetchHandleStatusUser = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await axios.post(`api/users/status/${id}`);
+      thunkAPI.dispatch(fetchGetAllUsers());
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

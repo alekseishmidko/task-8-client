@@ -22,9 +22,6 @@ const MyReviewsTable = () => {
 
   const deleteReview = (recordId) => {
     dispatch(fetchDeleteReview(recordId));
-    setTimeout(() => {
-      dispatch(fetchGetMyReviews());
-    }, 1500);
   };
 
   const columns = [
