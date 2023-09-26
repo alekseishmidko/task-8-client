@@ -9,9 +9,7 @@ export const fetchGetReviewComments = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
-      // throw error;
     }
   }
 );
@@ -24,9 +22,7 @@ export const fetchCreateComment = createAsyncThunk(
       console.log(response);
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
-      // throw error;
     }
   }
 );
@@ -37,9 +33,7 @@ export const fetchHandleLike = createAsyncThunk(
       const response = await axios.post(`api/likes/${id}`);
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
-      // throw error;
     }
   }
 );
@@ -50,9 +44,7 @@ export const fetchLikesCount = createAsyncThunk(
       const response = await axios.get(`api/likes/${id}`);
       return response.data;
     } catch (error) {
-      // Обработка ошибок, если необходимо
       return thunkAPI.rejectWithValue(error.response.data);
-      // throw error;
     }
   }
 );

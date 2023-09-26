@@ -1,28 +1,20 @@
 import React from "react";
 import { Badge } from "antd";
-import { HeartFilled, HeartOutlined, LikeOutlined } from "@ant-design/icons";
+import { HeartFilled } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchGetAllLikes,
   fetchHandleLike,
 } from "../../store/CommentsSlice/CommentsSlice";
-import {
-  fetchGetAllReviews,
-  fetchGetOneReview,
-} from "../../store/ReviewsSlice/ReviewsSlice";
+import axios from "../../axios";
+import { fetchGetAllReviews } from "../../store/ReviewsSlice/ReviewsSlice";
 const BadgeLike = ({ count, _id }) => {
   const { data } = useSelector((state) => state.accountSlice);
   const { themeMode } = useSelector((state) => state.themeSlice);
-  const { allLikes } = useSelector((state) => state.commentsSlice);
 
+  const [statusLike, setStatusLike] = React.useState(false);
   const userId = data?._id;
   const reviewId = _id;
-  function findObjectInArray(array, userId, reviewId) {
-    return array.some(
-      (item) => item.userId === userId && item.reviewId === reviewId
-    );
-  }
-  const isLiked = findObjectInArray(allLikes, userId, reviewId);
 
   const dispatch = useDispatch();
   const handleLike = async () => {
@@ -36,6 +28,21 @@ const BadgeLike = ({ count, _id }) => {
       }, 600);
     }
   };
+  React.useEffect(() => {
+    const fetchStatusLike = async () => {
+      try {
+        const res = await axios.post("api/likes", {
+          userId,
+          reviewId,
+        });
+        setStatusLike(res.data);
+      } catch (error) {
+        console.error("Error fetching like status:", error);
+      }
+    };
+
+    fetchStatusLike();
+  }, []);
 
   return count > 0 ? (
     <Badge
@@ -50,7 +57,7 @@ const BadgeLike = ({ count, _id }) => {
         disabled={data === null}
         style={{
           fontSize: 21,
-          color: isLiked === true ? "darkRed" : "",
+          color: statusLike == true ? "darkRed" : "",
           marginLeft: "4px",
           marginBottom: "4px",
         }}

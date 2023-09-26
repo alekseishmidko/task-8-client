@@ -120,4 +120,4 @@ function App() {
 
 export default App;
 
-// доработать логику badgelike
+// оптимизтровать рейтинг и лайки

@@ -14,7 +14,6 @@ import { useTranslation } from "react-i18next";
 const CommentBlock = () => {
   const { t } = useTranslation();
   const baseURL = instance.defaults.baseURL;
-  // socket logics
   const socket = socketIO.connect(baseURL);
   const { reviewComments, commentsLoading } = useSelector(
     (state) => state.commentsSlice
