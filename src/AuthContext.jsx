@@ -29,7 +29,6 @@ export function useAuth() {
     dispatch(fetchLogin({ email, password }));
   };
   const logOut = () => {
-    console.log("logOut");
     dispatch(logout());
   };
 

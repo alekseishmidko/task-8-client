@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import MainPage from "./Pages/MainPage";
 import LoginPage from "./Pages/LoginPage";
@@ -120,4 +119,6 @@ function App() {
 
 export default App;
 
-// оптимизтровать рейтинг и лайки
+// оптимизировать рейтинг и лайки
+// lazy loading Pages
+// layout на уровне роутинга
